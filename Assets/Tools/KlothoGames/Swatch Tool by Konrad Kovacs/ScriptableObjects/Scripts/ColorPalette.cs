@@ -4,4 +4,5 @@ using UnityEngine;
 public class ColorPalette : ScriptableObject
 {
     public Color[] colors;
+    public string[] names;
 }

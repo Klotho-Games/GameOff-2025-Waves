@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -30,14 +33,21 @@ public class SwatchColorReference : MonoBehaviour
     /// WHY: HideInInspector prevents clutter - users interact through the swatch buttons, not raw indices.
     /// SerializeField ensures the connection persists through play mode and scene saves.
     /// </summary>
-    [SerializeField] private int swatchIndex = -1;
-    
+    [HideInInspector][SerializeField] private int swatchIndex = -1;
+
     /// <summary>
-    /// Cached reference to the required SpriteRenderer component.
+    /// Reference to the required component (e.g., SpriteRenderer) for color updates. Property .color required.
     /// 
     /// WHY: Avoids GetComponent calls during frequent Update() color checks, improving runtime performance.
     /// </summary>
-    public SpriteRenderer SpriteRenderer { get; private set; }
+    private UnityEngine.Component referencedComponent;
+
+    /// <summary>
+    /// Cached PropertyInfo for the color property to avoid reflection overhead during updates.
+    /// </summary>
+    private PropertyInfo colorProperty;
+
+    private readonly bool enableDebug = true;
 
     /// <summary>
     /// Cache the SpriteRenderer component reference for performance.
@@ -47,11 +57,7 @@ public class SwatchColorReference : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        SpriteRenderer = GetComponent<SpriteRenderer>();
-        if (SpriteRenderer == null)
-        {
-            Debug.LogError("SwatchColorReference requires a SpriteRenderer component.");
-        }
+        GetReferencedComponent();
     }
 
     /// <summary>
@@ -116,46 +122,119 @@ public class SwatchColorReference : MonoBehaviour
     }
 
     /// <summary>
-    /// Fallback method to re-cache the SpriteRenderer component if needed.
+    /// Finds any component on this GameObject that has a 'color' property of type Color.
     /// 
-    /// WHY: Handles edge cases where the cached reference becomes null (rare Unity scenarios).
-    /// Provides recovery mechanism to maintain functionality even in unusual circumstances.
+    /// WHY: Uses reflection to automatically detect any component with a color property,
+    /// making the system extensible to work with custom components without code changes.
+    /// Caches the PropertyInfo for performance during frequent updates.
     /// </summary>
-    public void GetSpriteRenderer()
+    public void GetReferencedComponent()
     {
-        SpriteRenderer = GetComponent<SpriteRenderer>();
-        if (SpriteRenderer == null) Debug.LogError("SwatchColorReference requires a SpriteRenderer component.");
-        return;
+        // First try interface-based approach (most performant)
+        var colorableComponent = GetComponent<IColorable>();
+        if (colorableComponent != null)
+        {
+            referencedComponent = colorableComponent as UnityEngine.Component;
+            colorProperty = typeof(IColorable).GetProperty("color");
+            return;
+        }
+        
+        // Fallback to reflection-based approach for built-in Unity components
+        UnityEngine.Component[] components = GetComponents<UnityEngine.Component>();
+        
+        foreach (var component in components)
+        {
+            if (component == this) continue; // Skip self
+            
+            Type componentType = component.GetType();
+            PropertyInfo property = componentType.GetProperty("color", BindingFlags.Public | BindingFlags.Instance);
+            
+            // Check if the property exists and is of type Color
+            if (property != null && property.PropertyType == typeof(Color) && 
+                property.CanRead && property.CanWrite)
+            {
+                referencedComponent = component;
+                colorProperty = property;
+                if (enableDebug)
+                {
+                    Debug.Log($"SwatchColorReference: Found color property on {componentType.Name}");
+                }
+                return;
+            }
+        }
+        
+        if (enableDebug && referencedComponent == null)
+        {
+            Debug.LogWarning($"SwatchColorReference: No component with 'color' property found on {gameObject.name}");
+        }
     }
 
     /// <summary>
-    /// Updates the sprite's color to match the current palette, but only if they differ.
+    /// Updates the component's color to match the current palette, but only if they differ.
     /// 
-    /// WHY: Called frequently from Update(), so optimization is critical. Only applies changes
-    /// when needed to avoid unnecessary SetDirty calls that trigger serialization. The equality
-    /// check prevents performance overhead in scenes with many sprites.
+    /// WHY: Called frequently from Update(), so optimization is critical. Uses cached PropertyInfo
+    /// to avoid reflection overhead on each call. Only applies changes when needed to avoid 
+    /// unnecessary SetDirty calls that trigger serialization.
     /// 
     /// SetDirty ensures changes persist through play mode and scene saves.
     /// </summary>
     public void UpdateColorFromPalette()
     {
-        if (SpriteRenderer == null) GetSpriteRenderer();
+        if (referencedComponent == null || colorProperty == null) GetReferencedComponent();
+        if (referencedComponent == null || colorProperty == null) return;
 
-        Color tempColor = SpriteRenderer.color;
+        Color tempColor = GetCurrentColor();
         Color colorFromPalette = ColorFromPalette();
 
         if (colorFromPalette != tempColor)
         {
-            SpriteRenderer.color = colorFromPalette;
+            SetCurrentColor(colorFromPalette);
             
 #if UNITY_EDITOR
-            UnityEditor.EditorUtility.SetDirty(SpriteRenderer);
+            UnityEditor.EditorUtility.SetDirty(referencedComponent);
 #endif
+        }
+    }
+    
+    /// <summary>
+    /// Gets the current color from the referenced component using cached PropertyInfo.
+    /// </summary>
+    private Color GetCurrentColor()
+    {
+        try
+        {
+            return (Color)colorProperty.GetValue(referencedComponent);
+        }
+        catch (Exception e)
+        {
+            if (enableDebug)
+            {
+                Debug.LogError($"SwatchColorReference: Failed to get color from {referencedComponent.GetType().Name}: {e.Message}");
+            }
+            return Color.clear;
+        }
+    }
+    
+    /// <summary>
+    /// Sets the color on the referenced component using cached PropertyInfo.
+    /// </summary>
+    private void SetCurrentColor(Color color)
+    {
+        try
+        {
+            colorProperty.SetValue(referencedComponent, color);
+        }
+        catch (Exception e)
+        {
+            if (enableDebug)
+            {
+                Debug.LogError($"SwatchColorReference: Failed to set color on {referencedComponent.GetType().Name}: {e.Message}");
+            }
         }
     }
 
     /// <summary>
-    /// Retrieves the color from the palette that this component references.
+    /// Retrieves the color from the component that this component references.
     /// 
     /// WHY: Centralizes palette access and bounds checking. Returns Color.clear for invalid
     /// indices to provide safe fallback behavior instead of exceptions. This graceful degradation
@@ -166,7 +245,7 @@ public class SwatchColorReference : MonoBehaviour
     /// </summary>
     public Color ColorFromPalette()
     {
-        if (swatchIndex < 0 || SpriteRenderer == null) return Color.clear;
+        if (swatchIndex < 0) return Color.clear;
 
         ColorPalette palette = Resources.Load<ColorPalette>("ColorPalette");
         if (palette == null || palette.colors == null || swatchIndex >= palette.colors.Length) return Color.clear;

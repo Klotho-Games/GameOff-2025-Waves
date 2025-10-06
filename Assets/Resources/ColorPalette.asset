@@ -14,3 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ColorPalette
   colors:
   - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.9, g: 0.9, b: 0.9, a: 1}
+  - {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  - {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  - {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  - {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  - {r: 0.4, g: 0.4, b: 0.4, a: 1}
+  - {r: 0.3, g: 0.3, b: 0.3, a: 1}
+  - {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  - {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  - {r: 0, g: 0, b: 0, a: 1}
+  names:
+  - Default
+  - Swatch 1
+  - Swatch 2
+  - Swatch 3
+  - Swatch 4
+  - Swatch 5
+  - Swatch 6
+  - Swatch 7
+  - Swatch 8
+  - Swatch 9
+  - Swatch 10
+  - Swatch 11
