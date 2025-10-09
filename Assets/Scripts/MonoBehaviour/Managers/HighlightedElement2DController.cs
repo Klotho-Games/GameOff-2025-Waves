@@ -168,7 +168,7 @@ public class HighlightedElement2DController : MonoBehaviour
         // Scale animation
         Vector3 targetScale = isHighlighted
             ? Vector3.one * highlightable.highlightScale
-            : Vector3.one / highlightable.highlightScale;
+            : Vector3.one;
         Tween.Scale(highlightable.highlightAnchor, targetScale, sizeTweenDuration, Ease.OutBack);
 
         // Color tint animation
