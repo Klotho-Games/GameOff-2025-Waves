@@ -9,10 +9,6 @@ using UnityEngine.Rendering;
 /// <summary>
 /// Component that links a SpriteRenderer to a specific color in the ColorPalette system.
 /// 
-/// WHY: Provides the runtime bridge between sprites and the palette system. Without this component,
-/// sprites would lose their color relationships when the palette changes. This maintains the connection
-/// and enables automatic color updates, ensuring visual consistency across the entire project.
-/// 
 /// The component handles automatic registration for performance optimization and manages serialization
 /// edge cases like duplicated objects that need to re-register with the editor system.
 /// </summary>
@@ -21,24 +17,16 @@ public class SwatchColorReference : MonoBehaviour
 {
     /// <summary>
     /// Flag for manual update mode to avoid expensive FindObjectsByType calls.
-    /// 
-    /// WHY: Set by duplicated objects that need to trigger a one-time editor update to register
-    /// themselves in the performance-optimized static list maintained by the editor.
     /// </summary>
     [SerializeField] private bool manualSwatchesUpdate = false;
     
     /// <summary>
     /// Index into the ColorPalette array. -1 indicates no swatch assignment.
-    /// 
-    /// WHY: HideInInspector prevents clutter - users interact through the swatch buttons, not raw indices.
-    /// SerializeField ensures the connection persists through play mode and scene saves.
     /// </summary>
     [HideInInspector][SerializeField] private int swatchIndex = -1;
 
     /// <summary>
     /// Reference to the required component (e.g., SpriteRenderer) for color updates. Property .color required.
-    /// 
-    /// WHY: Avoids GetComponent calls during frequent Update() color checks, improving runtime performance.
     /// </summary>
     private UnityEngine.Component referencedComponent;
 
@@ -51,9 +39,6 @@ public class SwatchColorReference : MonoBehaviour
 
     /// <summary>
     /// Cache the SpriteRenderer component reference for performance.
-    /// 
-    /// WHY: Awake runs before Start, ensuring the component is ready when UpdateColorFromPalette
-    /// is called. Caching avoids repeated GetComponent calls during runtime color updates.
     /// </summary>
     private void Awake()
     {
@@ -62,9 +47,6 @@ public class SwatchColorReference : MonoBehaviour
 
     /// <summary>
     /// Apply the initial palette color when the object starts.
-    /// 
-    /// WHY: Ensures sprites show the correct palette color immediately when the scene loads,
-    /// even if their serialized color doesn't match the current palette (e.g., after palette changes).
     /// </summary>
     private void Start()
     {
@@ -73,10 +55,6 @@ public class SwatchColorReference : MonoBehaviour
 
     /// <summary>
     /// Assigns a swatch index and immediately applies its color to the sprite.
-    /// 
-    /// WHY: Provides atomic operation for swatch assignment. Ensures the visual change happens 
-    /// immediately when users click swatch buttons, giving instant feedback and maintaining
-    /// the visual connection between palette and sprite.
     /// </summary>
     public void SetSwatchIndexAndApplyColor(int index)
     {
@@ -86,9 +64,6 @@ public class SwatchColorReference : MonoBehaviour
 
     /// <summary>
     /// Sets the swatch index without applying color. Used internally for serialization.
-    /// 
-    /// WHY: Separated from color application to handle cases where only the reference needs
-    /// to be updated (like undo operations) without triggering visual changes prematurely.
     /// </summary>
     public void SetSwatchIndex(int index)
     {
@@ -97,9 +72,6 @@ public class SwatchColorReference : MonoBehaviour
 
     /// <summary>
     /// Returns the current swatch index, or -1 if no swatch is assigned.
-    /// 
-    /// WHY: Provides read access for the editor to highlight the current swatch and 
-    /// for systems that need to know which palette color this sprite references.
     /// </summary>
     public int GetSwatchIndex()
     {
@@ -108,10 +80,6 @@ public class SwatchColorReference : MonoBehaviour
 
     /// <summary>
     /// Finds any component on this GameObject that has a 'color' property of type Color.
-    /// 
-    /// WHY: Uses reflection to automatically detect any component with a color property,
-    /// making the system extensible to work with custom components without code changes.
-    /// Caches the PropertyInfo for performance during frequent updates.
     /// </summary>
     public void GetReferencedComponent()
     {
@@ -156,12 +124,6 @@ public class SwatchColorReference : MonoBehaviour
 
     /// <summary>
     /// Updates the component's color to match the current palette, but only if they differ.
-    /// 
-    /// WHY: Called frequently from Update(), so optimization is critical. Uses cached PropertyInfo
-    /// to avoid reflection overhead on each call. Only applies changes when needed to avoid 
-    /// unnecessary SetDirty calls that trigger serialization.
-    /// 
-    /// SetDirty ensures changes persist through play mode and scene saves.
     /// </summary>
     public void UpdateColorFromPalette()
     {
@@ -221,13 +183,6 @@ public class SwatchColorReference : MonoBehaviour
 
     /// <summary>
     /// Retrieves the color from the component that this component references.
-    /// 
-    /// WHY: Centralizes palette access and bounds checking. Returns Color.clear for invalid
-    /// indices to provide safe fallback behavior instead of exceptions. This graceful degradation
-    /// prevents broken sprites when palette sizes change or indices become invalid.
-    /// 
-    /// Uses Resources.Load for runtime compatibility - the palette needs to be accessible
-    /// from both editor and runtime contexts.
     /// </summary>
     public Color ColorFromPalette()
     {

@@ -5,10 +5,6 @@ using System.Collections.Generic;
 /// <summary>
 /// Base class for custom editors that integrate swatch-based color management.
 /// 
-/// WHY: Provides reusable swatch functionality that can be applied to any Unity component
-/// with a color property. This separation allows the swatch system to work with SpriteRenderer,
-/// UI.Image, Light, and any custom components without duplicating code.
-/// 
 /// The base class handles:
 /// - Swatch UI rendering and interaction
 /// - Color palette management
@@ -28,10 +24,6 @@ public abstract class SwatchEditorBase : Editor
 
     /// <summary>
     /// Static list maintaining all SwatchColorReference components in the scene.
-    /// 
-    /// WHY: Static storage allows the list to persist across inspector instances and provides O(1) access 
-    /// for batch updates. Components self-register on creation/destruction, eliminating the need for 
-    /// expensive FindObjectsByType calls during inspector refreshes.
     /// </summary>
     public static List<SwatchColorReference> SwatchRefs = new();
     

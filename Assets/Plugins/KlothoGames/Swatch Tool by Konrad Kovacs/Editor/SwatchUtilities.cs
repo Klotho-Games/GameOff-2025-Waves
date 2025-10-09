@@ -4,20 +4,11 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Utility class containing shared swatch system functionality that can be used across different editor types.
-/// 
-/// WHY: Centralizes common operations like palette management, reference tracking, and component detection
-/// to avoid code duplication across different component editors (SpriteRenderer, UI.Image, Light, etc.).
-/// 
-/// This separation allows the swatch system to be easily extended to new component types while
-/// maintaining consistent behavior and performance optimizations.
 /// </summary>
 public static class SwatchUtilities
 {
     /// <summary>
     /// Loads or creates the ColorPalette from Resources folder.
-    /// 
-    /// WHY: Centralizes palette loading logic to ensure consistent behavior across all swatch editors.
-    /// Auto-creation provides a seamless first-time experience without requiring manual setup.
     /// </summary>
     /// <returns>The loaded or newly created ColorPalette</returns>
     public static ColorPalette LoadOrCreateColorPalette()
@@ -59,9 +50,6 @@ public static class SwatchUtilities
 
     /// <summary>
     /// Finds all components on a GameObject that have a Color property and can work with the swatch system.
-    /// 
-    /// WHY: Provides automatic detection of colorable components, making the swatch system extensible
-    /// to work with any Unity component that follows the standard Color property pattern.
     /// </summary>
     /// <param name="gameObject">The GameObject to search</param>
     /// <returns>List of components that have a Color property</returns>
@@ -102,9 +90,6 @@ public static class SwatchUtilities
 
     /// <summary>
     /// Creates a SwatchColorReference component and automatically detects the best target component.
-    /// 
-    /// WHY: Automates the setup process by intelligently choosing which component should be controlled
-    /// by the swatch system. Prioritizes common 2D components like SpriteRenderer and UI.Image.
     /// </summary>
     /// <param name="gameObject">The GameObject to add the SwatchColorReference to</param>
     /// <returns>The created SwatchColorReference component, or null if no suitable target found</returns>
@@ -168,9 +153,6 @@ public static class SwatchUtilities
 
     /// <summary>
     /// Updates all SwatchColorReference components to reflect the current palette state.
-    /// 
-    /// WHY: Provides a centralized way to refresh all swatch-controlled colors when the palette changes.
-    /// Used by palette editors and undo/redo operations to maintain visual consistency.
     /// </summary>
     /// <param name="swatchRefs">List of SwatchColorReference components to update</param>
     public static void UpdateAllSwatchReferences(List<SwatchColorReference> swatchRefs)
@@ -194,9 +176,6 @@ public static class SwatchUtilities
 
     /// <summary>
     /// Registers a SwatchColorReference in the global list if it's not already present.
-    /// 
-    /// WHY: Maintains the performance-optimized static list used by editors to avoid
-    /// expensive FindObjectsByType calls during inspector updates.
     /// </summary>
     /// <param name="swatchRef">The SwatchColorReference to register</param>
     /// <param name="swatchRefs">The list to add it to</param>
@@ -210,9 +189,6 @@ public static class SwatchUtilities
 
     /// <summary>
     /// Creates a context menu for swatch operations (used in right-click menus).
-    /// 
-    /// WHY: Provides consistent context menu behavior across different swatch editors.
-    /// Centralizes the menu creation logic to ensure uniform user experience.
     /// </summary>
     /// <param name="swatchIndex">The index of the swatch to create menu for</param>
     /// <param name="onEditColor">Callback for editing the color</param>

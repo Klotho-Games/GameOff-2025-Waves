@@ -25,7 +25,7 @@ public class Clickable2D : MonoBehaviour, IClickable {
     
     public virtual void OnClick() {
         if (enableDebug) {
-            Debug.Log($"Clicked 2D object: {gameObject.name}");
+            if (enableDebug) Debug.Log($"Clicked 2D object: {gameObject.name}");
         }
         
         // Play click sound
@@ -48,6 +48,6 @@ public class Clickable2D : MonoBehaviour, IClickable {
         // GetComponent<SpriteRenderer>().color = Color.red;
         
         // Add your custom behavior here
-        Debug.Log($"Add custom click behavior for {gameObject.name}");
+        if (enableDebug) Debug.Log($"Add custom click behavior for {gameObject.name}");
     }
 }

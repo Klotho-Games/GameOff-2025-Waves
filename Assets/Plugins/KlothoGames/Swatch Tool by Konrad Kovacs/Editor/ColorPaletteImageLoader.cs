@@ -7,7 +7,6 @@ using System.IO;
 /// <summary>
 /// Multi-image color extraction system that processes entire folders of PNG files to build comprehensive color palettes.
 /// 
-/// WHY: Traditional palette creation requires manual color picking, which is time-consuming and inconsistent.
 /// This system analyzes existing artwork to extract proven color combinations, enabling:
 /// - Automatic palette generation from reference images
 /// - Consistent color schemes across projects
@@ -52,13 +51,6 @@ public class ColorPaletteImageLoader
 
     /// <summary>
     /// Main orchestration method that processes all PNG files in the designated folder and updates the ColorPalette.
-    /// 
-    /// WHY: Provides a single entry point for the complete palette generation workflow. This method handles
-    /// the complex coordination between folder scanning, image processing, duplicate prevention, and palette
-    /// integration while maintaining atomic operation semantics (either all changes apply or none do).
-    /// 
-    /// The method is designed for both interactive use (editor windows) and scripted automation (build pipelines).
-    /// Error handling ensures partial failures don't corrupt existing palettes.
     /// </summary>
     /// <returns>True if successful, false if no images found or other error</returns>
     public bool LoadColorsFromImages()
@@ -127,15 +119,6 @@ public class ColorPaletteImageLoader
 
     /// <summary>
     /// Scans the designated Resources subfolder and loads all PNG files as Texture2D assets.
-    /// 
-    /// WHY: Provides dynamic folder-based asset loading without requiring manual asset references.
-    /// This enables artists to simply drop PNG files into the folder and have them automatically
-    /// included in palette generation, supporting iterative design workflows.
-    /// 
-    /// Uses Directory.GetFiles for filesystem access combined with Resources.Load for Unity asset loading.
-    /// This hybrid approach handles both editor-time file discovery and runtime asset access requirements.
-    /// 
-    /// Auto-creates missing directories to provide a seamless first-time experience.
     /// </summary>
     private List<Texture2D> LoadAllImagesFromFolder()
     {
@@ -184,10 +167,6 @@ public class ColorPaletteImageLoader
 
     /// <summary>
     /// Extracts unique colors from a single texture using deterministic left-to-right, top-to-bottom scanning.
-    /// 
-    /// WHY: Deterministic scanning order ensures consistent results across multiple runs and different 
-    /// systems. Left-to-right, top-to-bottom mimics natural reading patterns, making the color sequence 
-    /// intuitive for artists who understand which colors will become which swatches.
     /// 
     /// Performance considerations:
     /// - Uses HashSet for O(1) duplicate detection within the image
@@ -248,10 +227,6 @@ public class ColorPaletteImageLoader
     /// <summary>
     /// Determines if a color is too similar to existing colors based on Manhattan distance calculation.
     /// 
-    /// WHY: Prevents palette bloat from near-duplicate colors that provide no visual value. Uses 
-    /// Manhattan distance (L1 norm) instead of Euclidean distance for performance - the simpler 
-    /// calculation is fast enough for real-time tolerance checking while still being perceptually meaningful.
-    /// 
     /// The tolerance system enables:
     /// - Filtering out compression artifacts and slight color variations
     /// - Maintaining palette efficiency by avoiding redundant similar colors
@@ -277,18 +252,6 @@ public class ColorPaletteImageLoader
 
     /// <summary>
     /// Retrieves the existing ColorPalette asset or creates a new one with sensible defaults.
-    /// 
-    /// WHY: Provides automatic infrastructure setup for new projects while preserving existing 
-    /// palettes in established projects. The auto-creation eliminates setup friction - users can
-    /// start extracting colors immediately without manual asset creation.
-    /// 
-    /// Default white swatch serves multiple purposes:
-    /// - Provides a neutral fallback color that works with any sprite
-    /// - Maintains index 0 as a reserved "no tint" option
-    /// - Ensures existing sprites with swatch 0 assignments remain functional
-    /// - Gives users a predictable starting point for palette customization
-    /// 
-    /// Uses Resources folder for cross-scene persistence and runtime accessibility.
     /// </summary>
     private ColorPalette GetOrCreateColorPalette()
     {

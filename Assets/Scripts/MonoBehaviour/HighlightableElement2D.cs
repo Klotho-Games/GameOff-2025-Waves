@@ -19,6 +19,13 @@ public class HighlightableElement2D : MonoBehaviour {
     /// </summary>
     public Color[] OriginalColors { get; private set; }
 
+    /// <summary>
+    /// Cached original colors before highlighting (for restoration).
+    /// </summary>
+    public Color[] CachedOriginalColors { get; set; }
+
+    [SerializeField] private bool enableDebug = false;
+    
     void Awake() {
         // Auto-assign highlight anchor if not set
         if (highlightAnchor == null)
@@ -36,10 +43,12 @@ public class HighlightableElement2D : MonoBehaviour {
             // Instance the material to avoid affecting shared materials
             _ = Models[i].material;
         }
-        
+
         // Ensure we have a 2D collider for detection
-        if (GetComponent<Collider2D>() == null) {
-            Debug.LogWarning($"HighlightableElement2D on {gameObject.name} requires a Collider2D component for mouse detection!");
+        if (GetComponent<Collider2D>() == null)
+        {
+            if (enableDebug) Debug.LogWarning($"HighlightableElement2D on {gameObject.name} requires a Collider2D component for mouse detection!");
+            gameObject.AddComponent<Collider2D>();
         }
     }
     
