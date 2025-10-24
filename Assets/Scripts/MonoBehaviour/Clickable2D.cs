@@ -45,7 +45,6 @@ public class Clickable2D : MonoBehaviour, IClickable {
         // Destroy(gameObject, 0.5f);
         
         // Example: Change the sprite color
-        // GetComponent<SpriteRenderer>().color = Color.red;
         
         // Add your custom behavior here
         if (enableDebug) Debug.Log($"Add custom click behavior for {gameObject.name}");

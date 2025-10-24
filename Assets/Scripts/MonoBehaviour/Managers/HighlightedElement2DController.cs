@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using JetBrains.Annotations;
 using PrimeTween;
 using Sirenix.OdinInspector;
@@ -193,9 +194,11 @@ public class HighlightedElement2DController : MonoBehaviour
                 h.PreHighlightColors = new List<Color>();
                 foreach (var component in h.Models)
                 {
-                    Color currentColor = GetComponentColor(component);
-                    h.PreHighlightColors.Add(currentColor);
-                    TweenExt.Color(component, h.isTint ? OverlayColor(currentColor, h.highlightColor) : h.highlightColor, colorTweenDuration, colorTweenEaseIn);
+                    Color? currentColor = ColorUtilities.GetColor(component);
+                    if (currentColor == null) continue;
+
+                    h.PreHighlightColors.Add(currentColor.Value);
+                    TweenExt.Color(component, h.isTint ? OverlayColor(currentColor.Value, h.highlightColor) : h.highlightColor, colorTweenDuration, colorTweenEaseIn);
                 }
             }
             else
@@ -221,9 +224,11 @@ public class HighlightedElement2DController : MonoBehaviour
                 for (int i = 0; i < h.Models.Length; i++)
                 {
                     Component component = h.Models[i];
-                    Color currentColor = GetComponentColor(component);
                     
-                    if (h.PreHighlightColors[i] == currentColor) continue;
+                    Color? currentColor = ColorUtilities.GetColor(component);
+                    if (currentColor == null) continue;
+                    
+                    if (h.PreHighlightColors[i] == currentColor.Value) continue;
                     
                     TweenExt.Color(component, h.PreHighlightColors[i], colorTweenDuration, colorTweenEaseOut);
                 }
@@ -283,35 +288,6 @@ public class HighlightedElement2DController : MonoBehaviour
         }
 
         tempColors.Clear();
-    }
-
-    /// <summary>
-    /// Gets the color from any component that has a color property.
-    /// Supports IColorable interface or reflection-based access.
-    /// </summary>
-    static Color GetComponentColor(Component component)
-    {
-        if (component == null) return Color.white;
-        
-        // Try IColorable first
-        if (component is IColorable colorable)
-            return colorable.color;
-        
-        // Fallback to reflection
-        var colorProperty = component.GetType().GetProperty("color");
-        if (colorProperty != null && colorProperty.PropertyType == typeof(Color))
-        {
-            try
-            {
-                return (Color)colorProperty.GetValue(component);
-            }
-            catch
-            {
-                return Color.white;
-            }
-        }
-        
-        return Color.white;
     }
 
     static Color OverlayColor(Color baseColor, Color overlayColor)

@@ -3,10 +3,38 @@ using UnityEditor;
 using System.Collections.Generic;
 
 /// <summary>
-/// Utility class containing shared swatch system functionality that can be used across different editor types.
+/// Editor-only utility class containing swatch system functionality.
+/// For runtime utilities, use ColorUtilitiesRuntime instead.
 /// </summary>
-public static class SwatchUtilities
-{
+public static class ColorUtilities
+{    
+    /// <summary>
+    /// Gets the color property from any component that has one.
+    /// Delegates to runtime version for consistency.
+    /// </summary>
+    public static System.Reflection.PropertyInfo GetColorProperty(Component component)
+    {
+        return ColorUtilitiesRuntime.GetColorProperty(component);
+    }
+
+    /// <summary>
+    /// Gets the color value from a component.
+    /// Delegates to runtime version for consistency.
+    /// </summary>
+    public static Color? GetColor(Component component)
+    {
+        return ColorUtilitiesRuntime.GetColor(component);
+    }
+    
+    /// <summary>
+    /// Sets the color on a component.
+    /// Delegates to runtime version for consistency.
+    /// </summary>
+    public static void SetColor(Component component, Color newColor)
+    {
+        ColorUtilitiesRuntime.SetColor(component, newColor);
+    }
+
     /// <summary>
     /// Loads or creates the ColorPalette from Resources folder.
     /// </summary>
@@ -55,37 +83,7 @@ public static class SwatchUtilities
     /// <returns>List of components that have a Color property</returns>
     public static List<Component> FindColorableComponents(GameObject gameObject)
     {
-        List<Component> colorableComponents = new();
-        Component[] allComponents = gameObject.GetComponents<Component>();
-
-        foreach (var component in allComponents)
-        {
-            if (component == null) continue;
-
-            // Skip SwatchColorReference itself
-            if (component is SwatchColorReference) continue;
-
-            // Check for IColorable interface first (most performant)
-            if (component is IColorable)
-            {
-                colorableComponents.Add(component);
-                continue;
-            }
-
-            // Check for color property using reflection
-            var colorProperty = component.GetType().GetProperty("color", 
-                System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
-
-            if (colorProperty != null && 
-                colorProperty.PropertyType == typeof(Color) && 
-                colorProperty.CanRead && 
-                colorProperty.CanWrite)
-            {
-                colorableComponents.Add(component);
-            }
-        }
-
-        return colorableComponents;
+        return ColorUtilitiesRuntime.FindColorableComponents(gameObject);
     }
 
     /// <summary>

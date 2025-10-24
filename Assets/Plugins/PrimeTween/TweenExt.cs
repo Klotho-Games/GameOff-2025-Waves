@@ -22,22 +22,7 @@ namespace PrimeTween
                 return default;
             }
 
-            // Check if target implements IColorable
-            if (target is IColorable colorable)
-            {
-                Color colorableStartValue = colorable.color;
-                
-                if (enableDebug && Application.isEditor)
-                    Debug.Log($"TweenExt.Color: Tweening IColorable {target.GetType().Name} from {colorableStartValue} to {endValue}");
-                
-                return Tween.Custom(colorableStartValue, endValue, duration, onValueChange: newColor =>
-                {
-                    if (target != null && target is IColorable c)
-                        c.color = newColor;
-                }, ease: ease, cycles: cycles, cycleMode: cycleMode, startDelay: startDelay, endDelay: endDelay, useUnscaledTime: useUnscaledTime);
-            }
-
-            // Fallback to reflection for components with color property but no IColorable
+            // Reflection for components with color property but no IColorable
             PropertyInfo colorProperty = target.GetType().GetProperty("color");
             
             if (colorProperty == null || colorProperty.PropertyType != typeof(Color))

@@ -18,7 +18,7 @@ public class ColorPaletteEditor : Editor
         // Check if any properties were changed
         if (GUI.changed)
         {
-            SpriteRendererWithSwatchesEditor.UpdateAllSwatchReferences();
+            SwatchEditorBase.UpdateAllSwatchReferences();
         }
     }
 }

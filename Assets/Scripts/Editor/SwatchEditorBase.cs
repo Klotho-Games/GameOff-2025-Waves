@@ -94,15 +94,11 @@ public abstract class SwatchEditorBase : Editor
         // Load ColorPalette if not already loaded
         if (colorPalette == null) LoadColorPalette();
 
-        // Only do editor-specific updates when NOT in Play mode
-        // if (!EditorApplication.isPlaying)
-        // {
-            // Update all swatch references if manual swatch update is enabled
-            ManualSwatchUpdate();
+        // Update all swatch references if manual swatch update is enabled
+        ManualSwatchUpdate();
 
-            // Auto-assign swatch 0 to new components
-            AutoAssignDefaultSwatch();
-        // }
+        // Auto-assign swatch 0 to new components
+        AutoAssignDefaultSwatch();
 
         // Draw component properties above swatches
         DrawComponentPropertiesAbove();
@@ -116,9 +112,8 @@ public abstract class SwatchEditorBase : Editor
         // Apply property modifications
         serializedObject.ApplyModifiedProperties();
 
-        // Only handle manual color changes when NOT in Play mode
-        // In Play mode, SwatchColorReference.Update() handles this
-        if (GUI.changed && HasColorChangedManually() /* && !EditorApplication.isPlaying */)
+        // Handle manual color changes
+        if (GUI.changed && HasColorChangedManually())
         {
             ClearSwatchReferences();
         }

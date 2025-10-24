@@ -39,40 +39,18 @@ public class HighlightableElement2D : MonoBehaviour {
 
     void OnEnable() {
         // Find all components with a color property
-        // Strategy: Prefer IColorable wrappers, skip raw components if wrapper exists
         var allComponents = GetComponentsInChildren<Component>();
         var colorableList = new List<Component>();
-        var gameObjectsWithWrappers = new HashSet<GameObject>();
         
-        // First pass: Find all IColorable components and track their GameObjects
+        // Add components with color property
         foreach (var component in allComponents)
         {
-            if (component == null) continue;
-            
-            if (component is IColorable)
-            {
-                colorableList.Add(component);
-                gameObjectsWithWrappers.Add(component.gameObject);
-                if (enableDebug)
-                    Debug.Log($"Found IColorable wrapper: {component.GetType().Name} on {component.gameObject.name}");
-            }
-        }
-        
-        // Second pass: Add raw components with color property ONLY if their GameObject doesn't have a wrapper
-        foreach (var component in allComponents)
-        {
-            if (component == null) continue;
-            if (component is IColorable) continue; // Skip, already added in first pass
-            if (gameObjectsWithWrappers.Contains(component.gameObject)) continue; // Skip, GameObject has wrapper
-            
-            // Check if it has a color property (SpriteRenderer, UI.Image, etc.)
-            var colorProperty = component.GetType().GetProperty("color");
-            if (colorProperty != null && colorProperty.PropertyType == typeof(Color))
-            {
-                colorableList.Add(component);
-                if (enableDebug)
-                    Debug.Log($"Found raw color component: {component.GetType().Name} on {component.gameObject.name}");
-            }
+            var colorProperty = ColorUtilitiesRuntime.GetColorProperty(component);
+            if (colorProperty == null) continue;
+
+            colorableList.Add(component);
+            if (enableDebug)
+                Debug.Log($"Found color component: {component.GetType().Name} on {component.gameObject.name}");
         }
         
         Models = colorableList.ToArray();

@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Reflection;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 /// <summary>
 /// Component that links a SpriteRenderer to a specific color in the ColorPalette system.
@@ -119,36 +118,38 @@ public class SwatchColorReference : MonoBehaviour
     /// </summary>
     public void GetReferencedComponent()
     {
-        // First try interface-based approach (most performant)
-        if (TryGetComponent<IColorable>(out var colorableComponent))
-        {
-            referencedComponent = colorableComponent as UnityEngine.Component;
-            colorProperty = typeof(IColorable).GetProperty("color");
-            return;
-        }
-        
-        // Fallback to reflection-based approach for built-in Unity components
+        // Reflection-based approach for built-in Unity components
         UnityEngine.Component[] components = GetComponents<UnityEngine.Component>();
         
         foreach (var component in components)
         {
             if (component == this) continue; // Skip self
             
-            Type componentType = component.GetType();
-            PropertyInfo property = componentType.GetProperty("color", BindingFlags.Public | BindingFlags.Instance);
-            
-            // Check if the property exists and is of type Color
-            if (property != null && property.PropertyType == typeof(Color) && 
-                property.CanRead && property.CanWrite)
+            var property = ColorUtilitiesRuntime.GetColorProperty(component);
+
+            if (property != null)
             {
                 referencedComponent = component;
                 colorProperty = property;
                 if (enableDebug)
                 {
-                    if (enableDebug) Debug.Log($"SwatchColorReference: Found color property on {componentType.Name}");
+                    Type componentType = component.GetType();
+                    Debug.Log($"SwatchColorReference: Found color property on {componentType.Name}");
                 }
                 return;
             }
+            // // Check if the property exists and is of type Color
+            // if (property != null && property.PropertyType == typeof(Color) && 
+            //     property.CanRead && property.CanWrite)
+            // {
+            //     referencedComponent = component;
+            //     colorProperty = property;
+            //     if (enableDebug)
+            //     {
+            //         if (enableDebug) Debug.Log($"SwatchColorReference: Found color property on {componentType.Name}");
+            //     }
+            //     return;
+            // }
         }
         
         if (enableDebug && referencedComponent == null)

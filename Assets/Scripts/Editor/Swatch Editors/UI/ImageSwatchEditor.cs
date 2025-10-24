@@ -4,23 +4,12 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Custom editor for UI.Image that integrates swatch-based color management.
-/// 
-/// WHY: Demonstrates how the modular SwatchEditorBase system can be easily extended
-/// to support different component types. UI.Image components benefit from the same
-/// centralized color palette system that SpriteRenderer uses, enabling consistent
-/// colors across both world-space sprites and UI elements.
-/// 
-/// This editor provides a clean interface focused on the properties most relevant
-/// to UI development while maintaining full swatch integration.
 /// </summary>
 [CustomEditor(typeof(Image))]
 public class ImageSwatchEditor : SwatchEditorBase
 {
     /// <summary>
     /// Draws the most commonly used UI.Image properties above the swatch section.
-    /// 
-    /// WHY: Source Image and Color are the primary properties for UI.Image components.
-    /// Placing them prominently provides immediate access to essential controls.
     /// </summary>
     protected override void DrawComponentPropertiesAbove()
     {
@@ -30,9 +19,6 @@ public class ImageSwatchEditor : SwatchEditorBase
 
     /// <summary>
     /// Draws secondary UI.Image properties below the swatch section.
-    /// 
-    /// WHY: These properties are important for UI layout and behavior but are
-    /// used less frequently than sprite and color during the design process.
     /// </summary>
     protected override void DrawComponentPropertiesBelow()
     {
@@ -57,9 +43,6 @@ public class ImageSwatchEditor : SwatchEditorBase
 
     /// <summary>
     /// Auto-assigns swatch 0 to new UI.Image components that don't have swatch references.
-    /// 
-    /// WHY: Provides seamless integration with the swatch system for UI elements.
-    /// New Image components automatically get connected to the palette system.
     /// </summary>
     protected override void AutoAssignDefaultSwatch()
     {
@@ -97,9 +80,6 @@ public class ImageSwatchEditor : SwatchEditorBase
 
     /// <summary>
     /// Checks if the UI.Image's color has been manually changed outside the swatch system.
-    /// 
-    /// WHY: Maintains data integrity by detecting when users directly modify the color field.
-    /// Clears swatch references to prevent confusion when palette updates override manual changes.
     /// </summary>
     protected override bool HasColorChangedManually()
     {
