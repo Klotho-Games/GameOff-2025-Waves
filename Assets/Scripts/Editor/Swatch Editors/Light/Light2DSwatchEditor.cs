@@ -1,4 +1,4 @@
-using UnityEngine;
+/* using UnityEngine;
 using UnityEditor;
 using UnityEngine.Rendering.Universal;
 using System.Collections.Generic;
@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine.Rendering;
 using UnityEditor.Rendering;
 using UnityEngine.UI;
+using UnityEditor.EditorTools;
 
 /// <summary>
 /// Custom editor for Light2D that integrates swatch-based color management with 2D-optimized property display.
@@ -79,6 +80,7 @@ public class Light2DSwatchEditor : SwatchEditorBase
         Sprite(); // Sprite only
         RadiusSpotAngleAndFalloff(); // Spot only
         TargetSortingLayers();
+        EditShape(); // Freeform only
         Blending();
         // Show for all except Global
         SerializedProperty lightTypeProp = serializedObject.FindProperty("m_LightType");
@@ -354,7 +356,91 @@ public class Light2DSwatchEditor : SwatchEditorBase
                 serializedObject.ApplyModifiedProperties();
             }
         }
-    
+
+        void EditShape()
+        {
+            // Only show for Freeform lights
+            SerializedProperty lightTypeProp = serializedObject.FindProperty("m_LightType");
+            if (lightTypeProp.intValue != (int)Light2D.LightType.Freeform)
+                return;
+
+            // Draw the Edit Shape button
+            const float kButtonWidth = 33;
+            const float kButtonHeight = 23;
+            const float k_SpaceBetweenLabelAndButton = 5;
+            var buttonStyle = new GUIStyle("EditModeSingleButton");
+
+            var rect = EditorGUILayout.GetControlRect(true, kButtonHeight, buttonStyle);
+            var buttonRect = new Rect(rect.xMin + EditorGUIUtility.labelWidth, rect.yMin, kButtonWidth, kButtonHeight);
+
+            var labelContent = new GUIContent("Edit Shape");
+            var labelSize = GUI.skin.label.CalcSize(labelContent);
+
+            var labelRect = new Rect(
+                buttonRect.xMax + k_SpaceBetweenLabelAndButton,
+                rect.yMin + (rect.height - labelSize.y) * .5f,
+                labelSize.x,
+                rect.height);
+
+            // Load the icon (try both pro and non-pro skin versions)
+            GUIContent icon;
+            if (EditorGUIUtility.isProSkin)
+                icon = new GUIContent(Resources.Load<Texture>("ShapeToolPro"), "Unlocks the shape to allow editing in the Scene View.");
+            else
+                icon = new GUIContent(Resources.Load<Texture>("ShapeTool"), "Unlocks the shape to allow editing in the Scene View.");
+
+            // Try to find the Freeform Shape Tool
+            var freeformToolType = System.Type.GetType("UnityEditor.Rendering.Universal.Light2DEditor+FreeformShapeTool, Unity.RenderPipelines.Universal.Editor");
+            
+            bool isToolAvailable = freeformToolType != null;
+            bool isToolActive = false;
+
+            if (isToolAvailable)
+            {
+                // Check if the tool is currently active using reflection
+                var toolManagerType = typeof(ToolManager).Assembly.GetType("UnityEditor.EditorTools.EditorToolManager");
+                if (toolManagerType != null)
+                {
+                    var isActiveToolMethod = toolManagerType.GetMethod("IsActiveTool", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+                    if (isActiveToolMethod != null)
+                    {
+                        var genericMethod = isActiveToolMethod.MakeGenericMethod(freeformToolType);
+                        isToolActive = (bool)genericMethod.Invoke(null, null);
+                    }
+                }
+            }
+
+            using (new EditorGUI.DisabledGroupScope(!isToolAvailable))
+            {
+                EditorGUI.BeginChangeCheck();
+                bool newIsActive = GUI.Toggle(buttonRect, isToolActive, icon, buttonStyle);
+                GUI.Label(labelRect, "Edit Shape");
+
+                if (EditorGUI.EndChangeCheck() && isToolAvailable)
+                {
+                    if (newIsActive)
+                    {
+                        // Activate the tool
+                        var setActiveToolMethod = typeof(ToolManager).GetMethod("SetActiveTool", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static, null, System.Reflection.CallingConventions.Any, new System.Type[] {  }, null);
+                        if (setActiveToolMethod != null)
+                        {
+                            var genericMethod = setActiveToolMethod.MakeGenericMethod(freeformToolType);
+                            genericMethod.Invoke(null, null);
+                        }
+                    }
+                    else
+                    {
+                        // Restore previous tool
+                        var restorePreviousToolMethod = typeof(ToolManager).GetMethod("RestorePreviousTool", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+                        if (restorePreviousToolMethod != null)
+                        {
+                            restorePreviousToolMethod.Invoke(null, null);
+                        }
+                    }
+                }
+            }
+        }
+
         void Blending()
         {
             CoreEditorUtils.DrawSplitter(false);
@@ -711,4 +797,4 @@ public class Light2DSwatchEditor : SwatchEditorBase
         Color swatchColor = swatchRef.ColorFromPalette();
         return Light2D.color != swatchColor;
     }
-}
+} */
