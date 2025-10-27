@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Rendering;
 using UnityEditor.Rendering;
+using UnityEngine.UI;
 
 /// <summary>
 /// Custom editor for Light2D that integrates swatch-based color management with 2D-optimized property display.
@@ -20,6 +21,9 @@ public class Light2DSwatchEditor : SwatchEditorBase
     private GUIContent[] m_AllSortingLayerNames;
     private List<int> m_ApplyToSortingLayersList;
     private bool m_BlendingSettingsFoldout = true;
+    private bool m_ShadowsSettingsFoldout = false;
+    private bool m_VolumetricSettingsFoldout = false;
+    private bool m_NormalMapsSettingsFoldout = false;
     
     /// <summary>
     /// Draws the most commonly used Light2D properties above the swatch section.
@@ -76,7 +80,13 @@ public class Light2DSwatchEditor : SwatchEditorBase
         RadiusSpotAngleAndFalloff(); // Spot only
         TargetSortingLayers();
         Blending();
-
+        // Show for all except Global
+        SerializedProperty lightTypeProp = serializedObject.FindProperty("m_LightType");
+        if (lightTypeProp.intValue == (int)Light2D.LightType.Global)
+            return;
+        Shadows();
+        Volumetric();
+        NormalMaps();
 
         void Intensity()
         {
@@ -355,7 +365,7 @@ public class Light2DSwatchEditor : SwatchEditorBase
 
             // Blend Style - using simplified approach since internal utilities aren't accessible
             SerializedProperty blendStyleProp = serializedObject.FindProperty("m_BlendStyleIndex");
-            
+
             // Try to get renderer data through reflection or use fallback
             UniversalRenderPipelineAsset pipelineAsset = UniversalRenderPipeline.asset;
             GUIContent[] blendStyleNames = null;
@@ -373,9 +383,9 @@ public class Light2DSwatchEditor : SwatchEditorBase
                         var rendererData = rendererDataProperty.GetValue(pipelineAsset);
                         if (rendererData != null)
                         {
-                            var lightBlendStylesField = rendererData.GetType().GetField("m_LightBlendStyles", 
+                            var lightBlendStylesField = rendererData.GetType().GetField("m_LightBlendStyles",
                                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                            
+
                             if (lightBlendStylesField != null)
                             {
                                 var blendStyles = lightBlendStylesField.GetValue(rendererData) as System.Array;
@@ -383,7 +393,7 @@ public class Light2DSwatchEditor : SwatchEditorBase
                                 {
                                     var namesList = new List<string>();
                                     var indicesList = new List<int>();
-                                    
+
                                     for (int i = 0; i < blendStyles.Length; i++)
                                     {
                                         var blendStyle = blendStyles.GetValue(i);
@@ -395,7 +405,7 @@ public class Light2DSwatchEditor : SwatchEditorBase
                                             indicesList.Add(i);
                                         }
                                     }
-                                    
+
                                     if (namesList.Count > 0)
                                     {
                                         blendStyleNames = namesList.Select(x => new GUIContent(x)).ToArray();
@@ -428,7 +438,7 @@ public class Light2DSwatchEditor : SwatchEditorBase
 
             // Display Blend Style
             EditorGUI.BeginChangeCheck();
-            EditorGUILayout.IntPopup(blendStyleProp, blendStyleNames, blendStyleIndices, 
+            EditorGUILayout.IntPopup(blendStyleProp, blendStyleNames, blendStyleIndices,
                 new GUIContent("Blend Style", "Adjusts how this light blends with the Sprites on the Target Sorting Layers. Different Blend Styles can be customized in the 2D Renderer Data Asset."));
             if (EditorGUI.EndChangeCheck())
             {
@@ -438,7 +448,7 @@ public class Light2DSwatchEditor : SwatchEditorBase
             // Light Order
             SerializedProperty lightOrderProp = serializedObject.FindProperty("m_LightOrder");
             EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(lightOrderProp, 
+            EditorGUILayout.PropertyField(lightOrderProp,
                 new GUIContent("Light Order", "Determines the relative order in which lights of the same Blend Style get rendered. Lights with lower values are rendered first."));
             if (EditorGUI.EndChangeCheck())
             {
@@ -448,13 +458,193 @@ public class Light2DSwatchEditor : SwatchEditorBase
             // Overlap Operation
             SerializedProperty overlapOperationProp = serializedObject.FindProperty("m_OverlapOperation");
             EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(overlapOperationProp, 
+            EditorGUILayout.PropertyField(overlapOperationProp,
                 new GUIContent("Overlap Operation", "Determines how this light blends with the other lights either through additive or alpha blending."));
             if (EditorGUI.EndChangeCheck())
             {
                 serializedObject.ApplyModifiedProperties();
             }
         }
+        
+        void Shadows()
+        {
+            CoreEditorUtils.DrawSplitter(false);
+            
+            SerializedProperty shadowsEnabledProp = serializedObject.FindProperty("m_ShadowsEnabled");
+            
+            // Draw header foldout with toggle checkbox
+            DrawHeaderFoldoutWithToggle(new GUIContent("Shadows", "Options used for shadows"), ref m_ShadowsSettingsFoldout, shadowsEnabledProp);
+
+            if (!m_ShadowsSettingsFoldout)
+                return;
+
+            EditorGUI.indentLevel++;
+            EditorGUI.BeginDisabledGroup(!shadowsEnabledProp.boolValue);
+
+            // Shadow Strength
+            SerializedProperty shadowIntensityProp = serializedObject.FindProperty("m_ShadowIntensity");
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.PropertyField(shadowIntensityProp, 
+                new GUIContent("Strength", "Adjusts the amount of light occlusion from the Shadow Caster 2D component(s) when blocking this light. The higher the value, the more opaque the shadow becomes."));
+            if (EditorGUI.EndChangeCheck())
+            {
+                serializedObject.ApplyModifiedProperties();
+            }
+
+            // Shadow Softness
+            SerializedProperty shadowSoftnessProp = serializedObject.FindProperty("m_ShadowSoftness");
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.PropertyField(shadowSoftnessProp, 
+                new GUIContent("Softness", "Adjusts the amount of softness at the edge of the shadow."));
+            if (EditorGUI.EndChangeCheck())
+            {
+                serializedObject.ApplyModifiedProperties();
+            }
+
+            // Shadow Falloff Strength
+            SerializedProperty shadowFalloffProp = serializedObject.FindProperty("m_ShadowSoftnessFalloffIntensity");
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.PropertyField(shadowFalloffProp, 
+                new GUIContent("Falloff Strength", "Adjusts the falloff curve to control the softness of the shadow edges. The higher the falloff strength, the softer the edges of this shadow."));
+            if (EditorGUI.EndChangeCheck())
+            {
+                serializedObject.ApplyModifiedProperties();
+            }
+
+            EditorGUI.EndDisabledGroup();
+            EditorGUI.indentLevel--;
+        }
+
+        void Volumetric()
+        {
+            CoreEditorUtils.DrawSplitter(false);
+            
+            SerializedProperty volumetricEnabledProp = serializedObject.FindProperty("m_LightVolumeEnabled");
+            
+            // Draw header foldout with toggle checkbox
+            DrawHeaderFoldoutWithToggle(new GUIContent("Volumetric", "Options used for volumetric lighting"), ref m_VolumetricSettingsFoldout, volumetricEnabledProp);
+
+            if (!m_VolumetricSettingsFoldout)
+                return;
+
+            EditorGUI.indentLevel++;
+            EditorGUI.BeginDisabledGroup(!volumetricEnabledProp.boolValue);
+
+            // Volumetric Intensity
+            SerializedProperty volumetricIntensityProp = serializedObject.FindProperty("m_LightVolumeIntensity");
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.PropertyField(volumetricIntensityProp, 
+                new GUIContent("Intensity", "Adjusts the intensity of this additional light volume that's additively blended on top of this light. To enable the Volumetric Shadow Strength, increase this Intensity to be greater than 0."));
+            if (EditorGUI.EndChangeCheck())
+            {
+                if (volumetricIntensityProp.floatValue < 0)
+                    volumetricIntensityProp.floatValue = 0;
+                serializedObject.ApplyModifiedProperties();
+            }
+
+            // Shadow Strength with toggle
+            DrawToggleProperty(
+                new GUIContent("Shadow Strength", "Adjusts the amount of volume light occlusion from the Shadow Caster 2D component(s) when blocking this light."), 
+                serializedObject.FindProperty("m_ShadowVolumeIntensityEnabled"), 
+                serializedObject.FindProperty("m_ShadowVolumeIntensity"));
+
+            EditorGUI.EndDisabledGroup();
+            EditorGUI.indentLevel--;
+        }
+
+        void DrawToggleProperty(GUIContent label, SerializedProperty boolProperty, SerializedProperty property)
+        {
+            int savedIndentLevel = EditorGUI.indentLevel;
+            float savedLabelWidth = EditorGUIUtility.labelWidth;
+            const int kCheckboxWidth = 20;
+
+            EditorGUILayout.BeginHorizontal();
+            
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.PropertyField(boolProperty, GUIContent.none, GUILayout.MaxWidth(kCheckboxWidth));
+            if (EditorGUI.EndChangeCheck())
+            {
+                serializedObject.ApplyModifiedProperties();
+            }
+
+            EditorGUIUtility.labelWidth = EditorGUIUtility.labelWidth - kCheckboxWidth;
+            EditorGUI.BeginDisabledGroup(!boolProperty.boolValue);
+            
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.PropertyField(property, label);
+            if (EditorGUI.EndChangeCheck())
+            {
+                serializedObject.ApplyModifiedProperties();
+            }
+            
+            EditorGUI.EndDisabledGroup();
+
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUI.indentLevel = savedIndentLevel;
+            EditorGUIUtility.labelWidth = savedLabelWidth;
+        }
+        
+        void NormalMaps()
+        {
+            CoreEditorUtils.DrawSplitter(false);
+            m_NormalMapsSettingsFoldout = CoreEditorUtils.DrawHeaderFoldout(new GUIContent("Normal Maps", "Options used for normal maps"), m_NormalMapsSettingsFoldout);
+
+            if (!m_NormalMapsSettingsFoldout)
+                return;
+
+            // Quality property
+            SerializedProperty normalMapQualityProp = serializedObject.FindProperty("m_NormalMapQuality");
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.PropertyField(normalMapQualityProp,
+                new GUIContent("Quality", "Determines the accuracy of the lighting calculations when normal map is used. To optimize for performance, select Fast."));
+            if (EditorGUI.EndChangeCheck())
+            {
+                serializedObject.ApplyModifiedProperties();
+            }
+
+            // Distance property (disabled when Quality is set to Disabled)
+            EditorGUI.BeginDisabledGroup(normalMapQualityProp.intValue == (int)Light2D.NormalMapQuality.Disabled);
+
+            SerializedProperty normalMapZDistanceProp = serializedObject.FindProperty("m_NormalMapDistance");
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.PropertyField(normalMapZDistanceProp,
+                new GUIContent("Distance", "Adjusts the z-axis distance of this light and the lit Sprite(s). Do note that this distance does not Transform the position of this light in the Scene."));
+            if (EditorGUI.EndChangeCheck())
+            {
+                normalMapZDistanceProp.floatValue = Mathf.Max(0.0f, normalMapZDistanceProp.floatValue);
+                serializedObject.ApplyModifiedProperties();
+            }
+
+            EditorGUI.EndDisabledGroup();
+        }
+    
+        void DrawHeaderFoldoutWithToggle(GUIContent title, ref bool foldoutState, SerializedProperty toggleState)
+        {
+            const float height = 17f;
+            var backgroundRect = GUILayoutUtility.GetRect(0, 0);
+
+            var labelRect = backgroundRect;
+            labelRect.yMax += height;
+            labelRect.xMin += 16f;
+            labelRect.xMax -= 20f;
+
+            EditorGUI.BeginChangeCheck();
+            bool newToggleState = GUI.Toggle(labelRect, toggleState.boolValue, " ");  // Needs a space for proper checkbox outline
+            if (EditorGUI.EndChangeCheck())
+            {
+                toggleState.boolValue = newToggleState;
+                serializedObject.ApplyModifiedProperties();
+            }
+
+            bool newFoldoutState = CoreEditorUtils.DrawHeaderFoldout("", foldoutState);
+            if (newFoldoutState != foldoutState)
+                foldoutState = newFoldoutState;
+
+            labelRect.xMin += 20;
+            EditorGUI.LabelField(labelRect, title, EditorStyles.boldLabel);
+        }
+
     }
 
     /// <summary>
