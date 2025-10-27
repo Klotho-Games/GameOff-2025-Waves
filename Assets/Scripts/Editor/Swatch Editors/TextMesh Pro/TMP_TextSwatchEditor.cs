@@ -4,7 +4,6 @@ using TMPro;
 using TMPro.EditorUtilities;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.ShaderGraph;
 
 /// <summary>
 /// Custom editor for TextMeshProUGUI that integrates swatch-based color management.
