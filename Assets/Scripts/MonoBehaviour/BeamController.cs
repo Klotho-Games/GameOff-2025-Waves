@@ -3,29 +3,31 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(LineRenderer))]
 public class BeamController : MonoBehaviour
 {
     /// <summary>
     /// Points that make up the beam path.
     /// </summary>
-    public List<Vector2> Points = new() { Vector2.zero };
 
+    [SerializeField] private int _intensity = 10;
+    [SerializeField] private GameObject lineRendererObjectPrefab;
     [SerializeField] private Camera mainCamera;
 
-    private LineRenderer lineRenderer;
-    private float timer = 0f;
-    private const float interval = 0.1f;
+    [ShowInInspector] private Stack<GameObject> spawnedLineRenderers = new();
     private bool enableDebugMousePosition = false;
 
-    private void Update()
+    private void FixedUpdate()
     {
-        timer += Time.deltaTime;
-        if (timer >= interval)
+        DeleteOldLineRenderers();
+        UpdateBeamPath();
+    }
+
+    private void DeleteOldLineRenderers()
+    {
+        while (spawnedLineRenderers.Count > 0)
         {
-            timer = 0f;
-            UpdateBeamPath();
-            SetLineRenderer();
+            GameObject lrObj = spawnedLineRenderers.Pop();
+            Destroy(lrObj);
         }
     }
     
@@ -40,21 +42,15 @@ public class BeamController : MonoBehaviour
 
     private void UpdateBeamPath()
     {
-        Points.Clear();
-        Points.Add((Vector2)transform.position);
-
         Vector2 mouseWorldPos = GetMouseWorldPosition();
         if (mouseWorldPos == Vector2.zero)
             return;
 
         Vector2 direction = (mouseWorldPos - (Vector2)transform.position).normalized;
 
-        bool hitIsDarkness = false;
-        int maxBounces = 10; // Safety limit to prevent infinite loops
-        int bounceCount = 0;
-        GameObject previouslyHitObject = null;
+        DrawNextBeam(_intensity, (Vector2)transform.position, direction, null);
 
-        while (hitIsDarkness == false && bounceCount < maxBounces)
+        /* while (hitIsDarkness == false && bounceCount < maxBounces)
         {
             RaycastInfo raycastInfo = RaycastForFirstGateTypeOrTheBigDarknessTag(Points[^1], direction, previouslyHitObject);
 
@@ -85,89 +81,100 @@ public class BeamController : MonoBehaviour
                 Vector2 surfaceNormal = raycastInfo.normal;
 
                 direction = Vector2.Reflect(direction, surfaceNormal);
-                
+
                 previouslyHitObject = raycastInfo.hitObject;
                 bounceCount++;
             }
-        }
+        } */
+    }
 
-        // If we hit max bounces, add a warning
-        if (bounceCount >= maxBounces)
+    private void DrawNextBeam(int intensity, Vector2 origin, Vector2 direction, GameObject ignoreObject)
+    {
+        --intensity;
+        if (intensity <= 0)
+            return;
+
+        RaycastInfo raycastInfo = RaycastForFirstGateTypeOrTheBigDarknessTag(origin, direction, ignoreObject);
+
+        #region Draw the line segment
+        LineRenderer segmentLR = Instantiate(lineRendererObjectPrefab, Vector3.zero, Quaternion.identity, transform).GetComponent<LineRenderer>();
+        segmentLR.positionCount = 2;
+        segmentLR.widthMultiplier = Mathf.Log(intensity);
+        segmentLR.SetPosition(0, new(origin.x, origin.y, 0f));
+        segmentLR.SetPosition(1, new(raycastInfo.contactPoint.x, raycastInfo.contactPoint.y, 0f));
+        spawnedLineRenderers.Push(segmentLR.gameObject);
+        #endregion
+
+        if (raycastInfo.isDarkness)
+            return;
+
+        switch (raycastInfo.gateTypeComponent.gateType)
         {
-            Debug.LogWarning($"Beam reached maximum bounce limit ({maxBounces}). Check gate logic.");
+            case GateTypes.Mirror:
+                // Reflect the beam
+                Vector2 reflectedDir = Vector2.Reflect(direction, raycastInfo.normal);
+                DrawNextBeam(intensity, raycastInfo.contactPoint + reflectedDir * 0.01f, reflectedDir, raycastInfo.hitObject);
+                break;
+
+            default:
+                // For other gate types, just stop the beam for now
+                Debug.LogWarning($"Gate type {raycastInfo.gateTypeComponent.gateType} not implemented yet.");
+                break;
         }
+    }
 
-
-        static RaycastInfo RaycastForFirstGateTypeOrTheBigDarknessTag(Vector2 origin, Vector2 direction, GameObject ignoreObject)
+    private RaycastInfo RaycastForFirstGateTypeOrTheBigDarknessTag(Vector2 origin, Vector2 direction, GameObject ignoreObject)
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(origin, direction, Mathf.Infinity);
+        if (hits != null && hits.Length > 0)
         {
-            // Visualize the ray in the editor for debug
-            Debug.DrawRay(origin, direction * Mathf.Infinity, Color.cyan, interval);
+            // Sort hits by distance to make sure we process nearest-first
+            System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
-            RaycastHit2D[] hits = Physics2D.RaycastAll(origin, direction, Mathf.Infinity);
-            if (hits != null && hits.Length > 0)
+            foreach (var hit in hits)
             {
-                // Sort hits by distance to make sure we process nearest-first
-                System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+                if (hit.collider == null) continue;
+                if (hit.collider.gameObject == ignoreObject) continue;
 
-                foreach (var hit in hits)
+                // Check for GateType component
+                if (hit.collider.TryGetComponent<GateType>(out var gateComp))
                 {
-                    if (hit.collider == null) continue;
-                    if (hit.collider.gameObject == ignoreObject) continue;
-
-                    // Check for GateType component
-                    if (hit.collider.TryGetComponent<GateType>(out var gateComp))
+                    return new RaycastInfo
                     {
-                        return new RaycastInfo
-                        {
-                            isDarkness = false,
-                            contactPoint = hit.point,
-                            normal = hit.normal,
-                            gateTypeComponent = gateComp,
-                            hitObject = hit.collider.gameObject
-                        };
-                    }
+                        isDarkness = false,
+                        contactPoint = hit.point,
+                        normal = hit.normal,
+                        gateTypeComponent = gateComp,
+                        hitObject = hit.collider.gameObject
+                    };
+                }
 
-                    // Check for TheBigDarknessTag
-                    if (hit.collider.TryGetComponent<TheBigDarknessTag>(out var isDarknessTag))
+                // Check for TheBigDarknessTag
+                if (hit.collider.TryGetComponent<TheBigDarknessTag>(out var isDarknessTag))
+                {
+                    return new RaycastInfo
                     {
-                        return new RaycastInfo
-                        {
-                            isDarkness = true,
-                            contactPoint = hit.point,
-                            normal = Vector2.zero,
-                            gateTypeComponent = null,
-                            hitObject = null
-                        };
-                    }
+                        isDarkness = true,
+                        contactPoint = hit.point,
+                        normal = Vector2.zero,
+                        gateTypeComponent = null,
+                        hitObject = null
+                    };
                 }
             }
-
-            // Nothing relevant hit: extend beam to max distance
-            return new RaycastInfo
-            {
-                isDarkness = true,
-                contactPoint = Vector2.zero, // arbitrary far point
-                normal = Vector2.zero,
-                gateTypeComponent = null,
-                hitObject = null
-            };
         }
-    }
 
-    
-
-    private void SetLineRenderer()
-    {
-        if (lineRenderer == null)
-            lineRenderer = GetComponent<LineRenderer>();
-
-        lineRenderer.positionCount = Points.Count;
-        // set subsequent positions from Points[0]..Points[Count-1]
-        for (int i = 0; i < Points.Count; ++i)
+        // Nothing relevant hit: extend beam to max distance
+        return new RaycastInfo
         {
-            lineRenderer.SetPosition(i, new Vector3(Points[i].x, Points[i].y, 0f));
-        }
+            isDarkness = true,
+            contactPoint = Vector2.zero, // arbitrary far point
+            normal = Vector2.zero,
+            gateTypeComponent = null,
+            hitObject = null
+        };
     }
+    
     
     /// <summary>
     /// Converts mouse screen position to world position for 2D.
