@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(RectTransform))]
 [ExecuteAlways]
-public class WorldspaceCanvasScaler : MonoBehaviour
+public class RectTransformFullScreenScaler : MonoBehaviour
 {
     [SerializeField] private Camera cam;
     private RectTransform rect;
