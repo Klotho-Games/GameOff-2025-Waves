@@ -31,4 +31,5 @@ public class GateType : MonoBehaviour
     [Header("Gate Info")]
     [Tooltip("Select the gate type.")]
     public GateTypes gateType = GateTypes.Mirror;
+    public int gateLevel = 1;
 }

@@ -14,6 +14,15 @@ public class BeamController : MonoBehaviour
     [SerializeField] private GameObject lineRendererObjectPrefab;
 
     public List<GameObject> SpawnedLineRenderers { get; private set; } = new();
+
+    private readonly float[][] diffractionAngles = new float[][]
+    {
+        new float[] { 45.7f },
+        new float[] { 55.1f, 28.5f },
+        new float[] { 60.2f, 37.9f, 21f },
+        new float[] { 63.6f, 44f, 29.5f, 16.6f },
+        new float[] { 66f, 48.3f, 35.3f, 24.2f, 13.8f }
+    };
     private readonly bool enableDebugMousePosition = false;
 
     #region Instance
@@ -30,11 +39,21 @@ public class BeamController : MonoBehaviour
         }
     }
     #endregion
-    
+
     private void FixedUpdate()
     {
         DeleteOldLineRenderers();
         UpdateBeamPath();
+    }
+
+    private int Increase(int value)
+    {
+        return value << 1;
+    }
+    
+    private int Decrease(int value)
+    {
+        return value >> 1;
     }
 
     private void DeleteOldLineRenderers()
@@ -85,7 +104,7 @@ public class BeamController : MonoBehaviour
         BeamData beamData = segmentLR.GetComponent<BeamData>();
         beamData.damagePerSecond = damagePerSecond;
         #endregion
-        
+
         --intensity;
         if (intensity <= 0)
             return;
@@ -101,10 +120,34 @@ public class BeamController : MonoBehaviour
                 DrawNextBeam(intensity, raycastInfo.contactPoint, reflectedDir, raycastInfo.hitObject, damagePerSecond);
                 break;
             case GateTypes.Diverging_lens:
-                DrawNextBeam(intensity, raycastInfo.contactPoint, direction, raycastInfo.hitObject, damagePerSecond >> 1);
+                // Decrease the dmg of the beam
+                DrawNextBeam(intensity, raycastInfo.contactPoint, direction, raycastInfo.hitObject, Decrease(damagePerSecond));
                 break;
             case GateTypes.Converging_lens:
-                DrawNextBeam(intensity, raycastInfo.contactPoint, direction, raycastInfo.hitObject, damagePerSecond << 1);
+                // Increase the dmg of the beam
+                DrawNextBeam(intensity, raycastInfo.contactPoint, direction, raycastInfo.hitObject, Increase(damagePerSecond));
+                break;
+            case GateTypes.Diffraction:
+                // pass the beam straight through
+                DrawNextBeam(intensity, raycastInfo.contactPoint, direction, raycastInfo.hitObject, damagePerSecond);
+
+                for (int i = 0; i < raycastInfo.gateTypeComponent.gateLevel; i++)
+                {
+                    float angleOffsetDeg = diffractionAngles[raycastInfo.gateTypeComponent.gateLevel - 1][i];
+                    // Right side
+                    Vector2 rotatedDirLeft = Quaternion.Euler(0, 0, -angleOffsetDeg) * direction;
+                    // Left side                        
+                    Vector2 rotatedDirRight = Quaternion.Euler(0, 0, angleOffsetDeg) * direction;
+                    // Don't draw beams that would cross back through the gate
+                    if (VectorShadowsHaveSameTurn(raycastInfo.normal, direction, rotatedDirRight))
+                    {
+                        DrawNextBeam(intensity, raycastInfo.contactPoint, rotatedDirRight, raycastInfo.hitObject, damagePerSecond);
+                    }
+                    if (VectorShadowsHaveSameTurn(raycastInfo.normal, direction, rotatedDirLeft))
+                    {
+                        DrawNextBeam(intensity, raycastInfo.contactPoint, rotatedDirLeft, raycastInfo.hitObject, damagePerSecond);
+                    }
+                }
                 break;
 
             // TODO: Implement other gate types
@@ -112,14 +155,17 @@ public class BeamController : MonoBehaviour
                 break;
             case GateTypes.One_way_mirror:
                 break;
-            case GateTypes.Diffraction:
-                break;
 
             default:
                 // For other gate types, just stop the beam for now
                 Debug.LogWarning($"Gate type {raycastInfo.gateTypeComponent.gateType} not implemented yet.");
                 break;
         }
+    }
+
+    bool VectorShadowsHaveSameTurn(Vector2 axis, Vector2 vec1, Vector2 vec2)
+    {
+        return (Vector2.Dot(vec1, axis) * Vector2.Dot(vec2, axis)) > 0;
     }
 
     private RaycastInfo RaycastForFirstGateTypeOrTheBigDarknessTag(Vector2 origin, Vector2 direction, GameObject ignoreObject)
