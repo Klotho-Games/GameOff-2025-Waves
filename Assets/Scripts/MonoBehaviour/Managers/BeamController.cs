@@ -100,7 +100,7 @@ public class BeamController : MonoBehaviour
         SpawnedLineRenderers.Add(segmentLR.gameObject);
         #endregion
 
-        #region Pass on data
+        #region Pass on data to the new beam segment
         BeamData beamData = segmentLR.GetComponent<BeamData>();
         beamData.damagePerSecond = damagePerSecond;
         #endregion
@@ -131,9 +131,14 @@ public class BeamController : MonoBehaviour
                 // pass the beam straight through
                 DrawNextBeam(intensity, raycastInfo.contactPoint, direction, raycastInfo.hitObject, damagePerSecond);
 
-                for (int i = 0; i < raycastInfo.gateTypeComponent.gateLevel; i++)
+                for (int i = 0; i < raycastInfo.gateTypeComponent.gateLevel; ++i)
                 {
                     float angleOffsetDeg = diffractionAngles[raycastInfo.gateTypeComponent.gateLevel - 1][i];
+                    int decreasedDMG = damagePerSecond;
+                    for (int j = 0; j < i; ++j)
+                    {
+                        decreasedDMG = Decrease(decreasedDMG);
+                    }
                     // Right side
                     Vector2 rotatedDirLeft = Quaternion.Euler(0, 0, -angleOffsetDeg) * direction;
                     // Left side                        
@@ -141,11 +146,11 @@ public class BeamController : MonoBehaviour
                     // Don't draw beams that would cross back through the gate
                     if (VectorShadowsHaveSameTurn(raycastInfo.normal, direction, rotatedDirRight))
                     {
-                        DrawNextBeam(intensity, raycastInfo.contactPoint, rotatedDirRight, raycastInfo.hitObject, damagePerSecond);
+                        DrawNextBeam(intensity, raycastInfo.contactPoint, rotatedDirRight, raycastInfo.hitObject, decreasedDMG);
                     }
                     if (VectorShadowsHaveSameTurn(raycastInfo.normal, direction, rotatedDirLeft))
                     {
-                        DrawNextBeam(intensity, raycastInfo.contactPoint, rotatedDirLeft, raycastInfo.hitObject, damagePerSecond);
+                        DrawNextBeam(intensity, raycastInfo.contactPoint, rotatedDirLeft, raycastInfo.hitObject, decreasedDMG);
                     }
                 }
                 break;
