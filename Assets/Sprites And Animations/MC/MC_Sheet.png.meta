@@ -144,7 +144,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 336
+        y: 192
         width: 32
         height: 48
       alignment: 0
@@ -166,7 +166,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 336
+        y: 192
         width: 32
         height: 48
       alignment: 0
@@ -188,7 +188,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 336
+        y: 192
         width: 32
         height: 48
       alignment: 0
@@ -210,7 +210,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 336
+        y: 192
         width: 32
         height: 48
       alignment: 0
@@ -231,8 +231,8 @@ TextureImporter:
       name: MC_Sheet_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 288
+        x: 128
+        y: 192
         width: 32
         height: 48
       alignment: 0
@@ -253,8 +253,8 @@ TextureImporter:
       name: MC_Sheet_5
       rect:
         serializedVersion: 2
-        x: 32
-        y: 288
+        x: 160
+        y: 192
         width: 32
         height: 48
       alignment: 0
@@ -275,8 +275,8 @@ TextureImporter:
       name: MC_Sheet_6
       rect:
         serializedVersion: 2
-        x: 64
-        y: 288
+        x: 0
+        y: 144
         width: 32
         height: 48
       alignment: 0
@@ -297,8 +297,8 @@ TextureImporter:
       name: MC_Sheet_7
       rect:
         serializedVersion: 2
-        x: 96
-        y: 288
+        x: 32
+        y: 144
         width: 32
         height: 48
       alignment: 0
@@ -319,8 +319,8 @@ TextureImporter:
       name: MC_Sheet_8
       rect:
         serializedVersion: 2
-        x: 0
-        y: 240
+        x: 64
+        y: 144
         width: 32
         height: 48
       alignment: 0
@@ -341,8 +341,8 @@ TextureImporter:
       name: MC_Sheet_9
       rect:
         serializedVersion: 2
-        x: 32
-        y: 240
+        x: 96
+        y: 144
         width: 32
         height: 48
       alignment: 0
@@ -363,8 +363,8 @@ TextureImporter:
       name: MC_Sheet_10
       rect:
         serializedVersion: 2
-        x: 64
-        y: 240
+        x: 128
+        y: 144
         width: 32
         height: 48
       alignment: 0
@@ -385,8 +385,8 @@ TextureImporter:
       name: MC_Sheet_11
       rect:
         serializedVersion: 2
-        x: 96
-        y: 240
+        x: 160
+        y: 144
         width: 32
         height: 48
       alignment: 0
@@ -408,7 +408,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 192
+        y: 96
         width: 32
         height: 48
       alignment: 0
@@ -430,7 +430,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 192
+        y: 96
         width: 32
         height: 48
       alignment: 0
@@ -452,7 +452,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 192
+        y: 96
         width: 32
         height: 48
       alignment: 0
@@ -474,7 +474,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 192
+        y: 96
         width: 32
         height: 48
       alignment: 0
@@ -495,8 +495,8 @@ TextureImporter:
       name: MC_Sheet_16
       rect:
         serializedVersion: 2
-        x: 0
-        y: 144
+        x: 128
+        y: 96
         width: 32
         height: 48
       alignment: 0
@@ -517,8 +517,8 @@ TextureImporter:
       name: MC_Sheet_17
       rect:
         serializedVersion: 2
-        x: 32
-        y: 144
+        x: 160
+        y: 96
         width: 32
         height: 48
       alignment: 0
@@ -539,8 +539,8 @@ TextureImporter:
       name: MC_Sheet_18
       rect:
         serializedVersion: 2
-        x: 64
-        y: 144
+        x: 0
+        y: 48
         width: 32
         height: 48
       alignment: 0
@@ -561,8 +561,8 @@ TextureImporter:
       name: MC_Sheet_19
       rect:
         serializedVersion: 2
-        x: 96
-        y: 144
+        x: 32
+        y: 48
         width: 32
         height: 48
       alignment: 0
@@ -583,8 +583,8 @@ TextureImporter:
       name: MC_Sheet_20
       rect:
         serializedVersion: 2
-        x: 0
-        y: 96
+        x: 64
+        y: 48
         width: 32
         height: 48
       alignment: 0
@@ -605,8 +605,8 @@ TextureImporter:
       name: MC_Sheet_21
       rect:
         serializedVersion: 2
-        x: 32
-        y: 96
+        x: 96
+        y: 48
         width: 32
         height: 48
       alignment: 0
@@ -627,8 +627,8 @@ TextureImporter:
       name: MC_Sheet_22
       rect:
         serializedVersion: 2
-        x: 64
-        y: 96
+        x: 128
+        y: 48
         width: 32
         height: 48
       alignment: 0
@@ -649,8 +649,8 @@ TextureImporter:
       name: MC_Sheet_23
       rect:
         serializedVersion: 2
-        x: 96
-        y: 96
+        x: 160
+        y: 48
         width: 32
         height: 48
       alignment: 0
@@ -672,7 +672,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 48
+        y: 0
         width: 32
         height: 48
       alignment: 0
@@ -694,7 +694,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 48
+        y: 0
         width: 32
         height: 48
       alignment: 0
@@ -716,7 +716,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 48
+        y: 0
         width: 32
         height: 48
       alignment: 0
@@ -729,116 +729,6 @@ TextureImporter:
       bones: []
       spriteID: dfa5156c475dba24eae9c352a6e52bd0
       internalID: 161752017
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MC_Sheet_27
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 48
-        width: 32
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2e588a29cc1396e4cbf662abd59e8464
-      internalID: -2035698233
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MC_Sheet_28
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ac1fb63243b168540a18a38235552577
-      internalID: -1480433003
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MC_Sheet_29
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 347fb1d0267d8e54cb4b6fd945edac1c
-      internalID: -1768310515
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MC_Sheet_30
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2e6ccdcf4b0bda4489a0674d6a90b7d9
-      internalID: -877144144
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MC_Sheet_31
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6195724dce84e1242a501170aecb7ae1
-      internalID: 215434786
       vertices: []
       indices: 
       edges: []
@@ -879,12 +769,7 @@ TextureImporter:
       MC_Sheet_24: -1716662292
       MC_Sheet_25: 1933791684
       MC_Sheet_26: 161752017
-      MC_Sheet_27: -2035698233
-      MC_Sheet_28: -1480433003
-      MC_Sheet_29: -1768310515
       MC_Sheet_3: -362075119
-      MC_Sheet_30: -877144144
-      MC_Sheet_31: 215434786
       MC_Sheet_4: -1193323698
       MC_Sheet_5: 405306824
       MC_Sheet_6: 1992722606
