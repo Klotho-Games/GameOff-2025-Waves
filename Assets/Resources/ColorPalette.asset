@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ColorPalette
   colors:
   - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 1, g: 0.8958094, b: 0.43867922, a: 1}
+  - {r: 1, g: 0.91361, b: 0.5424528, a: 1}
   - {r: 0.101960786, g: 0.101960786, b: 0.101960786, a: 1}
   names:
   - Default
