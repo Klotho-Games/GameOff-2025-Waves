@@ -80,7 +80,7 @@ public class PlayerAnimator : MonoBehaviour
 
         void HorizontalMovement()
         {
-            if (rb.linearVelocityY < 0)
+            if (rb.linearVelocityX < 0)
             {
                 SetDirection(Direction_8.Left);
             }

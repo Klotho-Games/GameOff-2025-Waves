@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
         if (velocity.magnitude > moveVariables.maxVelocity)
         {
             // Normalize and scale back to maxVelocity
-            velocity = velocity.normalized * moveVariables.maxVelocity;
+            velocity = velocity.normalized * moveVariables.maxVelocity * (Mathf.Sqrt(1f + moveVariables.yAxisModifier * moveVariables.yAxisModifier));
             rb.linearVelocity = velocity;
         }
     }
