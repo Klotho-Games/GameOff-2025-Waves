@@ -264,7 +264,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -859,28 +859,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 16x16_ultim6_wind_map_Denzi060606-5_52
-      rect:
-        serializedVersion: 2
-        x: 129
-        y: 287
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b34b3eea1ab11f830800000000000000
-      internalID: 4103091116749075515
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: 16x16_ultim6_wind_map_Denzi060606-5_81
       rect:
         serializedVersion: 2
@@ -977,7 +955,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

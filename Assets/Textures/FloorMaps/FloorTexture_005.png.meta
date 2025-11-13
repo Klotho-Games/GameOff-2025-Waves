@@ -1,7 +1,10 @@
 fileFormatVersion: 2
-guid: f3bbd8bc6d34e0b4b85a2552eb7761be
+guid: c3ca552c1b9fb2e42b6c83414cdabe42
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -4671372609095290765
+    second: FloorTexture_005_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -110,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Mirror_0
+      name: FloorTexture_005_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 3
+        width: 1152
+        height: 672
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 40a45ae7d203c91d0800000000000000
-      internalID: -3342743851459327484
+      spriteID: 370b26dac53fb2fb0800000000000000
+      internalID: -4671372609095290765
       vertices: []
       indices: 
       edges: []
@@ -145,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Mirror_0: -3342743851459327484
+      FloorTexture_005_0: -4671372609095290765
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
