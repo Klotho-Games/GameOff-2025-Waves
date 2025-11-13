@@ -1,0 +1,15 @@
+Copyright (c) 2025 Pray to Lucifer Development Group
+
+All rights reserved.
+
+This project — including its source code, art, music, writing, and any other assets — was created collaboratively by the members of [Team Name] for participation in a game jam.
+
+The contents of this repository are made publicly available solely for the purposes of viewing and judging the submission.
+
+You may not copy, modify, distribute, or reuse any part of this project or its assets, in whole or in part, unless you:
+- are a member of the Play to Lucifer Development Group, or
+- have obtained explicit written permission from the team or from the individual creators responsible for the elements you wish to use.
+
+All rights not expressly granted in this license are reserved by the creators.
+
+If a person wishes to reuse a specific element, they must contact the contributor(s) listed in CREDITS.txt for that element.
