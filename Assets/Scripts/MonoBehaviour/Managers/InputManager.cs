@@ -16,10 +16,21 @@ public class InputManager : MonoBehaviour
 
     private PlayerInput playerInput;
 
+    public bool IsKeyboardAndMouse
+    {
+        get
+        {
+            return playerInput.currentControlScheme == "Keyboard&Mouse";
+        }
+    }
+
     public Vector2 MoveInput { get; private set; }
     public bool SoulStateInput { get; private set; }
-    public bool PrimaryShootInput { get; private set; } // beam attack
+    private bool primaryShootInput;
     public bool TertiaryShootInput { get; private set; } // Soul Blast attack
+    public bool DashInput { get; private set; }
+    public Vector2 MousePosition { get; private set; }
+    public Vector2 RightStick { get; private set; }
 
     private InputAction moveAction;
     private InputAction soulStateAction;
@@ -28,6 +39,8 @@ public class InputManager : MonoBehaviour
     private InputAction tertiaryShootAction; // Soul Blast attack
     private InputAction dashAction;
     public InputAction CancelAction {get; private set; }
+    private InputAction mousePositionAction;
+    private InputAction rightStickAction;
 
     private void Awake()
     {
@@ -68,17 +81,28 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         UpdateInputs();
+
+        if (primaryShootInput)
+        {
+            BeamController.instance.gameObject.SetActive(true);
+        }
+        else
+        {
+            BeamController.instance.gameObject.SetActive(false);
+        }
     }
 
     private void UpdateInputs()
     {
         MoveInput = moveAction.ReadValue<Vector2>();
-        SoulStateInput = soulStateAction.ReadValue<bool>();
-        PrimaryShootInput = primaryShootAction.ReadValue<bool>();
-        TertiaryShootInput = tertiaryShootAction.ReadValue<bool>();
-        dashAction.ReadValue<bool>();
+        SoulStateInput = soulStateAction.IsPressed();
+        primaryShootInput = primaryShootAction.IsPressed();
+        TertiaryShootInput = tertiaryShootAction.IsPressed();
+        DashInput = dashAction.IsPressed();
+        MousePosition = mousePositionAction.ReadValue<Vector2>();
+        MousePosition = cam.ScreenToWorldPoint(MousePosition);
+        RightStick = rightStickAction.ReadValue<Vector2>();
         
-
         if (EnableDebug && MoveInput != Vector2.zero)
             Debug.Log($"[InputManager] Move input detected: {MoveInput}");
     }
@@ -93,5 +117,7 @@ public class InputManager : MonoBehaviour
         tertiaryShootAction = playerInput.actions["TertiaryShoot"];
         dashAction = playerInput.actions["Dash"];
         CancelAction = playerInput.actions["Cancel"];
+        mousePositionAction = playerInput.actions["MousePosition"];
+        rightStickAction = playerInput.actions["RightStick"];
     }
 }

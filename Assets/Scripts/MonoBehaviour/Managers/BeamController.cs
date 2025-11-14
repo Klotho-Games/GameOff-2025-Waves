@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class BeamController : MonoBehaviour
 {
@@ -9,11 +7,17 @@ public class BeamController : MonoBehaviour
 
     [SerializeField] private int damagePerSecond = 10;
     [SerializeField] private int _intensity = 10;
+    [SerializeField] private float beamConeAngle = 60f;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private Transform beamOriginTransform;
     [SerializeField] private GameObject lineRendererObjectPrefab;
+    [SerializeField] private PlayerSoulState playerSoulState;
+    [SerializeField] private Animator animator;
 
     public List<GameObject> SpawnedLineRenderers { get; private set; } = new();
+
+    private Vector2 facingDirection;
+    private Vector2 lastBeamDirection = Vector2.zero;
 
     private readonly float[][] diffractionAngles = new float[][]
     {
@@ -23,7 +27,6 @@ public class BeamController : MonoBehaviour
         new float[] { 63.6f, 44f, 29.5f, 16.6f },
         new float[] { 66f, 48.3f, 35.3f, 24.2f, 13.8f }
     };
-    private readonly bool enableDebugMousePosition = false;
 
     #region Instance
     void Awake()
@@ -37,8 +40,14 @@ public class BeamController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        Debug.LogWarning("TODO get facing direction from animator or player controller as a fallback for beam direction");
     }
     #endregion
+
+    void Start()
+    {
+        FacingDirectionUpdate();
+    }
 
     private void FixedUpdate()
     {
@@ -94,18 +103,107 @@ public class BeamController : MonoBehaviour
         return true;
     }
 
+    private void FacingDirectionUpdate()
+    {
+        if (animator.GetInteger("isShootingWhileMovingInDirection") != -1)
+        {
+            int dirIndex = animator.GetInteger("isShootingWhileMovingInDirection");
+            facingDirection = DirectionFromIndex(dirIndex);
+        }
+        else if (animator.GetInteger("isShootingFacing") != -1)
+        {
+            int dirIndex = animator.GetInteger("isShootingFacing") * 2;
+            facingDirection = DirectionFromIndex(dirIndex);
+        }
+
+        static Vector2 DirectionFromIndex(int index)
+        {
+            return index switch
+            {
+                0 => Vector2.down,
+                1 => new Vector2(1, -1).normalized,
+                2 => Vector2.right,
+                3 => new Vector2(1, 1).normalized,
+                4 => Vector2.up,
+                5 => new Vector2(-1, 1).normalized,
+                6 => Vector2.left,
+                7 => new Vector2(-1, -1).normalized,
+                _ => Vector2.up,
+            };
+        }
+    }
+
     private void UpdateBeamPath()
     {
-        Vector2 mouseWorldPos = GetMouseWorldPosition();
-        if (mouseWorldPos == Vector2.zero)
-            return;
-
         if (!BeamOriginIsAllGood())
             return;
 
-        Vector2 direction = (mouseWorldPos - (Vector2)beamOriginTransform.position).normalized;
+        Vector2 direction = (InputManager.instance.IsKeyboardAndMouse ? (InputManager.instance.MousePosition - (Vector2)beamOriginTransform.position) : InputManager.instance.RightStick).normalized;
+        if (direction == Vector2.zero)
+        {
+            if (lastBeamDirection != Vector2.zero)
+                direction = lastBeamDirection;
+            else
+            {
+                FacingDirectionUpdate();
+                direction = facingDirection; // fallback to direction player is facing
+            }
+        }
+        else
+        {
+            lastBeamDirection = direction;
+        }
 
-        DrawNextBeam(_intensity + 1, (Vector2)beamOriginTransform.position, direction, null, damagePerSecond);
+        DrawNextBeam(_intensity + 1, (Vector2)beamOriginTransform.position, playerSoulState.currentSoulState is null ? TrimDirection(direction) : direction, null, damagePerSecond);
+
+        Vector2 TrimDirection(Vector2 direction)
+        {
+            FacingDirectionUpdate();
+
+            //Trim to 90 degree cone around facingDirection
+            float angleBetween = Vector2.Angle(direction, facingDirection);
+            if (angleBetween <= beamConeAngle)
+                return direction;
+            
+            float sign = Mathf.Sign(Vector3.Cross(facingDirection, direction).z);
+            float clampedAngle = beamConeAngle * sign;
+            return Quaternion.Euler(0, 0, clampedAngle) * facingDirection;
+
+            /* // Snap to closest of 3 directions: facingDirection, facingDirection rotated +45 degrees, facingDirection rotated -45 degrees
+            Vector2[] possibleDirections = new Vector2[]
+            {
+                // facingDirection,
+                RotatedBy45Degrees(facingDirection, true),
+                RotatedBy45Degrees(facingDirection, false)
+            };
+            
+
+            Get Closest Direction
+            float smallestAngle = 180f;
+            Vector2 closestDirection = possibleDirections[0];
+            foreach (var dir in possibleDirections)
+            {
+                float angle = Vector2.Angle(direction, dir);
+                if (angle < smallestAngle)
+                {
+                    smallestAngle = angle;
+                    closestDirection = dir;
+                }
+            }
+            return closestDirection; */
+
+            Vector2 RotatedBy45Degrees(Vector2 dir, bool clockwise)
+            {
+                if (clockwise)
+                {
+                    return Quaternion.Euler(0, 0, -45) * dir;
+                }
+                else
+                {
+                    return Quaternion.Euler(0, 0, 45) * dir;
+                }
+            }
+        }
     }
 
     private void DrawNextBeam(int intensity, Vector2 origin, Vector2 direction, GameObject ignoreObject, int damagePerSecond)
@@ -250,32 +348,32 @@ public class BeamController : MonoBehaviour
     }
     
     
-    /// <summary>
-    /// Converts mouse screen position to world position for 2D.
-    /// Works with both old Input Manager and new Input System.
-    /// </summary>
-    private Vector2 GetMouseWorldPosition()
-    {
-        Vector3 mouseScreenPos = GetMouseScreenPosition();
-        if (enableDebugMousePosition) Debug.Log($"Mouse Screen Position: {mouseScreenPos}");
+    // /// <summary>
+    // /// Converts mouse screen position to world position for 2D.
+    // /// Works with both old Input Manager and new Input System.
+    // /// </summary>
+    // private Vector2 GetMouseWorldPosition()
+    // {
+    //     Vector3 mouseScreenPos = GetMouseScreenPosition();
+    //     if (enableDebugMousePosition) Debug.Log($"Mouse Screen Position: {mouseScreenPos}");
         
-        return mainCamera.ScreenToWorldPoint(mouseScreenPos);
-    }
+    //     return mainCamera.ScreenToWorldPoint(mouseScreenPos);
+    // }
 
-    /// <summary>
-    /// Gets mouse screen position using the appropriate input system.
-    /// </summary>
-    private Vector3 GetMouseScreenPosition()
-    {
-        // New Input System
-        if (Mouse.current != null)
-        {
-            return Mouse.current.position.ReadValue();
-        }
-        if (Input.mousePosition != null)
-        {
-            return Input.mousePosition;
-        }
-        return Vector3.zero;
-    }
+    // /// <summary>
+    // /// Gets mouse screen position using the appropriate input system.
+    // /// </summary>
+    // private Vector3 GetMouseScreenPosition()
+    // {
+    //     // New Input System
+    //     if (Mouse.current != null)
+    //     {
+    //         return Mouse.current.position.ReadValue();
+    //     }
+    //     if (Input.mousePosition != null)
+    //     {
+    //         return Input.mousePosition;
+    //     }
+    //     return Vector3.zero;
+    // }
 }
