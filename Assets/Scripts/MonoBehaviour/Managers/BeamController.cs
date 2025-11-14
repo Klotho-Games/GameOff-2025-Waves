@@ -77,7 +77,10 @@ public class BeamController : MonoBehaviour
 
     void OnDisable()
     {
-        beamOriginTransform.gameObject.SetActive(false);
+        if (beamOriginTransform != null && beamOriginTransform.gameObject != null)
+        {
+            beamOriginTransform.gameObject.SetActive(false);
+        }
     }
 
     private bool BeamOriginIsAllGood()
