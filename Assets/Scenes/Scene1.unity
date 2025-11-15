@@ -3424,7 +3424,7 @@ GameObject:
   - component: {fileID: 1552325829}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3647,9 +3647,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   chargeDuration: 2
-  fullChargeSoulCost: 100
   HPAmountPerSecond: 5
-  soulCostPerHPHealed: 10
   basicPlayerLight:
     intensity: 2
     outerRadius: 7
@@ -4499,6 +4497,59 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1897022496
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1897022498}
+  - component: {fileID: 1897022497}
+  m_Layer: 0
+  m_Name: Soul Economy Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1897022497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897022496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96b299b00a51c3448a92e008ba1c1793, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  FullSoulStateChargeCost: 100
+  CostPerHPHealed: 5
+  ConvergingLensCost: 0
+  MirrorCost: 0
+  OneWayMirrorCost: 0
+  DiffractionSlateCost: 0
+  DivergingLensUpgradeToLensSystemCost: 0
+  LensSystemUpgradeToConvergingLensCost: 0
+  UpgradeDiffractionPlateCosts: 00000000000000000000000000000000
+--- !u!4 &1897022498
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897022496}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1938470870
 GameObject:
   m_ObjectHideFlags: 0
@@ -4842,6 +4893,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2106973143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2106973146}
+  - component: {fileID: 2106973145}
+  - component: {fileID: 2106973144}
+  m_Layer: 0
+  m_Name: Gate Grid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2106973144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106973143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb44f80162d0ebe4780f951f778b0e81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GatePlacement
+  hexGrid: {fileID: 2106973145}
+  placementIndicatorPrefab: {fileID: 8784213973245083084, guid: 2c9135840fa974845b224e72437a2c61, type: 3}
+  player: {fileID: 1552325820}
+  minimumLightIntensity: 0.5
+--- !u!156049354 &2106973145
+Grid:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106973143}
+  m_Enabled: 1
+  m_CellSize: {x: 1.4998715, y: 1.732, z: 1}
+  m_CellGap: {x: 0, y: 0, z: 0}
+  m_CellLayout: 1
+  m_CellSwizzle: 0
+--- !u!4 &2106973146
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106973143}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.7499355, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &309964180999921769
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4958,6 +5070,7 @@ SceneRoots:
   - {fileID: 1162453831}
   - {fileID: 1802261714}
   - {fileID: 229292616}
+  - {fileID: 1897022498}
   - {fileID: 133823648}
   - {fileID: 1450780084}
   - {fileID: 1552325820}
@@ -4965,3 +5078,4 @@ SceneRoots:
   - {fileID: 1286122612}
   - {fileID: 1858650576}
   - {fileID: 4540798148290968415}
+  - {fileID: 2106973146}
