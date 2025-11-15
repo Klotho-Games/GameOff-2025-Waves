@@ -40,7 +40,6 @@ public class BeamController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        Debug.LogWarning("TODO get facing direction from animator or player controller as a fallback for beam direction");
     }
     #endregion
 

@@ -31,11 +31,9 @@ public class PlayerSoulState : MonoBehaviour
 
     [Header("Charging")]
     [SerializeField] private float chargeDuration = 2f;
-    [SerializeField] private int fullChargeSoulCost = 100;
 
     [Header("Healing")]
     [SerializeField] private int HPAmountPerSecond = 5;
-    [SerializeField] private int soulCostPerHPHealed = 10;
 
     [Header("Light Properties")]
     [SerializeField] private Light basicPlayerLight = new() { intensity = 2f, outerRadius = 7f };
@@ -135,10 +133,10 @@ public class PlayerSoulState : MonoBehaviour
 
     private void Charge()
     {
-        if (allocatedSouls >= fullChargeSoulCost)
+        if (allocatedSouls >= SoulEconomyManager.instance.FullSoulStateChargeCost)
         {
             currentSoulState = SoulState.Full;
-            allocatedSouls = fullChargeSoulCost;
+            allocatedSouls = SoulEconomyManager.instance.FullSoulStateChargeCost;
             chargeTimer = 0;
             soulChargeTimer = 0;
         }
@@ -158,12 +156,12 @@ public class PlayerSoulState : MonoBehaviour
 
             soulChargeTimer += Time.deltaTime;
 
-            if (soulChargeTimer * fullChargeSoulCost / chargeDuration >= 1)
+            if (soulChargeTimer * SoulEconomyManager.instance.FullSoulStateChargeCost / chargeDuration >= 1)
             {
-                int soulToAllocate = Mathf.FloorToInt(soulChargeTimer * fullChargeSoulCost / chargeDuration);
-                if (allocatedSouls + soulToAllocate > fullChargeSoulCost)
+                int soulToAllocate = Mathf.FloorToInt(soulChargeTimer * SoulEconomyManager.instance.FullSoulStateChargeCost / chargeDuration);
+                if (allocatedSouls + soulToAllocate > SoulEconomyManager.instance.FullSoulStateChargeCost)
                 {
-                    soulToAllocate = fullChargeSoulCost - allocatedSouls;
+                    soulToAllocate = SoulEconomyManager.instance.FullSoulStateChargeCost - allocatedSouls;
                 }
                 if (soulToAllocate > playerStats.CurrentSoul)
                 {
@@ -186,7 +184,7 @@ public class PlayerSoulState : MonoBehaviour
             healTimer = 0;
         }
         
-        if (playerStats.CurrentHealth < playerStats.MaxHealth && playerStats.CurrentSoul >= soulCostPerHPHealed)
+        if (playerStats.CurrentHealth < playerStats.MaxHealth && playerStats.CurrentSoul >= SoulEconomyManager.instance.CostPerHPHealed)
         {
             currentSoulState = SoulState.Heal;
             Heal();
@@ -214,7 +212,7 @@ public class PlayerSoulState : MonoBehaviour
         if (healTimer * HPAmountPerSecond >= 1)
         {
             int hpToHeal = Mathf.FloorToInt(healTimer * HPAmountPerSecond);
-            int soulNeeded = hpToHeal * soulCostPerHPHealed;
+            int soulNeeded = hpToHeal * SoulEconomyManager.instance.CostPerHPHealed;
             if (playerStats.CurrentSoul >= soulNeeded)
             {
                 playerStats.CurrentHealth += hpToHeal;
@@ -223,9 +221,9 @@ public class PlayerSoulState : MonoBehaviour
             }
             else
             {
-                int affordableHPToHeal = Mathf.FloorToInt(playerStats.CurrentSoul / (soulCostPerHPHealed * 1f));
+                int affordableHPToHeal = Mathf.FloorToInt(playerStats.CurrentSoul / (SoulEconomyManager.instance.CostPerHPHealed * 1f));
                 playerStats.CurrentHealth += affordableHPToHeal;
-                playerStats.CurrentSoul -= affordableHPToHeal * soulCostPerHPHealed;
+                playerStats.CurrentSoul -= affordableHPToHeal * SoulEconomyManager.instance.CostPerHPHealed;
                 healTimer = 0;
             }
         }
