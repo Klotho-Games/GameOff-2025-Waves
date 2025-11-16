@@ -36,6 +36,6 @@ public class RectTransformFullScreenScaler : MonoBehaviour
         if (rect == null)
             rect = GetComponent<RectTransform>();
 
-        rect.sizeDelta = new Vector2(10f * width / height, 10f);
+        rect.sizeDelta = new Vector2(width, height);
     }
 }
