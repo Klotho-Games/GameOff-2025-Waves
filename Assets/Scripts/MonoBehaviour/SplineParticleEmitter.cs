@@ -7,6 +7,8 @@ public class SplineParticleEmitter : MonoBehaviour
 {
     [Header("Spline Settings")]
     [SerializeField] private SplineContainer splineContainer;
+    [SerializeField] private bool isStatic = true;
+    [SerializeField] private int splineSampleResolution = 100;
     
     [Header("Particle Settings")]
     [SerializeField] private int particlesPerSecond = 50;
@@ -18,6 +20,7 @@ public class SplineParticleEmitter : MonoBehaviour
     private ParticleSystem.Particle[] particles;
     private float emissionTimer = 0f;
     private Bounds splineBounds;
+    private List<Vector3> cachedSplinePolygon = null;
     
     void Start()
     {
@@ -37,6 +40,11 @@ public class SplineParticleEmitter : MonoBehaviour
         if (splineContainer != null && splineContainer.Spline != null)
         {
             CalculateSplineBounds();
+            
+            if (isStatic)
+            {
+                cachedSplinePolygon = SampleSplineToPolygon();
+            }
         }
         
         particles = new ParticleSystem.Particle[maxParticles];
@@ -113,6 +121,21 @@ public class SplineParticleEmitter : MonoBehaviour
         splineParticleSystem.Emit(emitParams, 1);
     }
     
+    private List<Vector3> SampleSplineToPolygon()
+    {
+        List<Vector3> polygon = new List<Vector3>();
+        
+        // Sample the spline at high resolution to approximate curves
+        for (int i = 0; i < splineSampleResolution; i++)
+        {
+            float t = (float)i / splineSampleResolution;
+            Vector3 localPos = splineContainer.Spline.EvaluatePosition(t);
+            polygon.Add(localPos);
+        }
+        
+        return polygon;
+    }
+    
     private bool IsPointInsideSpline(Vector3 worldPoint)
     {
         if (splineContainer == null || splineContainer.Spline == null || !splineContainer.Spline.Closed)
@@ -121,18 +144,22 @@ public class SplineParticleEmitter : MonoBehaviour
         // Convert to local space
         Vector3 localPoint = splineContainer.transform.InverseTransformPoint(worldPoint);
         
+        // Get polygon points (cached if static, or calculate on-the-fly if dynamic)
+        List<Vector3> polygon = isStatic ? cachedSplinePolygon : SampleSplineToPolygon();
+        
+        if (polygon == null || polygon.Count < 3)
+            return false;
+        
         // Ray casting method for point-in-polygon test
         int intersections = 0;
-        float rayLength = splineBounds.size.x * 2f;
         
-        // Cast ray to the right and count intersections
-        for (int i = 0; i < splineContainer.Spline.Count; i++)
+        // Cast ray to the right and count intersections with polygon edges
+        for (int i = 0; i < polygon.Count; i++)
         {
-            int nextIndex = (i + 1) % splineContainer.Spline.Count;
+            int nextIndex = (i + 1) % polygon.Count;
             
-            // Sample segment
-            Vector3 p1 = splineContainer.Spline.EvaluatePosition((float)i / splineContainer.Spline.Count);
-            Vector3 p2 = splineContainer.Spline.EvaluatePosition((float)nextIndex / splineContainer.Spline.Count);
+            Vector3 p1 = polygon[i];
+            Vector3 p2 = polygon[nextIndex];
             
             // Check intersection with horizontal ray
             if (RayIntersectsSegment(localPoint, p1, p2))
@@ -182,6 +209,19 @@ public class SplineParticleEmitter : MonoBehaviour
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireCube(splineBounds.center, splineBounds.size);
+            
+            // Draw the sampled polygon for debugging
+            if (Application.isPlaying && cachedSplinePolygon != null && cachedSplinePolygon.Count > 0)
+            {
+                Gizmos.color = Color.green;
+                for (int i = 0; i < cachedSplinePolygon.Count; i++)
+                {
+                    int nextIndex = (i + 1) % cachedSplinePolygon.Count;
+                    Vector3 p1 = splineContainer.transform.TransformPoint(cachedSplinePolygon[i]);
+                    Vector3 p2 = splineContainer.transform.TransformPoint(cachedSplinePolygon[nextIndex]);
+                    Gizmos.DrawLine(p1, p2);
+                }
+            }
         }
     }
 }
