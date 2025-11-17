@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 516514264232912439}
+  - component: {fileID: 13449703198230300}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -31,3 +32,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &13449703198230300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6055560758000326917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5077c08d3696f964ca21da86a2daaa32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyLifeSystem
+  enemyData: {fileID: 0}
+  coll: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  redColorPercent: 0.6
+  originalColor: {r: 0, g: 0, b: 0, a: 0}
+  currentHP: 0

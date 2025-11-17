@@ -12,6 +12,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gargoyle Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5337230742852967873, guid: 669e43b5082ba8141bb78c07a42463d4, type: 3}
+      propertyPath: coll
+      value: 
+      objectReference: {fileID: 6182682697246713396}
+    - target: {fileID: 5337230742852967873, guid: 669e43b5082ba8141bb78c07a42463d4, type: 3}
+      propertyPath: enemyData
+      value: 
+      objectReference: {fileID: 11400000, guid: 24ebc3574d53f404a8dd1ad5577906bb, type: 2}
+    - target: {fileID: 5337230742852967873, guid: 669e43b5082ba8141bb78c07a42463d4, type: 3}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 6720088762748438413}
     - target: {fileID: 5554461742437432554, guid: 669e43b5082ba8141bb78c07a42463d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

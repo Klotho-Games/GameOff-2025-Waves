@@ -10,19 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60959e2dc67c838438f69088ce1ab5dc, type: 3}
-  m_Name: BluntAttacker
+  m_Name: Gargoyle
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  enemyName: BluntAttacker
+  enemyName: New Enemy
   isLava: 0
-  size: 1
-  maxHP: 20
-  speed: 4
-  armor: 1
-  regeneration: 5
+  maxHP: 100
+  speed: 5
+  regeneration: 0
   rewardAmount: 10
-  isPassthrough: 1
-  isPlacer: 1
-  attackType: 0
-  attackDamage: 20
-  attackRange: 10
-  attackCooldown: 1.5
+  isEnergy: 0
+  attacks: []

@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Placer Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5337230742852967873, guid: 669e43b5082ba8141bb78c07a42463d4, type: 3}
+      propertyPath: coll
+      value: 
+      objectReference: {fileID: 747719389983601310}
+    - target: {fileID: 5337230742852967873, guid: 669e43b5082ba8141bb78c07a42463d4, type: 3}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 5721542034405831700}
     - target: {fileID: 5554461742437432554, guid: 669e43b5082ba8141bb78c07a42463d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
