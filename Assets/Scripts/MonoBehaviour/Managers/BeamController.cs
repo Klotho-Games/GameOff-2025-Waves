@@ -190,6 +190,8 @@ public class BeamController : MonoBehaviour
         SpawnedLineRenderers.Add(segmentLR.gameObject);
         #endregion
 
+        segmentLR.gameObject.layer = LayerMask.NameToLayer("Beam");
+
         #region Pass on data to the new beam segment
         BeamData beamData = segmentLR.GetComponent<BeamData>();
         beamData.damagePerSecond = damagePerSecond;
