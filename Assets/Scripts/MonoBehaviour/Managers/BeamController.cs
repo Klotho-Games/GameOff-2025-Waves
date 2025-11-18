@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class BeamController : MonoBehaviour
@@ -50,7 +51,7 @@ public class BeamController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        DeleteOldLineRenderers();
+        DestroyOldLineRenderers();
         UpdateBeamPath();
     }
 
@@ -64,7 +65,7 @@ public class BeamController : MonoBehaviour
         return value >> 1;
     }
 
-    private void DeleteOldLineRenderers()
+    private void DestroyOldLineRenderers()
     {
         while (SpawnedLineRenderers.Count > 0)
         {
@@ -88,6 +89,7 @@ public class BeamController : MonoBehaviour
         if (beamOriginTransform != null && beamOriginTransform.gameObject != null)
         {
             beamOriginTransform.gameObject.SetActive(false);
+            DestroyOldLineRenderers();
         }
     }
 
@@ -161,7 +163,7 @@ public class BeamController : MonoBehaviour
 
             if (!InputManager.instance.PreciseControlInput)
                 return facingDirection;
-                
+
             //Trim to 90 degree cone around facingDirection
             float angleBetween = Vector2.Angle(direction, facingDirection);
             if (angleBetween <= beamConeAngle)
@@ -190,8 +192,6 @@ public class BeamController : MonoBehaviour
         segmentLR.SetPosition(1, new(raycastInfo.contactPoint.x, raycastInfo.contactPoint.y, 0f));
         SpawnedLineRenderers.Add(segmentLR.gameObject);
         #endregion
-
-        segmentLR.gameObject.layer = LayerMask.NameToLayer("Beam");
 
         #region Pass on data to the new beam segment
         BeamData beamData = segmentLR.GetComponent<BeamData>();

@@ -27,7 +27,7 @@ public class EnemySpawnSystem : MonoBehaviour
     {
         GameObject enemyToSpawn = GetRandomEnemy();
         Vector3 spawnPosition = GetPointOutsideCameraView();
-        EnergyMeleeAI AI = Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity).GetComponent<EnergyMeleeAI>();
+        EnergyMeleeAI AI = Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity, transform).GetComponent<EnergyMeleeAI>();
         AI.Initialize(playerTransform);
     }
 
