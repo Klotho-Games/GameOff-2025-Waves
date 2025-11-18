@@ -159,13 +159,14 @@ public class BeamController : MonoBehaviour
         {
             FacingDirectionUpdate();
 
+            if (!InputManager.instance.PreciseControlInput)
+                return facingDirection;
+                
             //Trim to 90 degree cone around facingDirection
             float angleBetween = Vector2.Angle(direction, facingDirection);
             if (angleBetween <= beamConeAngle)
                 return direction;
             
-            if (!InputManager.instance.PreciseControlInput)
-                return facingDirection;
             float sign = Mathf.Sign(Vector3.Cross(facingDirection, direction).z);
             float clampedAngle = beamConeAngle * sign;
             Vector2 clampedDirection = Quaternion.Euler(0, 0, clampedAngle) * facingDirection;
