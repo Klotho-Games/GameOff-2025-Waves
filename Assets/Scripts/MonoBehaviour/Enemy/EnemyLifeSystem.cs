@@ -1,7 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(Collider2D))]
 public class EnemyLifeSystem : MonoBehaviour
 {
     [SerializeField] private Enemy enemyData;
@@ -10,7 +8,7 @@ public class EnemyLifeSystem : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float redColorPercent = 0.6f; // Percent HP at which color is fully red
     [SerializeField] private Color originalColor;
 
-    [SerializeField] private int currentHP;
+    private int currentHP;
 
     private float averageDamageThisSecond = 0f;
     private float timeSinceLastDamage = 0f;

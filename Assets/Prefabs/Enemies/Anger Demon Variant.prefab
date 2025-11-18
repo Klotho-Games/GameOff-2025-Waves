@@ -48,6 +48,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 896205037674411373, guid: 89b83a4eaf6955b4bbab2b5248c19fb8, type: 3}
+      propertyPath: coll
+      value: 
+      objectReference: {fileID: 2317428130703660120}
+    - target: {fileID: 896205037674411373, guid: 89b83a4eaf6955b4bbab2b5248c19fb8, type: 3}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 2010788181556726881}
     - target: {fileID: 6361776168926915444, guid: 89b83a4eaf6955b4bbab2b5248c19fb8, type: 3}
       propertyPath: m_Name
       value: Anger Demon Variant
