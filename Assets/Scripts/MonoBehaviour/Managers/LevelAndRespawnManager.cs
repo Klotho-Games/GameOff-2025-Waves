@@ -44,24 +44,41 @@ public class LevelAndRespawnManager : MonoBehaviour
 
     void Update()
     {
+        // check for player death
         if (playerStats.CurrentHealth <= 0 && !isDead)
         {
             OnPlayerDeath();
+            if (currentLevelIndex >= levels.Length)
+                currentLevelIndex = levels.Length - 1;
             levelTimer = 0f;
+            currentTimelineElementIndex = 0;
         }
 
+        // check for game completion
+        if (currentLevelIndex >= levels.Length)
+        {
+            if (transform.childCount == 0 && !isDead)
+            {
+                Time.timeScale = 0f;
+                gameCompleteScreen.SetActive(true);
+            }
+            return;
+        }
+
+        // Level progression
         levelTimer += Time.deltaTime;
         while (transform.childCount <= 0 || levelTimer >= levels[currentLevelIndex].enemyGroups[currentTimelineElementIndex].spawnTime)
         {
             levelTimer = levels[currentLevelIndex].enemyGroups[currentTimelineElementIndex].spawnTime;
             SpawnEnemyGroup(levels[currentLevelIndex].enemyGroups[currentTimelineElementIndex]);
-            currentTimelineElementIndex++;
+            ++currentTimelineElementIndex;
 
             if (currentTimelineElementIndex >= levels[currentLevelIndex].enemyGroups.Count)
             {
                 LoadNextLevel();
                 currentTimelineElementIndex = 0;
                 levelTimer = 0f;
+                break;
             }
         }
     }
@@ -142,18 +159,12 @@ public class LevelAndRespawnManager : MonoBehaviour
 
     private void LoadNextLevel()
     {
-        if (currentLevelIndex < levels.Length - 1)
+        ++currentLevelIndex;
+        if (currentLevelIndex < levels.Length)
         {
-            ++currentLevelIndex;
             nextlevelScreen.GetComponent<TMPro.TextMeshProUGUI>().text = "Level " + (currentLevelIndex + 1);
             StartCoroutine(ShowForSeconds(nextlevelScreen, levelCompleteScreenDuration));
             // more level transition logic can be added here
-        }
-        else if (transform.childCount <= 0)
-        {
-            Debug.Log("All levels completed!");
-            gameCompleteScreen.SetActive(true);
-            // more end-of-game logic can be added here
         }
     }
 
