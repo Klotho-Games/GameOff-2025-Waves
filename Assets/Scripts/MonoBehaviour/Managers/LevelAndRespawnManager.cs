@@ -61,29 +61,43 @@ public class LevelAndRespawnManager : MonoBehaviour
         {
             for (int i = 0; i < enemyGroup.quantity; i++)
             {
-                SpawnEnemyScattered(enemyGroup.enemyPrefab);
+                Vector3 spawnPosition = GetPointOutsideCameraView(0f);
+                SpawnEnemy(enemyGroup.enemyPrefab, spawnPosition);
             }
         }
         else
         {
-            // Use a clutter at a random position outside the camera view
+            Vector3 groupCenter = GetPointOutsideCameraView(enemyGroup.groupRadius);
+            for (int i = 0; i < enemyGroup.quantity; i++)
+            {
+                Vector2 spawnOffset = Random.insideUnitCircle * enemyGroup.groupRadius;
+                Vector3 spawnPosition = new(groupCenter.x + spawnOffset.x, groupCenter.y + spawnOffset.y, 0f);
+                SpawnEnemy(enemyGroup.enemyPrefab, spawnPosition);
+            }
         }
     }
 
-    private void SpawnEnemyScattered(GameObject enemyToSpawn)
+    private void SpawnEnemy(GameObject enemyToSpawn, Vector3 spawnPosition)
     {
-        Vector3 spawnPosition = GetPointOutsideCameraView();
-        EnergyMeleeAI AI = Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity, transform).GetComponent<EnergyMeleeAI>();
-        AI.Initialize(playerTransform);
+        if (Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity, transform).TryGetComponent(out EnergyMeleeAI energyMeleeAI))
+            energyMeleeAI.Initialize(playerTransform);
+        else if (Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity, transform).TryGetComponent(out MaterialMeleeAI materialMeleeAI))
+            materialMeleeAI.Initialize(playerTransform);
+        else if (Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity, transform).TryGetComponent(out MaterialProjectileAI materialProjectileAI))
+            materialProjectileAI.Initialize(playerTransform);
+        else if (Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity, transform).TryGetComponent(out MaterialGrenadeAI materialGrenadeAI))
+            materialGrenadeAI.Initialize(playerTransform);
+        else
+            Debug.LogError("Enemy prefab does not have a recognized AI component.");
     }
 
-    private Vector3 GetPointOutsideCameraView()
+    private Vector3 GetPointOutsideCameraView(float groupSize)
     {
         float camHeight = 2f * cam.orthographicSize;
         float camWidth = camHeight * cam.aspect;
 
-        camWidth += 2f; // Extra buffer
-        camHeight += 2f; // Extra buffer
+        camWidth += 2f + groupSize; // Extra buffer
+        camHeight += 2f + groupSize; // Extra buffer
 
         float x, y;
         int side = Random.Range(0, 4); // 0: top, 1: bottom, 2: left, 3: right
