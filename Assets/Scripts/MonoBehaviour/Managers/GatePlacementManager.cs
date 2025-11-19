@@ -22,6 +22,7 @@ public class GatePlacementManager : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] private Transform parentForPlacedGates;
     [SerializeField] private LayerMask gateLayer;
+    [SerializeField] private TMPro.TMP_Text currentGateTypeDisplayText;
     // private LineRenderer debugLineRenderer;
 
     private readonly float[] diagonals = new float[] { 0f, 60f, 120f };
@@ -61,6 +62,11 @@ public class GatePlacementManager : MonoBehaviour
             currentGateType = (GateType)(((int)currentGateType + 1) % gatePrefabs.Count);
         }
         while (currentGateType == GateType.DivergingLens);
+
+        if (currentGateTypeDisplayText != null)
+        {
+            currentGateTypeDisplayText.text = GetCurrentGateTypeString();
+        }
     }
 
     void OnGateTypeLeft()
@@ -70,6 +76,23 @@ public class GatePlacementManager : MonoBehaviour
             currentGateType = (GateType)(((int)currentGateType - 1 + gatePrefabs.Count) % gatePrefabs.Count);
         }
         while (currentGateType == GateType.DivergingLens);
+
+        if (currentGateTypeDisplayText != null)
+        {
+            currentGateTypeDisplayText.text = GetCurrentGateTypeString();
+        }
+    }
+
+    private string GetCurrentGateTypeString()
+    {
+        return currentGateType switch
+        {
+            GateType.ConvergingLens => "Converging Lens",
+            GateType.Mirror => "Mirror",
+            GateType.OneWayMirror => "One-Way Mirror",
+            GateType.Diffraction => "Diffraction Slate",
+            _ => "Unknown Gate Type",
+        };
     }
 
     void OnDestroy()
@@ -88,13 +111,26 @@ public class GatePlacementManager : MonoBehaviour
 
         int gateCost = GetGateCost(currentGateType);
 
-        if (!InputManager.instance.PreciseControlInput 
-            || gateCost > playerStats.CurrentSoul)
+        if (gateCost > playerStats.CurrentSoul)
+        {
+            currentGateTypeDisplayText.alpha = 0.06f;
+            currentGateTypeDisplayText.text = GetCurrentGateTypeString();
+            DestroyAllIndicators();
+            return;
+        }
+        else
+        {
+            currentGateTypeDisplayText.alpha = 0.5f;
+            currentGateTypeDisplayText.text = "Press Ctrl to place: " + GetCurrentGateTypeString();
+        }
+
+        if (!InputManager.instance.PreciseControlInput)
         {
             DestroyAllIndicators();
             return;
         }
 
+        
 
         // Show places where you can build
         DestroyAllIndicators(); // children
