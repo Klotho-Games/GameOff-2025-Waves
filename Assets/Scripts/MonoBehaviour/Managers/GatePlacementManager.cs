@@ -48,6 +48,36 @@ public class GatePlacementManager : MonoBehaviour
     }
     #endregion
 
+    void Start()
+    {
+        InputManager.instance.ItemRightAction.performed += ctx => OnGateTypeRight();
+        InputManager.instance.ItemLeftAction.performed += ctx => OnGateTypeLeft();
+    }
+
+    void OnGateTypeRight()
+    {
+        do
+        {
+            currentGateType = (GateType)(((int)currentGateType + 1) % gatePrefabs.Count);
+        }
+        while (currentGateType == GateType.DivergingLens);
+    }
+
+    void OnGateTypeLeft()
+    {
+        do
+        {
+            currentGateType = (GateType)(((int)currentGateType - 1 + gatePrefabs.Count) % gatePrefabs.Count);
+        }
+        while (currentGateType == GateType.DivergingLens);
+    }
+
+    void OnDestroy()
+    {
+        InputManager.instance.ItemRightAction.performed -= ctx => OnGateTypeRight();
+        InputManager.instance.ItemLeftAction.performed -= ctx => OnGateTypeLeft();
+    }
+
     void Update()
     {
         if (isInRotationMode)
