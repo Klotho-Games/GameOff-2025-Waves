@@ -368,7 +368,7 @@ public class GatePlacementManager : MonoBehaviour
         
         if (lightIntensity < minimumLightIntensity)
         {
-            Debug.Log("Insufficient light at " + cellPosition + ": " + lightIntensity);
+            //Debug.Log("Insufficient light at " + cellPosition + ": " + lightIntensity);
             return false;
         }
 
@@ -403,7 +403,7 @@ public class GatePlacementManager : MonoBehaviour
 
         static bool CompareTags(GameObject obj)
         {
-            return obj.CompareTag("Player") || obj.CompareTag("Gate") || obj.CompareTag("Enemy");
+            return obj.CompareTag("Player") || obj.CompareTag("Gate") || obj.CompareTag("Material Enemy");
         }
     }
 

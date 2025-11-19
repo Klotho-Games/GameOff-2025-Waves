@@ -35,7 +35,7 @@ public class Enemy : ScriptableObject
     [Tooltip("How much health is regenerated per second")]
     public float regeneration = 0f;
     
-    public float rewardAmount = 10f;
+    public int soulRewardAmount = 10;
 
 
     [Header("Behavior")]
