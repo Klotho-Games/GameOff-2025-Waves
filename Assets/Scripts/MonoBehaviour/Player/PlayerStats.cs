@@ -9,11 +9,19 @@ public class PlayerStats : MonoBehaviour
 
     void Update()
     {
-        if (CurrentHealth < 0)
-            Die();
         if (CurrentSoul < 0)
             CurrentSoul = 0;
 
+    }
+
+    public void TakeDamage(int damage)
+    {
+        CurrentHealth -= damage;
+        if (CurrentHealth < 0)
+        {
+            CurrentHealth = 0;
+            Die();
+        }
     }
 
     private void Die()
