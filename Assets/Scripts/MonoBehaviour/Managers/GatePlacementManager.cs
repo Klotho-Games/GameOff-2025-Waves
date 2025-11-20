@@ -419,7 +419,7 @@ public class GatePlacementManager : MonoBehaviour
 
         static bool CompareTags(GameObject obj)
         {
-            return obj.CompareTag("Player") || obj.CompareTag("Gate") || obj.CompareTag("Material Enemy");
+            return obj.CompareTag("Player") || obj.CompareTag("Gate") || obj.CompareTag("Enemy");
         }
     }
 

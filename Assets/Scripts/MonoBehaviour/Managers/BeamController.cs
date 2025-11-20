@@ -157,7 +157,7 @@ public class BeamController : MonoBehaviour
     private void UpdateBeamPath()
     {
         spawnedLineRenderersNextToRedrawCache = 0;
-        StartCoroutine(DestroyAdditionalLineRenderersAtTheEndOfFrame());
+        StartCoroutine(DestroyAdditionalLineRenderersAndEffectsAtTheEndOfFrame());
 
         if (!BeamOriginIsAllGood())
             return;
@@ -200,15 +200,18 @@ public class BeamController : MonoBehaviour
         }
     }
 
-    private IEnumerator DestroyAdditionalLineRenderersAtTheEndOfFrame()
+    private IEnumerator DestroyAdditionalLineRenderersAndEffectsAtTheEndOfFrame()
     {
         yield return new WaitForEndOfFrame();
         while (spawnedLineRenderersNextToRedrawCache < SpawnedLineRenderers.Count)
         {
             Destroy(SpawnedLineRenderers[spawnedLineRenderersNextToRedrawCache].gameObject);
             SpawnedLineRenderers.RemoveAt(spawnedLineRenderersNextToRedrawCache);
-            Destroy(spawnedEffects[spawnedLineRenderersNextToRedrawCache]);
-            spawnedEffects.RemoveAt(spawnedLineRenderersNextToRedrawCache);
+            if (spawnedEffects.Count > spawnedLineRenderersNextToRedrawCache)
+            {
+                Destroy(spawnedEffects[spawnedLineRenderersNextToRedrawCache]);
+                spawnedEffects.RemoveAt(spawnedLineRenderersNextToRedrawCache);
+            }
             spawnedLineRenderersNextToRedrawCache++;
         }
     }
@@ -386,45 +389,56 @@ public class BeamController : MonoBehaviour
         Vector2 lightPosition = startPos + direction * (beamLength * 0.5f);
         
         GameObject effectObj;
+        int effectIndex = spawnedLineRenderersNextToRedrawCache - 1; // Effect index matches beam segment index
         
-        // Create particle system or empty GameObject
-        if (enableParticles)
+        // Reuse or create effect object
+        if (effectIndex < spawnedEffects.Count)
         {
-            effectObj = Instantiate(particleSystemPrefab, new Vector3(lightPosition.x, lightPosition.y, 0f), Quaternion.Euler(0, 0, angle), beamOriginTransform);
-            
-            if (effectObj.TryGetComponent<ParticleSystem>(out var ps))
-            {
-                var shape = ps.shape;
-                shape.scale = new Vector3(beamLength, 1f, 1f);
-                
-                // Stop emission so particles don't escape when destroyed
-                var emission = ps.emission;
-                emission.enabled = false;
-                
-                // Play/simulate to show existing particles, but don't emit new ones
-                ps.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-            }
+            effectObj = spawnedEffects[effectIndex];
+            effectObj.transform.SetPositionAndRotation(new Vector3(lightPosition.x, lightPosition.y, 0f), Quaternion.Euler(0, 0, angle));
         }
         else
         {
-            effectObj = new GameObject("BeamLight");
-            effectObj.transform.SetParent(beamOriginTransform);
-            effectObj.transform.SetPositionAndRotation((Vector3)lightPosition, 
-                Quaternion.Euler(0, 0, angle));
+            // Create particle system or empty GameObject
+            if (enableParticles && particleSystemPrefab != null)
+            {
+                effectObj = Instantiate(particleSystemPrefab, new Vector3(lightPosition.x, lightPosition.y, 0f), Quaternion.Euler(0, 0, angle), beamOriginTransform);
+            }
+            else
+            {
+                effectObj = new GameObject("BeamLight");
+                effectObj.transform.SetParent(beamOriginTransform);
+                effectObj.transform.SetPositionAndRotation((Vector3)lightPosition, Quaternion.Euler(0, 0, angle));
+            }
+            spawnedEffects.Add(effectObj);
         }
         
-        // Add Light2D component programmatically
+        // Update particle system if present
+        if (enableParticles && effectObj.TryGetComponent<ParticleSystem>(out var ps))
+        {
+            var shape = ps.shape;
+            shape.scale = new Vector3(beamLength, 1f, 1f);
+            
+            var emission = ps.emission;
+            emission.enabled = false;
+            
+            ps.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        }
+        
+        // Get or add Light2D component (don't stack multiple lights)
         if (enableLights)
         {
-            var light2D = effectObj.AddComponent<UnityEngine.Rendering.Universal.Light2D>();
-            light2D.lightType = UnityEngine.Rendering.Universal.Light2D.LightType.Point;
-            light2D.color = lightColor;
+            if (!effectObj.TryGetComponent<UnityEngine.Rendering.Universal.Light2D>(out var light2D))
+            {
+                light2D = effectObj.AddComponent<UnityEngine.Rendering.Universal.Light2D>();
+                light2D.lightType = UnityEngine.Rendering.Universal.Light2D.LightType.Point;
+                light2D.color = lightColor;
+            }
+            
             light2D.intensity = Mathf.Log(intensity + 1) * lightIntensityMultiplier;
             light2D.pointLightOuterRadius = beamLength * 0.5f;
             light2D.pointLightInnerRadius = 0f;
         }
-        
-        spawnedEffects.Add(effectObj);
     }
     
     private void ApplyWaveToLineRenderer(LineRenderer lr, Vector2 startPos, Vector2 endPos, int damagePerSecondOfSegment)
