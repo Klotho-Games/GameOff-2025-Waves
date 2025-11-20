@@ -74,7 +74,7 @@ public class EnemyLifeSystem : MonoBehaviour
         {
             if (!beamSegment.TryGetComponent<BeamData>(out var beamData)) continue;
             if (!beamSegment.TryGetComponent<LineRenderer>(out var beamLR)) continue;
-            if (!DoesLineIntersectCollider(beamLR.GetPosition(0), beamLR.GetPosition(1)))
+            if (!DoesLineIntersectCollider(beamLR))
                 continue;
 
             GetDamagedFromLine(beamData.damagePerSecond);
@@ -121,6 +121,31 @@ public class EnemyLifeSystem : MonoBehaviour
             if (hit.collider == coll)
             {
                 return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    private bool DoesLineIntersectCollider(LineRenderer lr)
+    {
+        // Check all segments of the LineRenderer
+        int posCount = lr.positionCount;
+        if (posCount < 2) return false;
+        
+        for (int i = 0; i < posCount - 1; i++)
+        {
+            Vector3 segmentStart = lr.GetPosition(i);
+            Vector3 segmentEnd = lr.GetPosition(i + 1);
+            
+            RaycastHit2D[] hits = Physics2D.LinecastAll(segmentStart, segmentEnd);
+            
+            foreach (RaycastHit2D hit in hits)
+            {
+                if (hit.collider == coll)
+                {
+                    return true;
+                }
             }
         }
         
