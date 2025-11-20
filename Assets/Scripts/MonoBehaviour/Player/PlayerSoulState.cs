@@ -166,7 +166,7 @@ public class PlayerSoulState : MonoBehaviour
                     return;
                 }
                 allocatedSouls += soulToAllocate;
-                playerStats.CurrentSoul -= soulToAllocate;
+                playerStats.TakeSoul(soulToAllocate);
                 soulChargeTimer = 0;
             }
         }
@@ -193,9 +193,7 @@ public class PlayerSoulState : MonoBehaviour
 
     private void CancelCharging()
     {
-        playerStats.CurrentSoul += allocatedSouls;
-        if (playerStats.CurrentSoul > playerStats.MaxSoul)
-            playerStats.CurrentSoul = playerStats.MaxSoul;
+        playerStats.AddSoul(allocatedSouls);
         allocatedSouls = 0;
         chargeTimer = 0;
         rb.linearVelocity = Vector2.zero;
@@ -213,15 +211,15 @@ public class PlayerSoulState : MonoBehaviour
             int soulNeeded = hpToHeal * SoulEconomyManager.instance.CostPerHPHealed;
             if (playerStats.CurrentSoul >= soulNeeded)
             {
-                playerStats.CurrentHealth += hpToHeal;
-                playerStats.CurrentSoul -= soulNeeded;
+                playerStats.Heal(hpToHeal);
+                playerStats.TakeSoul(soulNeeded);
                 healTimer = 0;
             }
             else
             {
                 int affordableHPToHeal = Mathf.FloorToInt(playerStats.CurrentSoul / (SoulEconomyManager.instance.CostPerHPHealed * 1f));
-                playerStats.CurrentHealth += affordableHPToHeal;
-                playerStats.CurrentSoul -= affordableHPToHeal * SoulEconomyManager.instance.CostPerHPHealed;
+                playerStats.Heal(affordableHPToHeal);
+                playerStats.TakeSoul(affordableHPToHeal * SoulEconomyManager.instance.CostPerHPHealed);
                 healTimer = 0;
             }
         }

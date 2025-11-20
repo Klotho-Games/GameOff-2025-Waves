@@ -1,17 +1,14 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public int MaxHealth = 1000;
-    public int CurrentHealth = 1000;
-    public int MaxSoul = 500;
-    public int CurrentSoul = 0;
+    public int MaxHealth { get; private set; } = 1000;
+    public int CurrentHealth { get; private set; } = 1000;
+    public int MaxSoul { get; private set; } = 500;
+    public int CurrentSoul { get; private set; } = 0;
 
-    void Update()
-    {
-        if (CurrentSoul < 0)
-            CurrentSoul = 0;
-    }
+    public event System.Action OnHealthChanged;
 
     public void TakeDamage(int damage)
     {
@@ -23,6 +20,35 @@ public class PlayerStats : MonoBehaviour
         }
         else
             CurrentHealth = temp;
+
+        OnHealthChanged?.Invoke();
+    }
+
+    public void Heal(int amount)
+    {
+        var temp = CurrentHealth + amount;
+        if (temp > MaxHealth)
+            CurrentHealth = MaxHealth;
+        else
+            CurrentHealth = temp;
+        
+        OnHealthChanged?.Invoke();
+    }
+
+    public void ResetCurrentHealth()
+    {
+        CurrentHealth = MaxHealth;
+
+        OnHealthChanged?.Invoke();
+    }
+
+    public void TakeSoul(int amount)
+    {
+        var temp = CurrentSoul - amount;
+        if (temp < 0)
+            CurrentSoul = 0;
+        else
+            CurrentSoul = temp;
     }
 
     public void AddSoul(int amount)

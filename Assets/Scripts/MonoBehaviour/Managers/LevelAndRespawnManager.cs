@@ -195,7 +195,7 @@ public class LevelAndRespawnManager : MonoBehaviour
         Time.timeScale = 1f;
         DestroyAllEnemies();
         playerTransform.position = levels[currentLevelIndex].spawnPosition;
-        playerStats.CurrentHealth = playerStats.MaxHealth;
+        playerStats.ResetCurrentHealth();
         youDiedScreen.SetActive(false);
         isDead = false;
     }

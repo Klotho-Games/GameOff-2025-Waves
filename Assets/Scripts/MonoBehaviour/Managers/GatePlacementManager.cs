@@ -173,7 +173,7 @@ public class GatePlacementManager : MonoBehaviour
         if (currentRotationIndicator == null)
             return;
 
-        playerStats.CurrentSoul -= GetGateCost(currentGateType);
+        playerStats.TakeSoul(GetGateCost(currentGateType));
 
         GameObject gatePrefab = gatePrefabs[(int)currentGateType];
         GameObject placedGate = Instantiate(gatePrefab, currentRotationIndicator.position, currentRotationIndicator.rotation, parentForPlacedGates);
