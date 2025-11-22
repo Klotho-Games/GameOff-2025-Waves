@@ -1106,10 +1106,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoulParticleChargeBurst
       objectReference: {fileID: 0}
-    - target: {fileID: 6252108855930336405, guid: 382fa539ae6c81d2b86370ec55c602bd, type: 3}
-      propertyPath: simulationSpeed
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 7327619397421690481, guid: 382fa539ae6c81d2b86370ec55c602bd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1149,18 +1145,6 @@ PrefabInstance:
     - target: {fileID: 7327619397421690481, guid: 382fa539ae6c81d2b86370ec55c602bd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7593921669068040510, guid: 382fa539ae6c81d2b86370ec55c602bd, type: 3}
-      propertyPath: playOnStart
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7593921669068040510, guid: 382fa539ae6c81d2b86370ec55c602bd, type: 3}
-      propertyPath: particleSystems.Array.data[1].delay
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8880882622627761865, guid: 382fa539ae6c81d2b86370ec55c602bd, type: 3}
-      propertyPath: simulationSpeed
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4599,6 +4583,18 @@ PrefabInstance:
       propertyPath: BeamController
       value: 
       objectReference: {fileID: 1370055743}
+    - target: {fileID: 885778590498416937, guid: 2795a4cf8aecc14eda352037261a4623, type: 3}
+      propertyPath: healingParticleSystem
+      value: 
+      objectReference: {fileID: 872584071}
+    - target: {fileID: 885778590498416937, guid: 2795a4cf8aecc14eda352037261a4623, type: 3}
+      propertyPath: enterSoulStateParticleSystem
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 885778590498416937, guid: 2795a4cf8aecc14eda352037261a4623, type: 3}
+      propertyPath: enterSoulStateParticleController
+      value: 
+      objectReference: {fileID: 698991559}
     - target: {fileID: 1294542595382735085, guid: 2795a4cf8aecc14eda352037261a4623, type: 3}
       propertyPath: m_SortingLayer
       value: 1
