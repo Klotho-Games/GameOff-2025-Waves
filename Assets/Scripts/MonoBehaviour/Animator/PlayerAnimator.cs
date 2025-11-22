@@ -3,6 +3,9 @@ using UnityEngine.EventSystems;
 
 public class PlayerAnimator : MonoBehaviour
 {
+    [Header("Soul State Particle Effects")]
+    [SerializeField] private ParticleController enterSoulStateParticleController;
+    [SerializeField] private ParticleSystem healingParticleSystem;
     [SerializeField] private Animator animator;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private GameObject BeamController;
@@ -27,6 +30,29 @@ public class PlayerAnimator : MonoBehaviour
         if (soulState.currentSoulState is not null)
         {
             SetInt("isSoulState", (int)soulState.currentSoulState);
+
+            // Play particle effects based on soul state
+            switch (soulState.currentSoulState)
+            {
+                case PlayerSoulState.SoulState.Enter:
+                    if (enterSoulStateParticleController != null)
+                        enterSoulStateParticleController.PlayAllParticleSystems();
+                    break;
+                case PlayerSoulState.SoulState.Heal:
+                    if (healingParticleSystem != null && !healingParticleSystem.isPlaying)
+                    {
+                        Debug.Log("Attempting to play healing particles");
+                        healingParticleSystem.Play();
+                    }
+                    break;
+                default:
+                    if (enterSoulStateParticleController != null)
+                        enterSoulStateParticleController.StopAllParticleSystems();
+                    // Only stop healing particles if soul state is not Heal
+                    if (healingParticleSystem != null && healingParticleSystem.isPlaying && soulState.currentSoulState != PlayerSoulState.SoulState.Heal)
+                        healingParticleSystem.Stop();
+                    break;
+            }
             return;
         }
 

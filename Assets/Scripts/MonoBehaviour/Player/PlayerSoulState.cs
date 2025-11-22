@@ -46,9 +46,7 @@ public class PlayerSoulState : MonoBehaviour
     [Tooltip("Speed at which zap indicator is moving while over an enemy, not yet implemented")]
     [SerializeField] private float zapIndicatorMoveOverEnemySpeed = 2f;
     
-    [Header("Particle Effects")]
-    [SerializeField] private ParticleController fullChargeParticleController;
-    [SerializeField] private ParticleSystem healingParticleSystem;
+    // ...existing code...
 
     [Header("Don't mess with these")]
     [SerializeField] private PlayerStats playerStats;
@@ -101,11 +99,7 @@ public class PlayerSoulState : MonoBehaviour
         playerLight.intensity = basicPlayerLight.intensity;
         playerLight.pointLightOuterRadius = basicPlayerLight.outerRadius;
         
-        // Stop healing particles when soul state is released
-        if (healingParticleSystem != null && healingParticleSystem.isPlaying)
-        {
-            healingParticleSystem.Stop();
-        }
+        // ...existing code...
         
         // reset timer, give back Souls and other things
     }
@@ -118,11 +112,7 @@ public class PlayerSoulState : MonoBehaviour
                 currentSoulState = SoulState.Enter;
                 rb.linearVelocity = Vector2.zero;
                 playerMovement.enabled = false;
-                // Play full charge particle effect when entering soul state
-                if (fullChargeParticleController != null)
-                {
-                    fullChargeParticleController.PlayAllParticleSystems();
-                }
+                // ...existing code...
                 chargeTimer = 0;
                 Charge();
                 break;
@@ -186,36 +176,19 @@ public class PlayerSoulState : MonoBehaviour
 
     private void HandleFullyChargedState()
     {
-        if (currentSoulState == SoulState.Idle)
-        {
-            if (healingParticleSystem != null && healingParticleSystem.isPlaying)
-            {
-                healingParticleSystem.Stop();
-            }
-            return;
-        }
-
         if (currentSoulState == SoulState.Full)
         {
             healTimer = 0;
         }
-        
+
         if (playerStats.CurrentHealth < playerStats.MaxHealth && playerStats.CurrentSoul >= SoulEconomyManager.instance.CostPerHPHealed)
         {
             currentSoulState = SoulState.Heal;
-            if (healingParticleSystem != null && !healingParticleSystem.isPlaying)
-            {
-                healingParticleSystem.Play();
-            }
             Heal();
         }
         else
         {
             currentSoulState = SoulState.Idle;
-            if (healingParticleSystem != null && healingParticleSystem.isPlaying)
-            {
-                healingParticleSystem.Stop();
-            }
         }
     }
 
