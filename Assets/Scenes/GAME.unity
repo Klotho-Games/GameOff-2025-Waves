@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 111005734}
   - component: {fileID: 111005733}
   m_Layer: 5
-  m_Name: Next Level Info
+  m_Name: Next Wave Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Level 1
+  m_text: Wave 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1302,13 +1302,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dd1e2730e5951003acf9304d35fa50d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPooler
-  enemyPrefabsToPool:
-  - prefab: {fileID: 0}
-    spawnWeight: 100
-  - prefab: {fileID: 0}
-    spawnWeight: 100
-  - prefab: {fileID: 0}
-    spawnWeight: 100
   poolSize: 500
 --- !u!4 &948221400
 Transform:
@@ -3973,18 +3966,18 @@ MonoBehaviour:
   - Press the button to end the tutorial.
   tutorialInstructionText: {fileID: 1209037423}
   endTutorialButton: {fileID: 1263849068}
-  tutorialEnemySpawnPos: {x: 6, y: 0}
+  tutorialEnemySpawnPos: {x: 5, y: 0}
   TutorialEnemyPrefab: {fileID: 3443801245498474183, guid: f78d4218de36a464c807eaa25cdc2057, type: 3}
   waves:
   - {fileID: 11400000, guid: 9e98129607c7a92ebb5621de5713f428, type: 2}
   currentWaveIndex: 0
-  autoStartWave: 1
+  autoStartWave: 0
   playerTransform: {fileID: 1552325820}
   cam: {fileID: 519420031}
   respawnDelay: 6
   youDiedScreen: {fileID: 391916037}
-  nextlevelScreen: {fileID: 111005730}
-  levelCompleteScreenDuration: 1.5
+  nextWaveText: {fileID: 111005733}
+  nextWaveTextShowDuration: 3
   gameCompleteScreen: {fileID: 1727602515}
   objectPooler: {fileID: 948221399}
   poolSize: 500
@@ -4208,7 +4201,7 @@ MonoBehaviour:
   - {fileID: 1964960831289686141, guid: 597e4b275c5d0be4bbe8c265e2a92b86, type: 3}
   hexGrid: {fileID: 2106973145}
   placementIndicatorPrefab: {fileID: 8784213973245083084, guid: 2c9135840fa974845b224e72437a2c61, type: 3}
-  slowmoDuringRotation: 0
+  destructionIndicatorPrefab: {fileID: 8784213973245083084, guid: 2943a3716a576e24e919f5f75b0b7a51, type: 3}
   rotationIndicatorPrefab: {fileID: 5941380524745284770, guid: 9faabfe7d4a9456489494736d6895175, type: 3}
   player: {fileID: 1552325820}
   playerStats: {fileID: 1552325829}
