@@ -680,6 +680,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &251566713
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 251566714}
+  m_Layer: 0
+  m_Name: ---CANVAS---
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &251566714
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251566713}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.60849, y: -0.25774, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &331857308
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,7 +806,6 @@ GameObject:
   - component: {fileID: 391916038}
   - component: {fileID: 391916041}
   - component: {fileID: 391916040}
-  - component: {fileID: 391916039}
   m_Layer: 5
   m_Name: You Died Panel
   m_TagString: Untagged
@@ -803,18 +833,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &391916039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 391916037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f9e3e36d7c97d64fb7aca216a68e1f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SwatchColorReference
 --- !u!114 &391916040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3238,7 +3256,6 @@ GameObject:
   - component: {fileID: 1717468284}
   - component: {fileID: 1717468287}
   - component: {fileID: 1717468286}
-  - component: {fileID: 1717468285}
   m_Layer: 5
   m_Name: You Died Text
   m_TagString: Untagged
@@ -3265,18 +3282,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1717468285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1717468283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f9e3e36d7c97d64fb7aca216a68e1f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SwatchColorReference
 --- !u!114 &1717468286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3786,7 +3791,7 @@ MonoBehaviour:
   nextWaveText: {fileID: 111005733}
   nextWaveTextShowDuration: 3
   gameCompleteScreen: {fileID: 1727602515}
-  objectPooler: {fileID: 948221399}
+  objectPooler: {fileID: 0}
   poolSize: 500
 --- !u!4 &1897987069
 Transform:
@@ -4012,7 +4017,6 @@ MonoBehaviour:
   rotationIndicatorPrefab: {fileID: 5941380524745284770, guid: 9faabfe7d4a9456489494736d6895175, type: 3}
   player: {fileID: 1552325820}
   playerStats: {fileID: 1552325829}
-  minimumLightIntensity: 0.5
   cam: {fileID: 519420031}
   parentForPlacedGates: {fileID: 1546054142}
   gateLayer:
@@ -4532,8 +4536,10 @@ SceneRoots:
   - {fileID: 133823648}
   - {fileID: 1286122612}
   - {fileID: 2106973146}
-  - {fileID: 948221400}
   - {fileID: 1546054142}
   - {fileID: 6631845881490349456}
   - {fileID: 1585594848}
   - {fileID: 4540798148290968415}
+  - {fileID: 251566714}
+  - {fileID: 1450780084}
+  - {fileID: 2083989087}
