@@ -18,7 +18,6 @@ public class PlayerSoulState : MonoBehaviour
     public enum SoulState
     {
         Enter, // charging up
-        Full,  // fully charged
         Idle, // already charged
         Heal, // continous healing when fully charged
         Blast // Soul Blast attack
@@ -28,7 +27,7 @@ public class PlayerSoulState : MonoBehaviour
     
 
     [Header("Charging")]
-    [SerializeField] private float chargeDuration = 2f;
+    public float chargeDuration = 2f;
 
     [Header("Healing")]
     [SerializeField] private int HPAmountPerSecond = 5;
@@ -119,17 +118,6 @@ public class PlayerSoulState : MonoBehaviour
 
             case SoulState.Enter:
                 Charge();
-                // After charging, always check for healing
-                if (currentSoulState == SoulState.Full)
-                {
-                    // Immediately check for healing after charge completes
-                    HandleFullyChargedState();
-                }
-                break;
-
-            case SoulState.Full:
-                // Always check for healing when fully charged
-                HandleFullyChargedState();
                 break;
 
             case SoulState.Idle:
@@ -166,21 +154,16 @@ public class PlayerSoulState : MonoBehaviour
         float outerRadiusEased = EvaluateEase(chargeFraction, outerRadiusTweenEase);
         playerLight.pointLightOuterRadius = Mathf.Lerp(basicPlayerLight.outerRadius, chargedPlayerLight.outerRadius, outerRadiusEased);
 
-        // When charge completes, set state to Full
-        if (chargeFraction >= 1f)
+        if (chargeFraction >= 1f) // When charge completes
         {
-            currentSoulState = SoulState.Full;
             chargeTimer = 0;
+            healTimer = 0;
+            HandleFullyChargedState();
         }
     }
 
     private void HandleFullyChargedState()
     {
-        if (currentSoulState == SoulState.Full)
-        {
-            healTimer = 0;
-        }
-
         if (playerStats.CurrentHealth < playerStats.MaxHealth && playerStats.CurrentSoul >= SoulEconomyManager.instance.CostPerHPHealed)
         {
             currentSoulState = SoulState.Heal;

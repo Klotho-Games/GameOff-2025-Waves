@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class PlayerAnimator : MonoBehaviour
 {
     [Header("Soul State Particle Effects")]
@@ -24,6 +25,12 @@ public class PlayerAnimator : MonoBehaviour
         Left,
         Back_Left
     } */
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+        animator.SetFloat("inverseOfChargeDuration", 1f / soulState.chargeDuration);
+    }
 
     void Update()
     {
