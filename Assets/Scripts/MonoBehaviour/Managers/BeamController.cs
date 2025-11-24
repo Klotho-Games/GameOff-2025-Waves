@@ -32,7 +32,7 @@ public class BeamController : MonoBehaviour
     public List<LineRenderer> SpawnedLineRenderers { get; private set; } = new();
     private readonly List<GameObject> spawnedEffects = new();
 
-    private Vector2 facingDirection;
+    //private Vector2 facingDirection;
     private Vector2 lastBeamDirection = Vector2.zero;
     private int spawnedLineRenderersNextToRedrawCache = 0;
 
@@ -62,7 +62,7 @@ public class BeamController : MonoBehaviour
 
     void Start()
     {
-        FacingDirectionUpdate();
+        // FacingDirectionUpdate();
     }
 
     private void FixedUpdate()
@@ -124,7 +124,7 @@ public class BeamController : MonoBehaviour
         return true;
     }
 
-    private void FacingDirectionUpdate()
+    /* private void FacingDirectionUpdate()
     {
         if (animator.GetInteger("isShootingWhileMovingInDirection") != -1)
         {
@@ -152,7 +152,7 @@ public class BeamController : MonoBehaviour
                 _ => Vector2.up,
             };
         }
-    }
+    } */
 
     private void UpdateBeamPath()
     {
@@ -167,20 +167,15 @@ public class BeamController : MonoBehaviour
         {
             if (lastBeamDirection != Vector2.zero)
                 direction = lastBeamDirection;
-            else
-            {
-                FacingDirectionUpdate();
-                direction = facingDirection; // fallback to direction player is facing
-            }
         }
         else
         {
             lastBeamDirection = direction;
         }
 
-        DrawNextBeam(_intensity + 1, (Vector2)beamOriginTransform.position, playerSoulState.currentSoulState is null ? TranslateDirection(direction) : direction, null, _damagePerSecond);
+        DrawNextBeam(_intensity + 1, (Vector2)beamOriginTransform.position, direction, null, _damagePerSecond);
 
-        Vector2 TranslateDirection(Vector2 direction)
+        /* Vector2 TranslateDirection(Vector2 direction)
         {
             FacingDirectionUpdate();
 
@@ -197,7 +192,7 @@ public class BeamController : MonoBehaviour
             Vector2 clampedDirection = Quaternion.Euler(0, 0, clampedAngle) * facingDirection;
             float mirroredAngle = beamConeAngle - Vector2.Angle(direction, clampedDirection); 
             return Quaternion.Euler(0, 0, mirroredAngle * sign) * facingDirection;
-        }
+        } */
     }
 
     private IEnumerator DestroyAdditionalLineRenderersAndEffectsAtTheEndOfFrame()

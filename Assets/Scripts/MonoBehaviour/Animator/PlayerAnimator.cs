@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class PlayerAnimator : MonoBehaviour
 {
@@ -7,13 +6,13 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private ParticleController enterSoulStateParticleController;
     [SerializeField] private ParticleSystem healingParticleSystem;
     [SerializeField] private Animator animator;
-    [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private GameObject BeamController;
+    // [SerializeField] private Rigidbody2D rb;
+    // [SerializeField] private GameObject BeamController;
     [SerializeField] private PlayerSoulState soulState;
 
-    private const float threshold = 1e-4f;
+    // private const float threshold = 1e-4f;
 
-    enum Direction_8
+/*     enum Direction_8
     {
         Back,
         Back_Right,
@@ -23,43 +22,38 @@ public class PlayerAnimator : MonoBehaviour
         Forward_Left,
         Left,
         Back_Left
-    }
+    } */
 
     void Update()
     {
         if (soulState.currentSoulState is not null)
         {
-            SetInt("isSoulState", (int)soulState.currentSoulState);
-
-            // Play particle effects based on soul state
-            switch (soulState.currentSoulState)
+            animator.SetBool("isSoulState", true);
+            if (soulState.currentSoulState == PlayerSoulState.SoulState.Heal)
             {
-                case PlayerSoulState.SoulState.Enter:
-                    if (enterSoulStateParticleController != null)
-                        enterSoulStateParticleController.PlayAllParticleSystems();
-                    break;
-                case PlayerSoulState.SoulState.Heal:
-                    if (healingParticleSystem != null && !healingParticleSystem.isPlaying)
-                    {
-                        Debug.Log("Attempting to play healing particles");
-                        healingParticleSystem.Play();
-                    }
-                    break;
-                default:
-                    if (enterSoulStateParticleController != null)
-                        enterSoulStateParticleController.StopAllParticleSystems();
-                    // Only stop healing particles if soul state is not Heal
-                    if (healingParticleSystem != null && healingParticleSystem.isPlaying && soulState.currentSoulState != PlayerSoulState.SoulState.Heal)
-                        healingParticleSystem.Stop();
-                    break;
+                animator.SetBool("isHealing", true);
+                if (!healingParticleSystem.isPlaying)
+                {
+                    healingParticleSystem.Play();
+                }
             }
-            return;
+            else
+            {
+                animator.SetBool("isHealing", false);
+                if (healingParticleSystem.isPlaying)
+                {
+                    healingParticleSystem.Stop();
+                }
+            }
         }
-
-        Movement();
+        else
+        {
+            animator.SetBool("isHealing", false);
+            animator.SetBool("isSoulState", false);
+        }  
     }
 
-    private void Movement()
+    /* private void Movement()
     {
         if (Mathf.Abs(rb.linearVelocityX) > threshold || Mathf.Abs(rb.linearVelocityY) > threshold)
         {
@@ -173,20 +167,11 @@ public class PlayerAnimator : MonoBehaviour
                 SetInt("isMovingInDirection", (int)direction);
             }
         }
-    }
+    }*/
 
     void DisableOtherParameters(string parameterToKeep)
     {
-        if (parameterToKeep != "isMovingInDirection")
-            animator.SetInteger("isMovingInDirection", -1);
-        if (parameterToKeep != "isIdleFacing")
-            animator.SetInteger("isIdleFacing", -1);
-        if (parameterToKeep != "isShootingWhileMovingInDirection")
-            animator.SetInteger("isShootingWhileMovingInDirection", -1);
-        if (parameterToKeep != "isShootingFacing")
-            animator.SetInteger("isShootingFacing", -1);
-        if (parameterToKeep != "isSoulState")
-            animator.SetInteger("isSoulState", -1);
+        
     }
 
     void SetInt(string parameter, int value)

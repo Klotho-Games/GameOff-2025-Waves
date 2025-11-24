@@ -467,7 +467,7 @@ public class GatePlacementManager : MonoBehaviour
             }
         }
 
-        Debug.Log("Cannot place gate on any diagonal at " + cellPosition);
+        //Debug.Log("Cannot place gate on any diagonal at " + cellPosition);
         return false;
     }
     
