@@ -86,30 +86,39 @@ public class GatePlacementManager : MonoBehaviour
 
     void OnGateTypeRight()
     {
-        do
-        {
-            currentGateType = (GateType)(((int)currentGateType + 1) % gatePrefabs.Count);
-        }
-        while (currentGateType == GateType.DivergingLens || currentGateType == GateType.OneWayMirror);
-
-        if (currentGateTypeDisplayText != null)
-        {
-            currentGateTypeDisplayText.text = GetCurrentGateTypeString();
-        }
+        OnGateTypeChange(toRight: true);
     }
 
     void OnGateTypeLeft()
     {
+        OnGateTypeChange(toRight: false);
+    }
+    
+    private void OnGateTypeChange(bool toRight)
+    {
+        GateType gateToChangeTo = currentGateType;
         do
         {
-            currentGateType = (GateType)(((int)currentGateType - 1 + gatePrefabs.Count) % gatePrefabs.Count);
+            if (toRight)
+                gateToChangeTo = (GateType)(((int)gateToChangeTo + 1) % gatePrefabs.Count);
+            else
+                gateToChangeTo = (GateType)(((int)gateToChangeTo - 1 + gatePrefabs.Count) % gatePrefabs.Count);
+            
+            if (gateToChangeTo == currentGateType)
+                return;
         }
-        while (currentGateType == GateType.DivergingLens || currentGateType == GateType.OneWayMirror);
+        while ( gateToChangeTo == GateType.DivergingLens 
+                || gateToChangeTo == GateType.OneWayMirror 
+                || (isInRotationMode 
+                    && GetGateCost(gateToChangeTo) > playerStats.CurrentSoul));
+
+        currentGateType = gateToChangeTo;
 
         if (currentGateTypeDisplayText != null)
         {
             currentGateTypeDisplayText.text = GetCurrentGateTypeString();
         }
+    
     }
 
     private string GetCurrentGateTypeString()
@@ -462,20 +471,20 @@ public class GatePlacementManager : MonoBehaviour
         return false;
     }
     
-    private bool IsPossibleToPlaceGateOnDiagonal(int diagonalIndex, Vector2Int cellGridPosition = default, Vector2 cellWorldPosition = default)
+    private bool IsPossibleToPlaceGateOnDiagonal(int diagonalIndex, Vector2Int? cellGridPosition = null, Vector2? cellWorldPosition = null)
     {
-        if (cellWorldPosition == default)
+        if (cellWorldPosition.HasValue == false)
         {
-            if (cellGridPosition == default)
+            if (cellGridPosition.HasValue == false)
             {
                 Debug.LogError("[GatePlacementManager]: Neither cellPosition nor cellWorldPosition has been specified");
                 return false;
             }
-            cellWorldPosition = hexGrid.GetCellCenterWorld((Vector3Int)cellGridPosition);
+            cellWorldPosition = hexGrid.GetCellCenterWorld((Vector3Int)cellGridPosition.Value);
         }
 
-        Vector2 diagonalStart = cellWorldPosition + GetStartOffset(diagonalIndex);
-        Vector2 diagonalEnd = cellWorldPosition + GetEndOffset(diagonalIndex);
+        Vector2 diagonalStart = cellWorldPosition.Value + GetStartOffset(diagonalIndex);
+        Vector2 diagonalEnd = cellWorldPosition.Value + GetEndOffset(diagonalIndex);
         /* 
         if (debugLineRenderer == null)
         {
@@ -512,7 +521,7 @@ public class GatePlacementManager : MonoBehaviour
         
         void ShowGateDestructionIndicator()
         {
-            Instantiate(destructionIndicatorPrefab, cellWorldPosition, Quaternion.identity, hexGrid.transform);
+            Instantiate(destructionIndicatorPrefab, cellWorldPosition.Value, Quaternion.identity, hexGrid.transform);
         }
 
         Vector2 GetStartOffset(int id)

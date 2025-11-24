@@ -214,7 +214,7 @@ public class LevelAndRespawnManager : MonoBehaviour
                 }
                 break;
             case 1:
-                if (transform.GetChild(0).GetComponent<SoulShard>() != null)
+                if (transform.childCount > 0 && transform.GetChild(0).GetComponent<SoulShard>() != null)
                 {
                     currentTutorialStep++;
                 }
