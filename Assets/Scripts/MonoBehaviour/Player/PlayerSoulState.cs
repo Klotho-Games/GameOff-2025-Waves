@@ -44,12 +44,9 @@ public class PlayerSoulState : MonoBehaviour
     [SerializeField] private float zapIndicatorMoveSpeed = 5f;
     [Tooltip("Speed at which zap indicator is moving while over an enemy, not yet implemented")]
     [SerializeField] private float zapIndicatorMoveOverEnemySpeed = 2f;
-    
-    // ...existing code...
 
     [Header("Don't mess with these")]
     [SerializeField] private PlayerStats playerStats;
-    [SerializeField] private Animator animator;
     [SerializeField] private Light2D playerLight;
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private Rigidbody2D rb;
@@ -58,7 +55,6 @@ public class PlayerSoulState : MonoBehaviour
     
     private int allocatedSouls = 0;
     private float chargeTimer = 0;
-    private float soulChargeTimer = 0;
     private float healTimer = 0;
     private bool isZapping = false;
     private Vector2 zapIndicatorDirection = Vector2.zero;
@@ -93,26 +89,23 @@ public class PlayerSoulState : MonoBehaviour
         {
             currentSoulState = null;
             CancelCharging();
+            
+            playerLight.intensity = basicPlayerLight.intensity;
+            playerLight.pointLightOuterRadius = basicPlayerLight.outerRadius;
+
+            chargeTimer = 0;
         }
-        
-        playerLight.intensity = basicPlayerLight.intensity;
-        playerLight.pointLightOuterRadius = basicPlayerLight.outerRadius;
-        
-        // ...existing code...
-        
-        // reset timer, give back Souls and other things
     }
 
     private void UpdateSoulState()
     {        
         switch (currentSoulState)
         {
-            case null:
-                currentSoulState = SoulState.Enter;
+            case null: // input received to enter soul state
                 rb.linearVelocity = Vector2.zero;
                 playerMovement.enabled = false;
-                // ...existing code...
                 chargeTimer = 0;
+                currentSoulState = SoulState.Enter;
                 Charge();
                 break;
 

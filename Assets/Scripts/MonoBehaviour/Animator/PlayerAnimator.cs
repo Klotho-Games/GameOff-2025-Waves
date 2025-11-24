@@ -45,10 +45,14 @@ public class PlayerAnimator : MonoBehaviour
 
             if (soulState.currentSoulState == PlayerSoulState.SoulState.Heal)
             {
+                if (!healingParticleSystem.isPlaying)
+                    healingParticleSystem.Play();
                 animator.SetBool("isHealing", true);
             }
             else
             {
+                if (healingParticleSystem.isPlaying)
+                    healingParticleSystem.Stop();
                 animator.SetBool("isHealing", false);
             }
 
@@ -56,6 +60,9 @@ public class PlayerAnimator : MonoBehaviour
         }
         else
         {
+            if (healingParticleSystem.isPlaying)
+                healingParticleSystem.Stop();
+
             animator.SetBool("isHealing", false);
             animator.SetBool("isSoulState", false);
 
