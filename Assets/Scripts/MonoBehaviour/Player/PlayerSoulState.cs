@@ -5,16 +5,6 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerSoulState : MonoBehaviour
 {
-    /// <summary>
-    /// Light properties: intensity, outer radius
-    /// </summary>
-    [Serializable]
-    public struct Light
-    {
-        public float intensity;
-        public float outerRadius;
-    }
-
     public enum SoulState
     {
         Enter, // charging up
@@ -31,12 +21,6 @@ public class PlayerSoulState : MonoBehaviour
 
     [Header("Healing")]
     [SerializeField] private int HPAmountPerSecond = 5;
-
-    [Header("Light Properties")]
-    [SerializeField] private Light basicPlayerLight = new() { intensity = 2f, outerRadius = 7f };
-    [SerializeField] private Light chargedPlayerLight = new() { intensity = 3f, outerRadius = 9f };
-    [SerializeField] private Ease intensityTweenEase = Ease.Linear;
-    [SerializeField] private Ease outerRadiusTweenEase = Ease.Linear;
 
     [Header("Soul Zap Attack")]
     [SerializeField] private float hitRadius = 1f;
@@ -89,9 +73,6 @@ public class PlayerSoulState : MonoBehaviour
         {
             currentSoulState = null;
             CancelCharging();
-            
-            playerLight.intensity = basicPlayerLight.intensity;
-            playerLight.pointLightOuterRadius = basicPlayerLight.outerRadius;
 
             chargeTimer = 0;
         }
@@ -140,12 +121,6 @@ public class PlayerSoulState : MonoBehaviour
         chargeTimer += Time.deltaTime;
 
         float chargeFraction = Mathf.Clamp01(chargeTimer / chargeDuration);
-        // Manually interpolate light values using the charge fraction with easing
-        float intensityEased = EvaluateEase(chargeFraction, intensityTweenEase);
-        playerLight.intensity = Mathf.Lerp(basicPlayerLight.intensity, chargedPlayerLight.intensity, intensityEased);
-
-        float outerRadiusEased = EvaluateEase(chargeFraction, outerRadiusTweenEase);
-        playerLight.pointLightOuterRadius = Mathf.Lerp(basicPlayerLight.outerRadius, chargedPlayerLight.outerRadius, outerRadiusEased);
 
         if (chargeFraction >= 1f) // When charge completes
         {
@@ -175,8 +150,6 @@ public class PlayerSoulState : MonoBehaviour
         chargeTimer = 0;
         rb.linearVelocity = Vector2.zero;
         playerMovement.enabled = true;
-        playerLight.intensity = basicPlayerLight.intensity;
-        playerLight.pointLightOuterRadius = basicPlayerLight.outerRadius;
     }
 
     private void Heal()

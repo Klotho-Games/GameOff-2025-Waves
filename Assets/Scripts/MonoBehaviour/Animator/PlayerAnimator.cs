@@ -7,24 +7,9 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private ParticleController enterSoulStateParticleController;
     [SerializeField] private ParticleSystem healingParticleSystem;
     [SerializeField] private Animator animator;
-    // [SerializeField] private Rigidbody2D rb;
-    // [SerializeField] private GameObject BeamController;
     [SerializeField] private PlayerSoulState soulState;
     private bool wasSoulStateLastFrame = false;
 
-    // private const float threshold = 1e-4f;
-
-/*     enum Direction_8
-    {
-        Back,
-        Back_Right,
-        Right,
-        Forward_Right,
-        Forward,
-        Forward_Left,
-        Left,
-        Back_Left
-    } */
 
     void Start()
     {
@@ -39,6 +24,12 @@ public class PlayerAnimator : MonoBehaviour
             if (!wasSoulStateLastFrame)
             {
                 animator.SetTrigger("startSoulState");
+
+                if (enterSoulStateParticleController != null)
+                {
+                    enterSoulStateParticleController.gameObject.SetActive(true);
+                    enterSoulStateParticleController.PlayAllParticleSystems();
+                }
             }
 
             animator.SetBool("isSoulState", true);
@@ -47,13 +38,11 @@ public class PlayerAnimator : MonoBehaviour
             {
                 if (!healingParticleSystem.isPlaying)
                     healingParticleSystem.Play();
-                animator.SetBool("isHealing", true);
             }
             else
             {
                 if (healingParticleSystem.isPlaying)
                     healingParticleSystem.Stop();
-                animator.SetBool("isHealing", false);
             }
 
             wasSoulStateLastFrame = true;
@@ -63,13 +52,45 @@ public class PlayerAnimator : MonoBehaviour
             if (healingParticleSystem.isPlaying)
                 healingParticleSystem.Stop();
 
-            animator.SetBool("isHealing", false);
+            if (enterSoulStateParticleController != null)
+            {
+                enterSoulStateParticleController.gameObject.SetActive(false);
+            }
+
             animator.SetBool("isSoulState", false);
 
             wasSoulStateLastFrame = false;
         }  
     }
+    
 
+    /* void DisableOtherParameters(string parameterToKeep)
+    {
+        
+    }
+
+    void SetInt(string parameter, int value)
+    {
+        animator.SetInteger(parameter, value);
+        DisableOtherParameters(parameter);
+    } */
+
+    // [SerializeField] private Rigidbody2D rb;
+    // [SerializeField] private GameObject BeamController;
+
+    // private const float threshold = 1e-4f;
+
+/*     enum Direction_8
+    {
+        Back,
+        Back_Right,
+        Right,
+        Forward_Right,
+        Forward,
+        Forward_Left,
+        Left,
+        Back_Left
+    } */
     /* private void Movement()
     {
         if (Mathf.Abs(rb.linearVelocityX) > threshold || Mathf.Abs(rb.linearVelocityY) > threshold)
@@ -185,15 +206,4 @@ public class PlayerAnimator : MonoBehaviour
             }
         }
     }*/
-
-    void DisableOtherParameters(string parameterToKeep)
-    {
-        
-    }
-
-    void SetInt(string parameter, int value)
-    {
-        animator.SetInteger(parameter, value);
-        DisableOtherParameters(parameter);
-    }
 }
