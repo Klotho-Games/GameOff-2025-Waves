@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37a197cb98bc793af9149a5083064b0f, type: 3}
-  m_Name: Wave1_2
+  m_Name: Wave2_5
   m_EditorClassIdentifier: Assembly-CSharp::WaveDataSO
-  waveDuration: 2
+  waveDuration: 10
   startingSpawnInterval: 1
   spawnIntervalDecrement: 0.01
   minSpawnInterval: 0.4

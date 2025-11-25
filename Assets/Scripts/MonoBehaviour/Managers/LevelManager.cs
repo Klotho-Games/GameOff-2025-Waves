@@ -40,8 +40,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] private float respawnDelay = 2f;
     [SerializeField] private GameObject youDiedScreen;
-    [SerializeField] private TMPro.TMP_Text nextWaveText;
-    [SerializeField] private float nextWaveTextShowDuration = 3f;
+    [SerializeField] private TMPro.TMP_Text waveText;
+    [SerializeField] private float waveTextShowDuration = 3f;
     [SerializeField] private GameObject gameCompleteScreen;
     [SerializeField] private SpriteRenderer floorRenderer;
     [Header("Pooling Settings")]
@@ -121,12 +121,15 @@ public class LevelManager : MonoBehaviour
         
         currentWaveIndex = waveIndex;
         waveCoroutine = StartCoroutine(SpawnWaveCoroutine(levels[currentLevelIndex].waves[currentWaveIndex].waveData));
-        ShowNextWaveText();
+        ShowWaveText();
 
-        void ShowNextWaveText()
+        void ShowWaveText()
         {
-            nextWaveText.text = $"Wave {waveIndex + 1}";
-            StartCoroutine(ShowForSeconds(nextWaveText.gameObject, nextWaveTextShowDuration));
+            if (waveIndex == 0)
+                waveText.text = $"Level {currentLevelIndex + 1}\nWave {waveIndex + 1}";
+            else
+                waveText.text = $"Wave {waveIndex + 1}";
+            StartCoroutine(ShowForSeconds(waveText.gameObject, waveTextShowDuration));
         }
     }
 
@@ -211,6 +214,21 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Starting Tutorial");
 
         Time.timeScale = 1f;
+
+        if (isTutorial)
+        {
+            if (waveCoroutine != null)
+            {
+                StopCoroutine(waveCoroutine);
+                waveCoroutine = null;
+            }
+
+            if (startNextWaveCoroutine != null)
+            {
+                StopCoroutine(startNextWaveCoroutine);
+                startNextWaveCoroutine = null;
+            }
+        }
 
         isPlaying = true;
         isTutorial = true;

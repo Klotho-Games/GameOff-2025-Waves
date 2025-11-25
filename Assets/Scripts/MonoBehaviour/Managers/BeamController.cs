@@ -8,12 +8,8 @@ public class BeamController : MonoBehaviour
 
     [SerializeField] private int _damagePerSecond = 10;
     [SerializeField] private int _intensity = 10;
-    [SerializeField] private float beamConeAngle = 45f;
-    [SerializeField] private Camera mainCamera;
     [SerializeField] private Transform beamOriginTransform;
     [SerializeField] private GameObject lineRendererObjectPrefab;
-    [SerializeField] private PlayerSoulState playerSoulState;
-    [SerializeField] private Animator animator;
     
     [Header("Beam Wave Settings")]
     [SerializeField] private bool enableWave = true;
