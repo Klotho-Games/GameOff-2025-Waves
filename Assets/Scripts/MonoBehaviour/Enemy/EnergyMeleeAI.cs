@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnergyMeleeAI : MonoBehaviour
 {
     [SerializeField] private Enemy enemyData;
-    public Transform PlayerTransform { get; private set; }
+    public Transform PlayerTransform;
     private Animator animator;
     private PlayerStats playerStats;
     private float attackCooldownTimer = 0f;
@@ -16,6 +16,8 @@ public class EnergyMeleeAI : MonoBehaviour
 
     void Update()
     {
+        if (gameObject.activeInHierarchy == false)
+            return;
         float distanceToPlayer = Vector3.Distance(transform.position, PlayerTransform.position);
         AttackOrMove(distanceToPlayer);
     }

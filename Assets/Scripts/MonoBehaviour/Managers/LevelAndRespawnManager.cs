@@ -29,7 +29,7 @@ public class LevelAndRespawnManager : MonoBehaviour
     [SerializeField] private TMPro.TMP_Text tutorialInstructionText;
     [SerializeField] private GameObject endTutorialButton;
     [SerializeField] private Vector2 tutorialEnemySpawnPos;
-    [SerializeField] private GameObject TutorialEnemyPrefab;
+    [SerializeField] private GameObject TutorialEnemy;
     private int currentTutorialStep = 0;
     private bool tutorialEnemyIsRespawning = false;
     private readonly Transform childLastFrame;
@@ -167,10 +167,9 @@ public class LevelAndRespawnManager : MonoBehaviour
         currentTutorialStep = 0;
         tutorialInstructionText.gameObject.SetActive(true);
         GatePlacementManager.instance.DestroyAllPlacedGates();
-        DestroyAllEnemiesAndSoulShards();
-        // currentLevelIndex = 0;
         RespawnPlayer();
         playerStats.TakeDamage(200);
+        StartCoroutine(RespawnTutorialEnemyAfterDelay(0f));
     }
 
     void Update()
@@ -257,7 +256,12 @@ public class LevelAndRespawnManager : MonoBehaviour
     {
         tutorialEnemyIsRespawning = true;
         yield return new WaitForSeconds(delay);
-        Instantiate(TutorialEnemyPrefab, (Vector3)tutorialEnemySpawnPos, Quaternion.identity, transform);
+        TutorialEnemy.SetActive(true);
+        TutorialEnemy.transform.parent = transform;
+        
+        // Re-initialize the enemy AI when respawning
+        InitializeEnemyAI(TutorialEnemy);
+        
         tutorialEnemyIsRespawning = false;
     }
 

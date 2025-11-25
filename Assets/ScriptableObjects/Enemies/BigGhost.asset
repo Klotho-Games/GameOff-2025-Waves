@@ -22,5 +22,5 @@ MonoBehaviour:
   attacks:
   - attackType: 0
     attackDamage: 150
-    attackRange: 0.4
+    attackRange: 1.2
     attackCooldown: 0.5

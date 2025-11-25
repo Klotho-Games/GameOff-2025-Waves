@@ -1389,8 +1389,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "<i>Controller isn't fully supported yet</i>\n\n\n<b>Controls cheat sheet:</b>\n\n<b>WASD</b>
     - move\n<b>Left Mouse</b> - shoot\n\n<b>Shift</b> - charge using soul, heal and/or
-    use special attacks\n\n<b>Densoul indicator in top-right</b>\n<b>Ctrl</b> - choose
-    densoul placement, \n<b>Tab</b> / <b>Q</b> - switch densoul type"
+    (coming soon) use special attacks\n\n<b>Densoul indicator in top-right</b>\n<b>Ctrl</b>
+    - choose densoul placement, \n<b>Tab</b> / <b>Q</b> - switch densoul type"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2392,6 +2392,83 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WordsizeCanvasScaler
   cam: {fileID: 519420031}
+--- !u!1001 &1458507388
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 78532269484941420, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
+      propertyPath: m_Name
+      value: Tutorial Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1252873072020208237, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
+      propertyPath: enemyData
+      value: 
+      objectReference: {fileID: 11400000, guid: f56ec255eb3eebe47b48e907361bed04, type: 2}
+    - target: {fileID: 1252873072020208237, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
+      propertyPath: playerStats
+      value: 
+      objectReference: {fileID: 7399529290342890365}
+    - target: {fileID: 1252873072020208237, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
+      propertyPath: PlayerTransform
+      value: 
+      objectReference: {fileID: 7645830644634311192}
+    - target: {fileID: 5923828071285120862, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5923828071285120862, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5923828071285120862, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5923828071285120862, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5923828071285120862, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5923828071285120862, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5923828071285120862, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5923828071285120862, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5923828071285120862, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5923828071285120862, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6138798462065360501, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
+      propertyPath: enemyData
+      value: 
+      objectReference: {fileID: 11400000, guid: f56ec255eb3eebe47b48e907361bed04, type: 2}
+    - target: {fileID: 6138798462065360501, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
+      propertyPath: isTutorialEnemy
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
 --- !u!1 &1546054141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2486,34 +2563,34 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 1585594846}
     m_ColliderPaths:
-    - - X: 313474848
+    - - X: 531714016
         Y: 299089120
-      - X: -313474848
+      - X: -531714016
         Y: 299089120
-      - X: -313474848
+      - X: -531714016
         Y: -299089120
-      - X: 313474848
+      - X: 531714016
         Y: -299089120
   - m_Collider: {fileID: 1585594845}
     m_ColliderPaths:
-    - - X: 208983232
+    - - X: 354476000
         Y: 199392752
-      - X: -208983232
+      - X: -354476000
         Y: 199392752
-      - X: -208983232
+      - X: -354476000
         Y: -199392752
-      - X: 208983232
+      - X: 354476000
         Y: -199392752
   m_CompositePaths:
     m_Paths:
-    - - {x: 31.347456, y: -29.908913}
-      - {x: 31.347456, y: 29.908913}
-      - {x: -31.347485, y: 29.908884}
-      - {x: -31.347456, y: -29.908913}
-    - - {x: 20.898323, y: -19.939247}
-      - {x: -20.898323, y: -19.939247}
-      - {x: -20.898294, y: 19.939276}
-      - {x: 20.898323, y: 19.939247}
+    - - {x: 53.171375, y: -29.908913}
+      - {x: 53.171375, y: 29.908913}
+      - {x: -53.171402, y: 29.908884}
+      - {x: -53.171375, y: -29.908913}
+    - - {x: 35.4476, y: -19.939247}
+      - {x: -35.4476, y: -19.939247}
+      - {x: -35.44757, y: 19.939276}
+      - {x: 35.4476, y: 19.939247}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -2660,7 +2737,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20.898323, y: 19.939276, z: 0}
+  m_LocalScale: {x: 35.4476, y: 19.939276, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3079,6 +3156,11 @@ MeshRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1712254273 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 78532269484941420, guid: 7016aca09c37aac4e9db89d9179850a5, type: 3}
+  m_PrefabInstance: {fileID: 1458507388}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1713728333
 GameObject:
   m_ObjectHideFlags: 0
@@ -3779,7 +3861,7 @@ MonoBehaviour:
   - Use WASD to move around.
   - Shoot the enemy with your mouse.
   - Collect the <i>Soul Shard</i> dropped by the enemy.
-  - Enter <i>Soul State</i> and charge to fully heal.
+  - 'Enter <i>Soul State</i>: collect more shards and charge to heal yourself!'
   - 'Place a <i>Densoul</i>: collect enough Soul; press Ctrl; click location; hit
     Space to place with current rotation.'
   - Press Q or Tab to switch items.
@@ -3787,7 +3869,7 @@ MonoBehaviour:
   tutorialInstructionText: {fileID: 1209037423}
   endTutorialButton: {fileID: 1263849068}
   tutorialEnemySpawnPos: {x: 5, y: 0}
-  TutorialEnemyPrefab: {fileID: 3443801245498474183, guid: f78d4218de36a464c807eaa25cdc2057, type: 3}
+  TutorialEnemy: {fileID: 1712254273}
   waves:
   - {fileID: 11400000, guid: 9e98129607c7a92ebb5621de5713f428, type: 2}
   currentWaveIndex: 0
@@ -4763,7 +4845,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &2735184478990295277
 GameObject:
   m_ObjectHideFlags: 0
@@ -20189,6 +20271,7 @@ SceneRoots:
   - {fileID: 1546054142}
   - {fileID: 7645830644634311192}
   - {fileID: 1585594848}
+  - {fileID: 1458507388}
   - {fileID: 4540798148290968415}
   - {fileID: 127907763}
   - {fileID: 251566714}

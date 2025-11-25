@@ -8,6 +8,7 @@ public class EnemyLifeSystem : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float redColorPercent = 0.6f; // Percent HP at which color is fully red
     [SerializeField] private Color originalColor;
     [SerializeField] private GameObject soulShardPrefab;
+    [SerializeField] private bool isTutorialEnemy = false;
 
     private int currentHP;
 
@@ -54,6 +55,14 @@ public class EnemyLifeSystem : MonoBehaviour
     {
         // Handle enemy death (e.g., play animation, drop rewards)
         SpawnSoulShard();
+
+        if (isTutorialEnemy)
+        {
+            gameObject.SetActive(false);
+            gameObject.transform.parent = null;
+            return;
+        }
+
         Destroy(gameObject);
     }
 
