@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dd1e2730e5951003acf9304d35fa50d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPooler
-  poolSize: 100
+  poolSize: 50
 --- !u!4 &127907763
 Transform:
   m_ObjectHideFlags: 0
@@ -451,8 +451,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283949311
-  m_fontColor: {r: 1, g: 0.8771034, b: 0.33999997, a: 1}
+    rgba: 4282162353
+  m_fontColor: {r: 0.695, g: 0.6105098, b: 0.23711768, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -564,6 +564,135 @@ MeshRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 11
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &152246874
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 152246879}
+  - component: {fileID: 152246878}
+  - component: {fileID: 152246877}
+  - component: {fileID: 152246876}
+  - component: {fileID: 152246875}
+  m_Layer: 31
+  m_Name: Place Gate When In Rotation Mode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &152246875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152246874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5a5991eaa78a0f43926890592d685a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Clickable2D
+  clickSound: {fileID: 0}
+  specialFunction: 7
+  enableDebug: 0
+--- !u!114 &152246876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152246874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a2aa38677573947ad1b15d9e44d65c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HighlightableElement2D
+  highlightAnchor: {fileID: 0}
+  highlightScale: 1.1
+  isTint: 1
+  highlightColor: {r: 1.2, g: 1.2, b: 1.2, a: 1}
+  PreHighlightColors: []
+  PreHighlightScale: {x: 1, y: 1}
+  PreHighlightScaleCached: 0
+  enableDebug: 0
+--- !u!61 &152246877
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152246874}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &152246878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152246874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e688dcbb6b35174b8d3b764149b8e27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TransformFullScreenScaler
+  cam: {fileID: 519420031}
+--- !u!4 &152246879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152246874}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 35.464912, y: 19.939276, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &160634996
 GameObject:
   m_ObjectHideFlags: 0
@@ -1518,8 +1647,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4286038225
-  m_fontColor: {r: 0.8207547, g: 0.7545093, b: 0.46844962, a: 1}
+    rgba: 4283532175
+  m_fontColor: {r: 0.56, g: 0.5144498, b: 0.31885168, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4727,9 +4856,10 @@ MonoBehaviour:
   - Use WASD to move around.
   - Shoot the enemy with your mouse.
   - Collect the <i>Soul Shard</i> dropped by the enemy.
-  - Collect more shards and hold Shift to charge <i>Soul State</i> and heal yourself!
-  - 'Place a <i>Densoul</i>: collect enough Soul; press Ctrl; click location; hit
-    Space to place with current rotation.'
+  - Collect more shards and hold Shift to charge <i>Soul State</i> and heal yourself
+    to the max!
+  - 'Place a <i>Densoul</i>: collect more soul; press Ctrl; click location; click
+    again to place with the chosen rotation.'
   - Press Q or Tab to switch items.
   - Press the button to end the tutorial.
   tutorialInstructionText: {fileID: 1209037423}
@@ -5081,6 +5211,7 @@ MonoBehaviour:
     m_Bits: 64
   currentGateTypeDisplayText: {fileID: 1956055834}
   MainMenu: {fileID: 2083989082}
+  placeGateButton: {fileID: 152246874}
 --- !u!4 &1976485765
 Transform:
   m_ObjectHideFlags: 0
@@ -21423,6 +21554,7 @@ SceneRoots:
   - {fileID: 133823648}
   - {fileID: 1286122612}
   - {fileID: 2106973146}
+  - {fileID: 152246879}
   - {fileID: 1546054142}
   - {fileID: 7645830644634311192}
   - {fileID: 1585594848}
