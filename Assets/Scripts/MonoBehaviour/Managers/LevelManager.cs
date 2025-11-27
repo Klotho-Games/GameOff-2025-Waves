@@ -1,4 +1,5 @@
 using System.Collections;
+using PrimeTween;
 using TMPro;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private LevelSO[] levels;
     [SerializeField] private bool autoStartWave = true;
     [SerializeField] private SpriteRenderer floorRenderer;
+    [SerializeField] private SpriteRenderer levelTransitionOverlayPanel;
     
     [Header("Tutorial Settings")]
     [SerializeField] private string[] tutorialInstructions = new string[]
@@ -184,6 +186,17 @@ public class LevelManager : MonoBehaviour
     {
         Debug.Log($"Starting Level {levelIndex + 1}");
 
+        if (levelIndex > 0)
+        {
+            Time.timeScale = 0f;
+            Color color = levelTransitionOverlayPanel.color;
+            Tween.Alpha(levelTransitionOverlayPanel, 1f, 1f, Ease.InSine, useUnscaledTime: true).OnComplete(() =>
+            {
+                Time.timeScale = 1f;
+                Tween.Alpha(levelTransitionOverlayPanel, 0f, 2f, Ease.OutSine, useUnscaledTime: true);
+            });  
+        }
+
         currentLevelIndex = levelIndex;
 
         // Complete cleanup
@@ -202,7 +215,7 @@ public class LevelManager : MonoBehaviour
         DestroyAllEnemiesAndSoulShards();
         StartWave(0);
     }
-    
+
     #endregion
 
     #region Wave Management

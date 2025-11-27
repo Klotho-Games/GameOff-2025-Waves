@@ -54,6 +54,14 @@ public class EnemyLifeSystem : MonoBehaviour
 
     void Update()
     {
+        if (spriteRenderer.color.a == 0f)
+        {
+            Debug.LogWarning("Enemy sprite is invisible. Resetting alpha to 1.");
+            var newColor = spriteRenderer.color;
+            newColor.a = 1f;
+            spriteRenderer.color = newColor;
+        }
+
         if (!GetDamaged())
         {
             RegenerateHealth();

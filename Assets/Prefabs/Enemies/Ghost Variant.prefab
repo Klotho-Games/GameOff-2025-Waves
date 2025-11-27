@@ -92,6 +92,22 @@ PrefabInstance:
       propertyPath: spriteRenderer
       value: 
       objectReference: {fileID: 8900470016611661572}
+    - target: {fileID: 6899202260005894788, guid: fb8ec0884f509c145a1d3c0c42c51cbb, type: 3}
+      propertyPath: originalColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899202260005894788, guid: fb8ec0884f509c145a1d3c0c42c51cbb, type: 3}
+      propertyPath: originalColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899202260005894788, guid: fb8ec0884f509c145a1d3c0c42c51cbb, type: 3}
+      propertyPath: originalColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899202260005894788, guid: fb8ec0884f509c145a1d3c0c42c51cbb, type: 3}
+      propertyPath: originalColor.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
