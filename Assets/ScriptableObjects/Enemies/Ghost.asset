@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Ghost
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   IsLava: 0
-  MaxHP: 100
+  MaxHP: 10
   Speed: 1
   Regeneration: 0
   SoulRewardAmount: 10
   IsEnergy: 0
-  Attacks: []
+  Attacks:
+  - Type: 0
+    Damage: 75
+    Cooldown: 0.8
+    DelayAfterTrigger: 0.35

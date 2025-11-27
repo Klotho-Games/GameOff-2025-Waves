@@ -21,5 +21,5 @@ MonoBehaviour:
   Attacks:
   - Type: 0
     Damage: 20
-    Cooldown: 0
-    DelayAfterTrigger: 0
+    Cooldown: 1.2
+    DelayAfterTrigger: 0.5

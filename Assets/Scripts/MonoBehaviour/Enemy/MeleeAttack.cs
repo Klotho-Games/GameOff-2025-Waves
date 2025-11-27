@@ -1,15 +1,26 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MeleeAttack : MonoBehaviour
 {
     [SerializeField] private EnemySO enemyData;
     [SerializeField] private CircleCollider2D attackArea;
+    [SerializeField] private Animator animator;
 
     private EnemySO.Attack attackInfo;
     private Collider2D playerColl;
     private PlayerStats playerStats;
     private float cooldownTimer = 0f;
+    private bool playerWithinRange = false;
+    private bool isAttacking = false;
+
+    private void OnDisable()
+    {
+        isAttacking = false;
+        cooldownTimer = 0f;
+        playerWithinRange = false;
+    }
 
     public void Initialize(Collider2D pColl, PlayerStats pStats)
     {
@@ -36,24 +47,51 @@ public class MeleeAttack : MonoBehaviour
         {
             cooldownTimer -= Time.deltaTime;
         }
+
+        if (playerWithinRange && cooldownTimer <= 0f && !isAttacking)
+        {
+            StartCoroutine(DelayedAttack());
+        }
     }
 
-    void OnTriggerStay(Collider other)
+    void OnTriggerStay2D(Collider2D other)
     {
-        if (other == playerColl)
-        {
-            if (cooldownTimer <= 0f)
-            {
-                StartCoroutine(DelayedAttack());
-                cooldownTimer = attackInfo.Cooldown;
-            }
-        }
+        if (other != playerColl)
+            return;
+
+        playerWithinRange = true;
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other != playerColl)
+            return;
+
+        playerWithinRange = false;
     }
 
     private IEnumerator DelayedAttack()
     {
-        // start animation here
+        if (isAttacking)
+            yield break;
+        isAttacking = true;
+        animator.SetTrigger("Attack");
+        cooldownTimer = attackInfo.Cooldown;
         yield return new WaitForSeconds(attackInfo.DelayAfterTrigger);
-        playerStats.TakeDamage(attackInfo.Damage);
+        if (IsCollidingWithPlayer())
+            playerStats.TakeDamage(attackInfo.Damage);
+        isAttacking = false;
+    }
+
+    private bool IsCollidingWithPlayer()
+    {
+        List<Collider2D> results = new();
+        ContactFilter2D filter = new();
+        filter.SetLayerMask(LayerMask.GetMask("Player"));
+        filter.useLayerMask = true;
+        
+        Physics2D.OverlapCollider(attackArea, filter, results);
+
+        return results.Contains(playerColl);
     }
 }

@@ -130,6 +130,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6055560758000326917, guid: 4e30b45abe44a9246bdec6fc6c69aa7e, type: 3}
       insertIndex: -1
       addedObject: {fileID: -5385228268661869666}
+    - targetCorrespondingSourceObject: {fileID: 6055560758000326917, guid: 4e30b45abe44a9246bdec6fc6c69aa7e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4010995609519128367}
   m_SourcePrefab: {fileID: 100100000, guid: 4e30b45abe44a9246bdec6fc6c69aa7e, type: 3}
 --- !u!1 &835567148765652125 stripped
 GameObject:
@@ -150,6 +153,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MeleeAttack
   enemyData: {fileID: 0}
   attackArea: {fileID: 813513496688651456}
+--- !u!114 &-4010995609519128367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835567148765652125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: effa4c2ca825e8346918c599cc2b4b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnergyAI
+  enemyData: {fileID: 0}
+  coll: {fileID: 0}
 --- !u!4 &6393472603440831407 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 516514264232912439, guid: 4e30b45abe44a9246bdec6fc6c69aa7e, type: 3}

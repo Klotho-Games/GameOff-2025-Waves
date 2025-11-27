@@ -12,15 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60959e2dc67c838438f69088ce1ab5dc, type: 3}
   m_Name: Gargoyle
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  enemyName: Gargoyle
-  isLava: 0
-  maxHP: 40
-  speed: 10
-  regeneration: 0
-  soulRewardAmount: 100
-  isEnergy: 0
-  attacks:
-  - attackType: 0
-    attackDamage: 20
-    attackRange: 0.4
-    attackCooldown: 1
+  IsLava: 0
+  MaxHP: 100
+  Speed: 5
+  Regeneration: 0
+  SoulRewardAmount: 10
+  IsEnergy: 0
+  Attacks: []

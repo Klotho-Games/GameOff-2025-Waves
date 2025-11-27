@@ -16,6 +16,10 @@ MonoBehaviour:
   MaxHP: 100
   Speed: 1.5
   Regeneration: 0
-  SoulRewardAmount: 10
+  SoulRewardAmount: 100
   IsEnergy: 0
-  Attacks: []
+  Attacks:
+  - Type: 0
+    Damage: 150
+    Cooldown: 0.8
+    DelayAfterTrigger: 0.5

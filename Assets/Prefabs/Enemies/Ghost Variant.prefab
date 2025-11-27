@@ -13,6 +13,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 82efa639e59cb6c4680aa389e34d5d7c, type: 2}
     - target: {fileID: -5385228268661869666, guid: fb8ec0884f509c145a1d3c0c42c51cbb, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 8051217271974599450}
+    - target: {fileID: -5385228268661869666, guid: fb8ec0884f509c145a1d3c0c42c51cbb, type: 3}
+      propertyPath: enemyData
+      value: 
+      objectReference: {fileID: 11400000, guid: 82efa639e59cb6c4680aa389e34d5d7c, type: 2}
+    - target: {fileID: -4010995609519128367, guid: fb8ec0884f509c145a1d3c0c42c51cbb, type: 3}
+      propertyPath: coll
+      value: 
+      objectReference: {fileID: 4466477938682139499}
+    - target: {fileID: -4010995609519128367, guid: fb8ec0884f509c145a1d3c0c42c51cbb, type: 3}
       propertyPath: enemyData
       value: 
       objectReference: {fileID: 11400000, guid: 82efa639e59cb6c4680aa389e34d5d7c, type: 2}
