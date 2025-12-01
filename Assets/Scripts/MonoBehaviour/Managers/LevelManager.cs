@@ -51,7 +51,10 @@ public class LevelManager : MonoBehaviour
     [Header("Pooling Settings")]
     [SerializeField] private ObjectPooler objectPooler;
     [SerializeField] private int poolSize = 100;
-    
+    [Header("Wave Music")]
+    [SerializeField] private AudioSource wave1music;
+    [SerializeField] private AudioSource wave2music;
+
     #endregion
 
     #region Private Variables
@@ -242,6 +245,19 @@ public class LevelManager : MonoBehaviour
         currentWaveIndex = waveIndex;
         waveCoroutine = StartCoroutine(SpawnWaveCoroutine(levels[currentLevelIndex].waves[currentWaveIndex].waveData));
         ShowWaveText();
+
+	// Play music depending on wave
+	if (waveIndex == 0) // Wave 1
+	{
+  	  if (wave2music != null) wave2music.Stop();
+  	  if (wave1music != null) wave1music.Play();
+	}
+	else if (waveIndex == 1) // Wave 2
+	{
+  	  if (wave1music != null) wave1music.Stop();
+  	  if (wave2music != null) wave2music.Play();
+	}
+
 
         void ShowWaveText()
         {
