@@ -226,56 +226,55 @@ public class LevelManager : MonoBehaviour
 
     public void StartWave(int waveIndex)
     {
-        Debug.Log($"Starting Wave {waveIndex + 1} of Level {currentLevelIndex + 1}");
+    Debug.Log($"Starting Wave {waveIndex + 1} of Level {currentLevelIndex + 1}");
 
-        if (waveCoroutine != null)
-            StopCoroutine(waveCoroutine);
+    if (waveCoroutine != null)
+        StopCoroutine(waveCoroutine);
 
-        if (waveIndex >= levels[currentLevelIndex].waves.Length)
-        {
-            waveIndex = levels[currentLevelIndex].waves.Length - 1;
-            Debug.LogWarning("Wave index exceeded max wave count. Continuing with last wave.");
-        }
+    if (waveIndex >= levels[currentLevelIndex].waves.Length)
+        waveIndex = levels[currentLevelIndex].waves.Length - 1;
 
-        if (waveIndex < 0)
-        {
-            waveIndex = 0;
-            Debug.LogWarning("Wave index was less than 0. Continuing with wave equal 0.");
-        }
-        
-        currentWaveIndex = waveIndex;
-        waveCoroutine = StartCoroutine(SpawnWaveCoroutine(levels[currentLevelIndex].waves[currentWaveIndex].waveData));
-        ShowWaveText();
-	// PLAY WAVE MUSIC
-	
+    if (waveIndex < 0)
+        waveIndex = 0;
 
-        // Change to the new wave music
-        // waves 1-5 have indexes 0-4
-        // levels 1-2 have indexes 0-1
-        // Use currentWaveIndex and currentLevelIndex to determine music
+    currentWaveIndex = waveIndex;
 
-	// Play music depending on wave
-	if (waveIndex == 0) // Wave 1
-	{
-  	  if (wave2music != null) wave2music.Stop();
-  	  if (wave1music != null) wave1music.Play();
-	}
-	else if (waveIndex == 1) // Wave 2
-	{
-  	  if (wave1music != null) wave1music.Stop();
-  	  if (wave2music != null) wave2music.Play();
-	}
+    waveCoroutine = StartCoroutine(
+        SpawnWaveCoroutine(levels[currentLevelIndex].waves[currentWaveIndex].waveData)
+    );
 
+    ShowWaveText();
 
-        void ShowWaveText()
-        {
-            if (waveIndex == 0)
-                waveText.text = $"Level {currentLevelIndex + 1}\nWave {waveIndex + 1}";
-            else
-                waveText.text = $"Wave {waveIndex + 1}";
-            StartCoroutine(ShowForSeconds(waveText.gameObject, waveTextShowDuration));
-        }
+    // ----------------------------------------------------
+    // CLEAN MUSIC SWITCH – ONLY THIS!!!
+    // ----------------------------------------------------
+    wave1music.Stop();
+    wave2music.Stop();
+
+    if (waveIndex == 0)
+    {
+        Debug.Log("PLAYING MUSIC FOR WAVE 1");
+        wave1music.Play();
     }
+    else if (waveIndex == 1)
+    {
+        Debug.Log("PLAYING MUSIC FOR WAVE 2");
+        wave2music.Play();
+    }
+
+    // ----------------------------------------------------
+
+    void ShowWaveText()
+    {
+        if (waveIndex == 0)
+            waveText.text = $"Level {currentLevelIndex + 1}\nWave {waveIndex + 1}";
+        else
+            waveText.text = $"Wave {waveIndex + 1}";
+
+        StartCoroutine(ShowForSeconds(waveText.gameObject, waveTextShowDuration));
+    }
+}
+
 
     private IEnumerator SpawnWaveCoroutine(WaveDataSO wave)
     {
