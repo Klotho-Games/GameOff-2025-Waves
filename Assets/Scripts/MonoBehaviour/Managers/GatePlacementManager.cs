@@ -39,6 +39,7 @@ public class GatePlacementManager : MonoBehaviour
     private static readonly float subtriangleHeight = sideLength * Mathf.Sqrt(3) / 2;
 
     public bool HasPlacedGate { get; private set; } = false;
+    public bool HasDestroyedGate { get; set; } = false;
 
     #region Instance
     void Awake()
@@ -62,6 +63,7 @@ public class GatePlacementManager : MonoBehaviour
             Destroy(child.gameObject);
         }
         HasPlacedGate = false;
+        HasDestroyedGate = false;
     }
 
     void Start()

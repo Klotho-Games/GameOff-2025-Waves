@@ -26,7 +26,6 @@ public class LevelManager : MonoBehaviour
         "Press Q or Tab to switch Densoul type (the selected type is displayed in the top-right corner)."
     };
     [SerializeField] private TMP_Text tutorialInstructionText;
-    [SerializeField] private GameObject endTutorialButton;
     [SerializeField] private Vector2 tutorialEnemySpawnPos;
     [SerializeField] private GameObject TutorialEnemy;
     
@@ -145,7 +144,6 @@ public class LevelManager : MonoBehaviour
 
         void DisableTutorialElements()
         {
-            endTutorialButton.SetActive(false);
             tutorialInstructionText.gameObject.SetActive(false);
         }
     }
@@ -477,8 +475,10 @@ public class LevelManager : MonoBehaviour
                 }
                 break;
             case 6:
-                endTutorialButton.SetActive(true);
-                currentTutorialStep++; // Move past tutorial to prevent re-trigger
+                if (GatePlacementManager.instance.HasDestroyedGate)
+                {
+                    currentTutorialStep++;
+                }
                 break;
             default:
                 break;

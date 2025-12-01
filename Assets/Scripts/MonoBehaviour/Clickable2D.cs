@@ -107,7 +107,8 @@ public class Clickable2D : MonoBehaviour, IClickable {
         {
             if (col.CompareTag("Gate"))
             {
-                Destroy(col.gameObject);
+                GatePlacementManager.instance.HasDestroyedGate = true;
+                ObjectPooler.instance.ReturnToPool(col.gameObject, col.gameObject);
                 return;
             }
         }
