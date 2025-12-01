@@ -3516,7 +3516,7 @@ MonoBehaviour:
     Name: Heal Soul State
     Clips:
     - {fileID: 8300000, guid: 505c02be314282a4593f61aa880615a6, type: 3}
-    Volume: {x: 1, y: 1}
+    Volume: {x: 0.1, y: 0.1}
     Pitch: {x: 1, y: 1}
   ChangeGateTypeSFX:
     Name: Change Gate Type SFX
@@ -3579,7 +3579,7 @@ MonoBehaviour:
     Name: Merge Soul Shard SFX
     Clips:
     - {fileID: 8300000, guid: 08805c26f86a502498b5375082e008a1, type: 3}
-    Volume: {x: 1, y: 1}
+    Volume: {x: 0.6, y: 0.6}
     Pitch: {x: 1, y: 1}
   TutorialButtonSFX:
     Name: Tutorial Button SFX
