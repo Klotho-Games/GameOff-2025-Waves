@@ -24,7 +24,7 @@ public class PlayerAnimator : MonoBehaviour
             if (!wasSoulStateLastFrame)
             {
                 animator.SetTrigger("startSoulState");
-                // begin charging
+                SFXManager.instance.StartLoopingSFX(SFXManager.instance.HealSFX, transform.position);
 
                 if (enterSoulStateParticleController != null)
                 {
@@ -43,6 +43,7 @@ public class PlayerAnimator : MonoBehaviour
             }
             else
             {
+                SFXManager.instance.StopLoopingSFX(SFXManager.instance.HealSFX.Name);
                 // charged but not heal state
                 if (healingParticleSystem.isPlaying)
                     healingParticleSystem.Stop();
@@ -52,6 +53,7 @@ public class PlayerAnimator : MonoBehaviour
         }
         else
         {
+            SFXManager.instance.StopLoopingSFX(SFXManager.instance.HealSFX.Name);
             // stop charging 
             if (healingParticleSystem.isPlaying)
                 healingParticleSystem.Stop();

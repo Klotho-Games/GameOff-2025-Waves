@@ -19,6 +19,11 @@ public class SFXManager : MonoBehaviour
     [SerializeField] private GameObject sfxAudioSourcePrefab;
     [SerializeField] private int poolSize = 5;
 
+    [Header("Player SFX")]
+    public SFX ChargeSFX;
+    public SFX HealSFX;
+    public SFX ChargedSFX;
+
     [Header("Enemy SFX")]
     [SerializeField] private List<SFX> enemyAttacks;
     [SerializeField] private List<SFX> enemyDeaths;
