@@ -586,7 +586,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a5991eaa78a0f43926890592d685a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clickable2D
-  clickSound: {fileID: 0}
   specialFunction: 7
   enableDebug: 0
 --- !u!114 &152246876
@@ -678,7 +677,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 35.444466, y: 19.939276, z: 0}
+  m_LocalScale: {x: 35.4476, y: 19.939276, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1328,7 +1327,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 9}
-  m_LocalScale: {x: 35.444466, y: 19.939276, z: 0}
+  m_LocalScale: {x: 35.4476, y: 19.939276, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2083989087}
@@ -1900,34 +1899,34 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 1170239318}
     m_ColliderPaths:
-    - - X: 194944576
+    - - X: 194961808
         Y: 109666024
-      - X: -194944576
+      - X: -194961808
         Y: 109666024
-      - X: -194944576
+      - X: -194961808
         Y: -109666024
-      - X: 194944576
+      - X: 194961808
         Y: -109666024
   - m_Collider: {fileID: 1170239317}
     m_ColliderPaths:
-    - - X: 177222336
+    - - X: 177238000
         Y: 99696376
-      - X: -177222336
+      - X: -177238000
         Y: 99696376
-      - X: -177222336
+      - X: -177238000
         Y: -99696376
-      - X: 177222336
+      - X: 177238000
         Y: -99696376
   m_CompositePaths:
     m_Paths:
-    - - {x: 19.494429, y: -10.966602}
-      - {x: 19.494429, y: 10.966602}
-      - {x: -19.494457, y: 10.966573}
-      - {x: -19.494429, y: -10.966602}
-    - - {x: 17.722235, y: -9.969608}
-      - {x: -17.722235, y: -9.969608}
-      - {x: -17.722204, y: 9.969638}
-      - {x: 17.722235, y: 9.969608}
+    - - {x: 19.496153, y: -10.966602}
+      - {x: 19.496153, y: 10.966602}
+      - {x: -19.496181, y: 10.966573}
+      - {x: -19.496153, y: -10.966602}
+    - - {x: 17.7238, y: -9.969608}
+      - {x: -17.7238, y: -9.969608}
+      - {x: -17.723772, y: 9.969638}
+      - {x: 17.7238, y: 9.969608}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -2074,7 +2073,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 35.444466, y: 19.939276, z: 0}
+  m_LocalScale: {x: 35.4476, y: 19.939276, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2363,7 +2362,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a5991eaa78a0f43926890592d685a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clickable2D
-  clickSound: {fileID: 0}
   specialFunction: 3
   enableDebug: 0
 --- !u!61 &1263849072
@@ -2460,7 +2458,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 9}
-  m_LocalScale: {x: 35.444466, y: 19.939276, z: 0}
+  m_LocalScale: {x: 35.4476, y: 19.939276, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1707721363}
@@ -2821,7 +2819,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a5991eaa78a0f43926890592d685a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clickable2D
-  clickSound: {fileID: 0}
   specialFunction: 4
   enableDebug: 0
 --- !u!61 &1365788411
@@ -3283,7 +3280,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 35.444466, y: 19.939276}
+  m_SizeDelta: {x: 35.4476, y: 19.939276}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1450780085
 MonoBehaviour:
@@ -3640,7 +3637,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 9}
-  m_LocalScale: {x: 35.444466, y: 19.939276, z: 0}
+  m_LocalScale: {x: 35.4476, y: 19.939276, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 391916038}
@@ -3755,8 +3752,107 @@ MonoBehaviour:
     Pitch: {x: 1, y: 1}
   - Name: Gargoyle
     Clips:
-    - {fileID: 0}
+    - {fileID: 8300000, guid: ab3ab6a5f51fd2d45a3e1c26999b82d9, type: 3}
+    Volume: {x: 0.3, y: 0.3}
+    Pitch: {x: 1, y: 1.2}
+  enemyDeaths:
+  - Name: GhostDeath
+    Clips:
+    - {fileID: 8300000, guid: 46b9d113bd2b7634e918e957d3775fe6, type: 3}
     Volume: {x: 1, y: 1}
+    Pitch: {x: 1, y: 1.2}
+  BeamStartSFX:
+    Name: Lightbeam
+    Clips:
+    - {fileID: 8300000, guid: 66dd0d3d82bce99489a03c11418a3302, type: 3}
+    Volume: {x: 0.1, y: 0.1}
+    Pitch: {x: 1, y: 1.2}
+  BeamLoopSFX:
+    Name: LightbeamLoop
+    Clips:
+    - {fileID: 8300000, guid: 695c955d489fa064296fcdeb19982fe5, type: 3}
+    Volume: {x: 0.2, y: 0.2}
+    Pitch: {x: 1, y: 1}
+  BeamEndSFX:
+    Name: LightbeamEnd
+    Clips:
+    - {fileID: 8300000, guid: e8f867c834b355947bdc0a84522a6f98, type: 3}
+    Volume: {x: 0.1, y: 0.1}
+    Pitch: {x: 1, y: 1.2}
+  ChangeGateTypeSFX:
+    Name: 
+    Clips: []
+    Volume: {x: 0, y: 0}
+    Pitch: {x: 0, y: 0}
+  EnterGatePlacementModeSFX:
+    Name: GatePlaceMode
+    Clips:
+    - {fileID: 8300000, guid: 6d1b01a98a3fb764b8397117ed111a74, type: 3}
+    Volume: {x: 0.3, y: 0.3}
+    Pitch: {x: 1, y: 1}
+  GatePlacementModeLoopSFX:
+    Name: GatePlace
+    Clips:
+    - {fileID: 8300000, guid: c817238ab9ac624469fb55cabffdb3b4, type: 3}
+    Volume: {x: 1, y: 1}
+    Pitch: {x: 1, y: 1}
+  LeaveGatePlacementModeSFX:
+    Name: 
+    Clips: []
+    Volume: {x: 0, y: 0}
+    Pitch: {x: 0, y: 0}
+  EnterRotationModeSFX:
+    Name: 
+    Clips: []
+    Volume: {x: 0, y: 0}
+    Pitch: {x: 0, y: 0}
+  RotateGateSFX:
+    Name: RotateGate
+    Clips:
+    - {fileID: 8300000, guid: 2257a590a78a15c439f581af98c23b00, type: 3}
+    - {fileID: 8300000, guid: 0f435c007a793e749b4f8043a68e691c, type: 3}
+    - {fileID: 8300000, guid: 16fab1d6f79f9ea41852163fb58c819e, type: 3}
+    Volume: {x: 0.1, y: 0.3}
+    Pitch: {x: 1, y: 1.2}
+  PlaceGateSFX:
+    Name: PlaceGate
+    Clips:
+    - {fileID: 8300000, guid: c817238ab9ac624469fb55cabffdb3b4, type: 3}
+    Volume: {x: 0.3, y: 0.3}
+    Pitch: {x: 1, y: 1}
+  DestroyGateSFX:
+    Name: 
+    Clips: []
+    Volume: {x: 0, y: 0}
+    Pitch: {x: 0, y: 0}
+  CollectSoulShardSFX:
+    Name: CollectSoul
+    Clips:
+    - {fileID: 8300000, guid: cbc5870b2140b434ba96825f3a903e98, type: 3}
+    Volume: {x: 0.2, y: 0.3}
+    Pitch: {x: 1, y: 1.2}
+  MergeSoulShardSFX:
+    Name: 
+    Clips: []
+    Volume: {x: 0, y: 0}
+    Pitch: {x: 0, y: 0}
+  TutorialButtonSFX:
+    Name: TutorialButton
+    Clips:
+    - {fileID: 8300000, guid: 08805c26f86a502498b5375082e008a1, type: 3}
+    Volume: {x: 0.3, y: 0.3}
+    Pitch: {x: 1, y: 1}
+  PlayButtonSFX:
+    Name: PlayButton
+    Clips:
+    - {fileID: 8300000, guid: 1ea401e1772c6f34a82a9a190affc58f, type: 3}
+    Volume: {x: 0.3, y: 0.3}
+    Pitch: {x: 1, y: 1}
+  ExitButtonSFX:
+    Name: ExitButton
+    Clips:
+    - {fileID: 8300000, guid: 9ac7af46e84189f4189c4a4d84490b18, type: 3}
+    Volume: {x: 0.3, y: 0.3}
     Pitch: {x: 1, y: 1}
 --- !u!4 &1579627184
 Transform:
@@ -3836,34 +3932,34 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 1585594846}
     m_ColliderPaths:
-    - - X: 354444672
+    - - X: 354476000
         Y: 199392752
-      - X: -354444672
+      - X: -354476000
         Y: 199392752
-      - X: -354444672
+      - X: -354476000
         Y: -199392752
-      - X: 354444672
+      - X: 354476000
         Y: -199392752
   - m_Collider: {fileID: 1585594845}
     m_ColliderPaths:
-    - - X: 194944576
+    - - X: 194961808
         Y: 109666024
-      - X: -194944576
+      - X: -194961808
         Y: 109666024
-      - X: -194944576
+      - X: -194961808
         Y: -109666024
-      - X: 194944576
+      - X: 194961808
         Y: -109666024
   m_CompositePaths:
     m_Paths:
-    - - {x: 35.44444, y: -19.939276}
-      - {x: 35.44444, y: 19.939276}
-      - {x: -35.44447, y: 19.939247}
-      - {x: -35.44444, y: -19.939276}
-    - - {x: 19.494457, y: -10.966573}
-      - {x: -19.494457, y: -10.966573}
-      - {x: -19.494429, y: 10.966602}
-      - {x: 19.494457, y: 10.966573}
+    - - {x: 35.44757, y: -19.939276}
+      - {x: 35.44757, y: 19.939276}
+      - {x: -35.4476, y: 19.939247}
+      - {x: -35.44757, y: -19.939276}
+    - - {x: 19.496181, y: -10.966573}
+      - {x: -19.496181, y: -10.966573}
+      - {x: -19.496153, y: 10.966602}
+      - {x: 19.496181, y: 10.966573}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -4010,7 +4106,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 35.444466, y: 19.939276, z: 0}
+  m_LocalScale: {x: 35.4476, y: 19.939276, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4132,7 +4228,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a5991eaa78a0f43926890592d685a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clickable2D
-  clickSound: {fileID: 0}
   specialFunction: 5
   enableDebug: 0
 --- !u!61 &1592250583
@@ -4636,7 +4731,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a5991eaa78a0f43926890592d685a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clickable2D
-  clickSound: {fileID: 0}
   specialFunction: 2
   enableDebug: 0
 --- !u!61 &1713728337
@@ -5287,7 +5381,6 @@ MonoBehaviour:
   - Press Q or Tab to switch items.
   - Press the button to end the tutorial.
   tutorialInstructionText: {fileID: 1209037423}
-  endTutorialButton: {fileID: 1263849068}
   tutorialEnemySpawnPos: {x: 5, y: 0}
   TutorialEnemy: {fileID: 1712254273}
   playerTransform: {fileID: 7645830644634311192}
@@ -5308,6 +5401,8 @@ MonoBehaviour:
   respawnDelay: 4
   objectPooler: {fileID: 127907762}
   poolSize: 500
+  musicSource: {fileID: 0}
+  musicClips: []
 --- !u!4 &1897987069
 Transform:
   m_ObjectHideFlags: 0
@@ -5518,7 +5613,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 9}
-  m_LocalScale: {x: 35.444466, y: 19.939276, z: 0}
+  m_LocalScale: {x: 35.4476, y: 19.939276, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 391916038}
@@ -6098,7 +6193,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 35.444466, y: 19.939276}
+  m_SizeDelta: {x: 35.4476, y: 19.939276}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2106973143
 GameObject:
