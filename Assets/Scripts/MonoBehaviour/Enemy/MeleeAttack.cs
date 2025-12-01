@@ -77,9 +77,15 @@ public class MeleeAttack : MonoBehaviour
         isAttacking = true;
         animator.SetTrigger("Attack");
         cooldownTimer = attackInfo.Cooldown;
+
         yield return new WaitForSeconds(attackInfo.DelayAfterTrigger);
+
         if (IsCollidingWithPlayer())
+        {
             playerStats.TakeDamage(attackInfo.Damage);
+            SFXManager.instance.PlayEnemyAttackSFX(enemyData.Name, transform.position);
+        }
+
         isAttacking = false;
     }
 

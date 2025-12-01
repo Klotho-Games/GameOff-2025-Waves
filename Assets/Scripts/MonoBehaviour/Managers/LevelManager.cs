@@ -26,7 +26,6 @@ public class LevelManager : MonoBehaviour
         "Press Q or Tab to switch Densoul type (the selected type is displayed in the top-right corner)."
     };
     [SerializeField] private TMP_Text tutorialInstructionText;
-    [SerializeField] private GameObject endTutorialButton;
     [SerializeField] private Vector2 tutorialEnemySpawnPos;
     [SerializeField] private GameObject TutorialEnemy;
     
@@ -51,7 +50,12 @@ public class LevelManager : MonoBehaviour
     [Header("Pooling Settings")]
     [SerializeField] private ObjectPooler objectPooler;
     [SerializeField] private int poolSize = 100;
-    
+    [Header("Level Music")]
+    // Based on time even tho levels aren't. TODO: fix that later
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioClip[] musicClips;
+
+   
     #endregion
 
     #region Private Variables
@@ -140,7 +144,6 @@ public class LevelManager : MonoBehaviour
 
         void DisableTutorialElements()
         {
-            endTutorialButton.SetActive(false);
             tutorialInstructionText.gameObject.SetActive(false);
         }
     }
@@ -199,6 +202,14 @@ public class LevelManager : MonoBehaviour
 
         currentLevelIndex = levelIndex;
 
+        // In case there are less music clips than levels, we take modulo
+
+        //musicSource.clip = musicClips[levelIndex % musicClips.Length];
+        //if (!musicSource.isPlaying)
+        //{
+        //    musicSource.Play();
+        //}
+
         // Complete cleanup
         DestroyAllEnemiesAndSoulShards();
         GatePlacementManager.instance.DestroyAllPlacedGates();
@@ -222,36 +233,46 @@ public class LevelManager : MonoBehaviour
 
     public void StartWave(int waveIndex)
     {
-        Debug.Log($"Starting Wave {waveIndex + 1} of Level {currentLevelIndex + 1}");
+    Debug.Log($"Starting Wave {waveIndex + 1} of Level {currentLevelIndex + 1}");
 
-        if (waveCoroutine != null)
-            StopCoroutine(waveCoroutine);
+    if (waveCoroutine != null)
+        StopCoroutine(waveCoroutine);
 
-        if (waveIndex >= levels[currentLevelIndex].waves.Length)
-        {
-            waveIndex = levels[currentLevelIndex].waves.Length - 1;
-            Debug.LogWarning("Wave index exceeded max wave count. Continuing with last wave.");
-        }
+    if (waveIndex >= levels[currentLevelIndex].waves.Length)
+        waveIndex = levels[currentLevelIndex].waves.Length - 1;
 
-        if (waveIndex < 0)
-        {
-            waveIndex = 0;
-            Debug.LogWarning("Wave index was less than 0. Continuing with wave equal 0.");
-        }
-        
-        currentWaveIndex = waveIndex;
-        waveCoroutine = StartCoroutine(SpawnWaveCoroutine(levels[currentLevelIndex].waves[currentWaveIndex].waveData));
-        ShowWaveText();
+    if (waveIndex < 0)
+        waveIndex = 0;
 
-        void ShowWaveText()
-        {
-            if (waveIndex == 0)
-                waveText.text = $"Level {currentLevelIndex + 1}\nWave {waveIndex + 1}";
-            else
-                waveText.text = $"Wave {waveIndex + 1}";
-            StartCoroutine(ShowForSeconds(waveText.gameObject, waveTextShowDuration));
-        }
+    currentWaveIndex = waveIndex;
+
+    // 🎵 Change music instantly based on wave index
+	
+    if (musicClips.Length > 0)
+    {
+    int idx = currentWaveIndex % musicClips.Length;
+    musicSource.clip = musicClips[idx];
+    musicSource.Play();
     }
+
+
+    waveCoroutine = StartCoroutine(
+        SpawnWaveCoroutine(levels[currentLevelIndex].waves[currentWaveIndex].waveData)
+    );
+
+    ShowWaveText();
+
+    void ShowWaveText()
+    {
+        if (waveIndex == 0)
+            waveText.text = $"Level {currentLevelIndex + 1}\nWave {waveIndex + 1}";
+        else
+            waveText.text = $"Wave {waveIndex + 1}";
+
+        StartCoroutine(ShowForSeconds(waveText.gameObject, waveTextShowDuration));
+    }
+}
+
 
     private IEnumerator SpawnWaveCoroutine(WaveDataSO wave)
     {
@@ -465,8 +486,10 @@ public class LevelManager : MonoBehaviour
                 }
                 break;
             case 6:
-                endTutorialButton.SetActive(true);
-                currentTutorialStep++; // Move past tutorial to prevent re-trigger
+                if (GatePlacementManager.instance.HasDestroyedGate)
+                {
+                    currentTutorialStep++;
+                }
                 break;
             default:
                 break;
