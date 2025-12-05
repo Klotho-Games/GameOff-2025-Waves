@@ -483,7 +483,7 @@ public class GatePlacementManager : MonoBehaviour
         debugLineRenderer.SetPosition(1, diagonalEnd);
  */
         // Gate check must be before linecast check to show gate destruction indicator
-        Collider2D gateHit = Physics2D.OverlapPoint(cellWorldPosition.Value, gateLayer);
+        Collider2D gateHit = Physics2D.OverlapCircle(cellWorldPosition.Value, 0.01f, gateLayer);
         if (gateHit != null)
         {
             ShowGateDestructionIndicator();

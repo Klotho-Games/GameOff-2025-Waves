@@ -102,7 +102,7 @@ public class Clickable2D : MonoBehaviour, IClickable {
     
     private void DestroyGateAtPosition(Vector2 position)
     {
-        Collider2D[] colliders = Physics2D.OverlapPointAll(position, LayerMask.GetMask("Gate"));
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, 0.01f, LayerMask.GetMask("Gate"));
         foreach (var col in colliders)
         {
             if (col.CompareTag("Gate"))
