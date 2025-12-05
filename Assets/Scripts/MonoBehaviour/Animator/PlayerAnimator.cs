@@ -46,6 +46,7 @@ public class PlayerAnimator : MonoBehaviour
             }
             else
             {
+                SFXManager.instance.StopLoopingSFX(SFXManager.instance.HealSFX.Name);
                 // charged but not heal state
                 if (healingParticleSystem.isPlaying)
                     healingParticleSystem.Stop();

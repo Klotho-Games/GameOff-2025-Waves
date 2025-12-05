@@ -2257,6 +2257,179 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1263849068
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1263849069}
+  - component: {fileID: 1263849073}
+  - component: {fileID: 1263849072}
+  - component: {fileID: 1263849071}
+  - component: {fileID: 1263849070}
+  m_Layer: 5
+  m_Name: End Tutorial Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1263849069
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263849068}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -8, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1450780084}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1263849070
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263849068}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: -1213773247
+  m_SortingLayer: 1
+  m_SortingOrder: 10
+  m_Sprite: {fileID: 21300000, guid: ed36fe5b000606d428b29d827e43a6af, type: 3}
+  m_Color: {r: 0, g: 0.43188637, b: 0.613, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 0.5}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &1263849071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263849068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5a5991eaa78a0f43926890592d685a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Clickable2D
+  specialFunction: 3
+  enableDebug: 0
+--- !u!61 &1263849072
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263849068}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 0.5}
+    newSize: {x: 1, y: 0.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &1263849073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263849068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a2aa38677573947ad1b15d9e44d65c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HighlightableElement2D
+  highlightAnchor: {fileID: 0}
+  highlightScale: 1.1
+  isTint: 1
+  highlightColor: {r: 1.2, g: 1.2, b: 1.2, a: 1}
+  PreHighlightColors: []
+  PreHighlightScale: {x: 1, y: 1}
+  PreHighlightScaleCached: 0
+  enableDebug: 0
 --- !u!1 &1276352399
 GameObject:
   m_ObjectHideFlags: 0
@@ -2781,30 +2954,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1429836478}
-  - component: {fileID: 1429836479}
+  - component: {fileID: 1429836477}
+  - component: {fileID: 1429836476}
   m_Layer: 0
-  m_Name: Music Controller
+  m_Name: Music player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1429836478
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1429836475}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1429836479
+--- !u!82 &1429836476
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2813,7 +2972,104 @@ AudioSource:
   m_GameObject: {fileID: 1429836475}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 5509097932273419458, guid: 8943216de54e992479b59d3c6aef8cb1, type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: f10f03389bb7cfe4e820a07bb6ca617b, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &1429836477
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429836475}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: b8f89689338720649bd6e98394cc9664, type: 3}
   m_PlayOnAwake: 1
@@ -2901,6 +3157,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!4 &1429836478
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429836475}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1450780080
 GameObject:
   m_ObjectHideFlags: 0
@@ -3003,6 +3274,7 @@ RectTransform:
   - {fileID: 1956055832}
   - {fileID: 1631456045}
   - {fileID: 1209037422}
+  - {fileID: 1263849069}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3475,39 +3747,34 @@ MonoBehaviour:
   enemyAttacks:
   - Name: Ghost
     Clips:
-    - {fileID: 8300000, guid: 4a0f0f6610451c540a070f69493e8852, type: 3}
+    - {fileID: 8300000, guid: 17526d04d89b2554ab1585c683f5f7b9, type: 3}
     Volume: {x: 1, y: 1}
     Pitch: {x: 1, y: 1}
   - Name: Gargoyle
     Clips:
     - {fileID: 8300000, guid: ab3ab6a5f51fd2d45a3e1c26999b82d9, type: 3}
-    Volume: {x: 1, y: 1}
-    Pitch: {x: 1, y: 1}
+    Volume: {x: 0.3, y: 0.3}
+    Pitch: {x: 1, y: 1.2}
   enemyDeaths:
-  - Name: Ghost
+  - Name: GhostDeath
     Clips:
     - {fileID: 8300000, guid: 46b9d113bd2b7634e918e957d3775fe6, type: 3}
     Volume: {x: 1, y: 1}
-    Pitch: {x: 1, y: 1}
-  - Name: Gargoyle
-    Clips:
-    - {fileID: 8300000, guid: 63913fc7f75983c4e8e56675e9f0bdee, type: 3}
-    Volume: {x: 1, y: 1}
-    Pitch: {x: 1, y: 1}
+    Pitch: {x: 1, y: 1.2}
   BeamStartSFX:
-    Name: Beam Start SFX
+    Name: Lightbeam
     Clips:
-    - {fileID: 8300000, guid: b099284419d7da348a1bd351ecebfee2, type: 3}
-    Volume: {x: 1, y: 1}
-    Pitch: {x: 1, y: 1}
+    - {fileID: 8300000, guid: 66dd0d3d82bce99489a03c11418a3302, type: 3}
+    Volume: {x: 0.1, y: 0.1}
+    Pitch: {x: 1, y: 1.2}
   BeamLoopSFX:
-    Name: Beam Loop SFX
+    Name: LightbeamLoop
     Clips:
-    - {fileID: 8300000, guid: d1481883fa854f04db0d3e61d03f8499, type: 3}
-    Volume: {x: 1, y: 1}
+    - {fileID: 8300000, guid: 695c955d489fa064296fcdeb19982fe5, type: 3}
+    Volume: {x: 0.2, y: 0.2}
     Pitch: {x: 1, y: 1}
   BeamEndSFX:
-    Name: Beam End SFX
+    Name: LightbeamEnd
     Clips:
     - {fileID: 8300000, guid: 729e1ca85fec41a4bbffc4538ca6e67d, type: 3}
     Volume: {x: 1, y: 1}
@@ -3519,62 +3786,57 @@ MonoBehaviour:
     Volume: {x: 0.1, y: 0.1}
     Pitch: {x: 1, y: 1}
   ChangeGateTypeSFX:
-    Name: Change Gate Type SFX
-    Clips:
-    - {fileID: 8300000, guid: 2257a590a78a15c439f581af98c23b00, type: 3}
-    - {fileID: 8300000, guid: 0f435c007a793e749b4f8043a68e691c, type: 3}
-    - {fileID: 8300000, guid: 16fab1d6f79f9ea41852163fb58c819e, type: 3}
-    Volume: {x: 1, y: 1}
-    Pitch: {x: 1, y: 1}
+    Name: 
+    Clips: []
+    Volume: {x: 0, y: 0}
+    Pitch: {x: 0, y: 0}
   EnterGatePlacementModeSFX:
-    Name: Enter Gate Placement Mode SFX
+    Name: GatePlaceMode
     Clips:
     - {fileID: 8300000, guid: 6d1b01a98a3fb764b8397117ed111a74, type: 3}
-    Volume: {x: 1, y: 1}
+    Volume: {x: 0.3, y: 0.3}
     Pitch: {x: 1, y: 1}
   GatePlacementModeLoopSFX:
-    Name: Gate Placement Loop SFX
-    Clips: []
+    Name: 
+    Clips:
+    - {fileID: 0}
     Volume: {x: 1, y: 1}
     Pitch: {x: 1, y: 1}
   LeaveGatePlacementModeSFX:
-    Name: Leave Gate Placement Mode SFX
-    Clips:
-    - {fileID: 8300000, guid: 1ea401e1772c6f34a82a9a190affc58f, type: 3}
-    Volume: {x: 1, y: 1}
-    Pitch: {x: 1, y: 1}
+    Name: 
+    Clips: []
+    Volume: {x: 0, y: 0}
+    Pitch: {x: 0, y: 0}
   EnterRotationModeSFX:
-    Name: Enter Rotation Mode SFX
-    Clips:
-    - {fileID: 8300000, guid: df360ac781345c7409d3995be074f1dc, type: 3}
-    Volume: {x: 1, y: 1}
-    Pitch: {x: 1, y: 1}
+    Name: 
+    Clips: []
+    Volume: {x: 0, y: 0}
+    Pitch: {x: 0, y: 0}
   RotateGateSFX:
-    Name: Rotate Gate SFX
+    Name: RotateGate
     Clips:
     - {fileID: 8300000, guid: 2257a590a78a15c439f581af98c23b00, type: 3}
     - {fileID: 8300000, guid: 0f435c007a793e749b4f8043a68e691c, type: 3}
     - {fileID: 8300000, guid: 16fab1d6f79f9ea41852163fb58c819e, type: 3}
-    Volume: {x: 1, y: 1}
-    Pitch: {x: 1, y: 1}
+    Volume: {x: 0.1, y: 0.3}
+    Pitch: {x: 1, y: 1.2}
   PlaceGateSFX:
-    Name: Place Gate SFX
+    Name: PlaceGate
     Clips:
     - {fileID: 8300000, guid: c817238ab9ac624469fb55cabffdb3b4, type: 3}
-    Volume: {x: 1, y: 1}
+    Volume: {x: 0.3, y: 0.3}
     Pitch: {x: 1, y: 1}
   DestroyGateSFX:
-    Name: Destroy Gate SFX
-    Clips:
-    - {fileID: 8300000, guid: 6d7fc8654c812ef4fafd7f0968739f16, type: 3}
-    Volume: {x: 1, y: 1}
-    Pitch: {x: 1, y: 1}
+    Name: 
+    Clips: []
+    Volume: {x: 0, y: 0}
+    Pitch: {x: 0, y: 0}
   CollectSoulShardSFX:
-    Name: Collect Soul Shard SFX
+    Name: CollectSoul
     Clips:
-    - {fileID: 8300000, guid: d628349c7b1e1d949823a99c8a59e5e9, type: 3}
-    Volume: {x: 1, y: 1}
-    Pitch: {x: 1, y: 1}
+    - {fileID: 8300000, guid: cbc5870b2140b434ba96825f3a903e98, type: 3}
+    Volume: {x: 0.2, y: 0.3}
+    Pitch: {x: 1, y: 1.2}
   MergeSoulShardSFX:
     Name: Merge Soul Shard SFX
     Clips:
@@ -3582,23 +3844,25 @@ MonoBehaviour:
     Volume: {x: 0.6, y: 0.6}
     Pitch: {x: 1, y: 1}
   TutorialButtonSFX:
-    Name: Tutorial Button SFX
-    Clips:
-    - {fileID: 8300000, guid: df360ac781345c7409d3995be074f1dc, type: 3}
-    Volume: {x: 1, y: 1}
-    Pitch: {x: 1, y: 1}
-  PlayButtonSFX:
-    Name: Play Button SFX
+    Name: TutorialButton
     Clips:
     - {fileID: 8300000, guid: 5e03252d9c995dd40b38c7e47a993ea0, type: 3}
-    Volume: {x: 1, y: 1}
+    Volume: {x: 0.3, y: 0.3}
+    Pitch: {x: 1, y: 1}
+  PlayButtonSFX:
+    Name: PlayButton
+    Clips:
+    - {fileID: 8300000, guid: df360ac781345c7409d3995be074f1dc, type: 3}
+    Volume: {x: 0.3, y: 0.3}
     Pitch: {x: 1, y: 1}
   ExitButtonSFX:
-    Name: Exit Button SFX
+    Name: ExitButton
     Clips:
     - {fileID: 8300000, guid: 7fd93c871a2eda4449f56cf7d408d456, type: 3}
-    Volume: {x: 1, y: 1}
+    Volume: {x: 0.3, y: 0.3}
     Pitch: {x: 1, y: 1}
+  mainMixerGroup: {fileID: 0}
+  stepVolumeChange: 8.47
 --- !u!4 &1579627184
 Transform:
   m_ObjectHideFlags: 0
@@ -5149,10 +5413,8 @@ MonoBehaviour:
   respawnDelay: 4
   objectPooler: {fileID: 127907762}
   poolSize: 500
-  musicSource: {fileID: 1429836479}
-  musicClips:
-  - {fileID: 8300000, guid: b8f89689338720649bd6e98394cc9664, type: 3}
-  - {fileID: 8300000, guid: f10f03389bb7cfe4e820a07bb6ca617b, type: 3}
+  musicSource: {fileID: 0}
+  musicClips: []
 --- !u!4 &1897987069
 Transform:
   m_ObjectHideFlags: 0
@@ -6176,7 +6438,6 @@ SceneRoots:
   - {fileID: 1802261714}
   - {fileID: 229292616}
   - {fileID: 1897987069}
-  - {fileID: 1429836478}
   - {fileID: 1579627184}
   - {fileID: 1897022498}
   - {fileID: 133823648}
@@ -6193,3 +6454,4 @@ SceneRoots:
   - {fileID: 251566714}
   - {fileID: 1450780084}
   - {fileID: 2083989087}
+  - {fileID: 1429836478}
